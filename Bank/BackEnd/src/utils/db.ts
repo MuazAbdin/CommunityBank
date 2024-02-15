@@ -3,6 +3,9 @@ import mongoose from "mongoose";
 export default function connectDB() {
   const url = `${process.env.MONGO_URL}`;
   // const url = "mongodb://127.0.0.1:27017/ExtendedBankDB";
+  const DBname = "CommunityBankDB";
+  // if (/^mongodb\+srv/.test(url))
+  //   console.log(/mongodb.net\/(?<DBname>\w+)\?/.exec(url)?.groups?.DBname);
 
   try {
     mongoose.connect(url);
@@ -12,7 +15,7 @@ export default function connectDB() {
   }
 
   mongoose.connection.once("open", (_) => {
-    console.log(`Database connected: ${url}`);
+    console.log(`Database connected: ${DBname}`);
   });
 
   mongoose.connection.on("error", (err) => {
