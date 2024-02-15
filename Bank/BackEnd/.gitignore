@@ -1,0 +1,17 @@
+### macOS ###
+.DS_*
+
+### Node ###
+# Logs
+logs
+*.log
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# dotenv environment variable files
+.env
+
+# TypeScript outDir
+build/
