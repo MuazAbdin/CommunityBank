@@ -23,7 +23,7 @@ const userSchema = new Schema(
     IDcard: {
       type: String,
       required: true,
-      validate: { validator: (v: string) => /\d{10}/.test(v) },
+      validate: { validator: (v: string) => /\d{9}/.test(v) },
     },
     name: name,
     password: { type: String, required: true },
