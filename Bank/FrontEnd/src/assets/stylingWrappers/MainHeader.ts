@@ -18,7 +18,7 @@ const Wrapper = styled.header`
     margin: 0;
     padding: 0;
     display: flex;
-    gap: 1.5rem;
+    gap: 0.25rem;
   }
 
   li {
@@ -29,10 +29,25 @@ const Wrapper = styled.header`
     cursor: pointer;
     color: var(--primary-400);
     color: var(--white);
+    font-size: 1.25rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+    border-radius: var(--border-radius);
+    padding: 0.5rem;
+    transition: var(--transition);
   }
 
   li:hover {
-    font-weight: 600;
+    box-shadow: 0 0 5px black;
+  }
+
+  .mode-btn {
+    border-radius: 50%;
+    height: 2.5rem;
+    width: 2.5rem;
+    font-size: 1.5rem;
+    color: var(--primary-600);
+    border: 1px solid;
   }
 
   .logo {

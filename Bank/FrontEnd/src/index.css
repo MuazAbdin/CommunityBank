@@ -164,8 +164,9 @@ ul {
 /* BUTTONS */
 .btn {
   cursor: pointer;
-  color: var(--white);
-  background: var(--primary-300);
+  font-family: var(--main-font);
+  color: var(--grey-200);
+  background: var(--primary-600);
   border: transparent;
   border-radius: var(--border-radius);
   letter-spacing: var(--letter-spacing);
@@ -176,7 +177,8 @@ ul {
   display: inline-block;
 }
 .btn:hover {
-  background: var(--primary-400);
+  color: var(--primary-600);
+  background: var(--primary-300);
   box-shadow: var(--shadow-3);
 }
 .btn-block {

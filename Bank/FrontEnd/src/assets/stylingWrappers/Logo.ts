@@ -30,6 +30,7 @@ const Wrapper = styled.section`
     padding: 0.5rem 0.5rem;
     border: 2px solid var(--primary-600);
     background-color: var(--grey-200);
+    color: var(--primary-600);
     border-radius: 0 1rem 1rem 0;
   }
 `;

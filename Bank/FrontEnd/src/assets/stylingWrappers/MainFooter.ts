@@ -8,8 +8,9 @@ const Wrapper = styled.footer`
   padding: 0.5rem 1rem;
   font-family: var(--main-font);
   font-size: 1rem;
-  border-top: 1px solid;
-  box-shadow: 0 -1px 15px;
+  border-top: 1px solid black;
+  box-shadow: 0 -1px 15px black;
+  color: var(--white);
 `;
 
 export default Wrapper;
