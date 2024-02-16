@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Wrapper from "../assets/stylingWrappers/Landing";
 import Logo from "../components/Logo";
 
@@ -20,8 +21,12 @@ function Landing() {
           Don't have an account? Register to open one!
         </p>
         <div className="btn-group">
-          <button className="btn">register</button>
-          <button className="btn">sign in</button>
+          <Link to="register">
+            <button className="btn">register</button>
+          </Link>
+          <Link to="register">
+            <button className="btn">sign in</button>
+          </Link>
         </div>
       </section>
     </Wrapper>

@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import Wrapper from "../assets/stylingWrappers/MainHeader.ts";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocationDot, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { FaLocationDot, FaEnvelope } from "react-icons/fa6";
 import Logo from "./Logo.tsx";
-import { faMoon } from "@fortawesome/free-solid-svg-icons/faMoon";
+import ToggleTheme from "./ToggleTheme.tsx";
+import { IMainHeaderProps } from "../interfaces/components.ts";
 
-function MainHeader() {
+function MainHeader({ isDark, themeToggle }: IMainHeaderProps) {
   return (
     <Wrapper>
       <Link to="/">
@@ -14,15 +14,15 @@ function MainHeader() {
       <nav>
         <menu>
           <li>
-            <FontAwesomeIcon icon={faLocationDot} />
+            <FaLocationDot />
             <Link to="/">Branches</Link>
           </li>
           <li>
-            <FontAwesomeIcon icon={faEnvelope} />
+            <FaEnvelope />
             <Link to="/">Contact Us</Link>
           </li>
-          <li className="mode-btn">
-            <FontAwesomeIcon icon={faMoon} />
+          <li className="theme-btn">
+            <ToggleTheme isDark={isDark} themeToggle={themeToggle} />
           </li>
         </menu>
       </nav>

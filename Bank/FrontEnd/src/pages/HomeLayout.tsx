@@ -1,15 +1,28 @@
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import MainHeader from "../components/MainHeader";
 import MainFooter from "../components/MainFooter";
 
 function HomeLayout() {
+  const [isDark, setIsDark] = useState(getTheme());
+
+  function themeToggle() {
+    setIsDark((prevState) => !prevState);
+    localStorage.setItem("darkTheme", String(!isDark));
+  }
+
   return (
-    <>
-      <MainHeader />
+    <div id="app-container" className={isDark ? "dark-theme" : ""}>
+      <MainHeader isDark={isDark} themeToggle={themeToggle} />
       <Outlet />
       <MainFooter />
-    </>
+    </div>
   );
 }
 
 export default HomeLayout;
+
+function getTheme() {
+  const isDark = localStorage.getItem("darkTheme") === "true";
+  return isDark;
+}

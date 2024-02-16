@@ -9,7 +9,7 @@ const Wrapper = styled.main`
   background-repeat: no-repeat;
   overflow-y: scroll;
 
-  .welcome {
+  form {
     display: flex;
     justify-content: center;
     align-items: center;
