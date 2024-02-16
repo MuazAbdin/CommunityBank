@@ -9,11 +9,19 @@ const Wrapper = styled.main`
   background-repeat: no-repeat;
   overflow-y: scroll;
 
-  form {
+  .title {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    gap: 1.25rem;
+    font-size: 3rem;
+    font-family: var(--subtitle-font);
+    padding-bottom: 2rem;
+  }
+
+  form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 1rem;
     border-radius: 1rem;
     padding: 2rem;
@@ -28,27 +36,15 @@ const Wrapper = styled.main`
   }
 
   .title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1.25rem;
-    font-size: 3rem;
-    font-family: var(--subtitle-font);
-    padding-bottom: 2rem;
+    grid-column: 1 / 3;
   }
 
-  p {
-    text-align: justify;
-  }
-
-  .auth-message {
-    font-size: 1.75rem;
-    font-weight: 500;
-    padding-top: 1rem;
-    color: var(--highlight-color);
+  div:nth-of-type(2) {
+    grid-column: 1;
   }
 
   .btn-group {
+    grid-column: 1 / 3;
     padding-top: 1.5rem;
     align-self: stretch;
     display: flex;
@@ -66,6 +62,16 @@ const Wrapper = styled.main`
     padding: 0.75rem 0;
     font-size: 1.65rem;
     font-weight: 500;
+  }
+
+  .reset {
+    background-color: var(--red-dark);
+    color: var(--red-light);
+  }
+
+  .reset:hover {
+    background-color: var(--red-light);
+    color: var(--red-dark);
   }
 `;
 
