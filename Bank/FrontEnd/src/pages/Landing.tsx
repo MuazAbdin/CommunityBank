@@ -24,8 +24,8 @@ function Landing() {
           <Link to="register">
             <button className="btn">register</button>
           </Link>
-          <Link to="register">
-            <button className="btn">sign in</button>
+          <Link to="login">
+            <button className="btn">login</button>
           </Link>
         </div>
       </section>

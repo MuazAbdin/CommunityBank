@@ -1,4 +1,4 @@
-import { Form } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
 import Input from "../components/Input";
 import Wrapper from "../assets/stylingWrappers/Register";
 
@@ -76,6 +76,9 @@ function Register() {
         <div className="btn-group">
           <button className="btn reset">reset</button>
           <button className="btn">submit</button>
+        </div>
+        <div className="links-group">
+          <Link to="../login">Already have an account?</Link>
         </div>
       </Form>
     </Wrapper>

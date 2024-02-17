@@ -21,7 +21,6 @@ const Wrapper = styled.main`
 
   form {
     display: grid;
-    grid-template-columns: 1fr 1fr;
     gap: 1rem;
     border-radius: 1rem;
     padding: 2rem;
@@ -33,18 +32,14 @@ const Wrapper = styled.main`
     font-family: var(--main-font);
     font-size: 1.65rem;
     line-height: 1.2;
-  }
 
-  .title {
-    grid-column: 1 / 3;
-  }
-
-  div:nth-of-type(2) {
-    grid-column: 1;
+    div {
+      justify-self: center;
+      width: 70%;
+    }
   }
 
   .btn-group {
-    grid-column: 1 / 3;
     padding-top: 1.5rem;
     align-self: stretch;
     display: flex;
@@ -79,7 +74,10 @@ const Wrapper = styled.main`
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--text-secondary-color);
-    grid-column: 1 / 3;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 2rem;
   }
 
   .links-group > a:hover {
