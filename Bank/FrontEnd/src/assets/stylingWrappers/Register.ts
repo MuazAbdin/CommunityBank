@@ -39,7 +39,7 @@ const Wrapper = styled.main`
     grid-column: 1 / 3;
   }
 
-  div:nth-of-type(2) {
+  fieldset:nth-of-type(2) {
     grid-column: 1;
   }
 

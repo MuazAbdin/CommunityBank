@@ -1,8 +1,20 @@
 import { Form, Link } from "react-router-dom";
 import Input from "../components/Input";
 import Wrapper from "../assets/stylingWrappers/Register";
+import {
+  isAddressValid,
+  isEmailValid,
+  isFirstNameValid,
+  isIDValid,
+  isLastNameValid,
+  isMobileValid,
+  isPasswordConfirmValid,
+  isPasswordValid,
+} from "../utils/validation";
+import { useRef } from "react";
 
 function Register() {
+  const insertedPassword = useRef<HTMLInputElement>();
   return (
     <Wrapper>
       <Form>
@@ -12,21 +24,28 @@ function Register() {
           id="IDcard"
           type="number"
           placeholder="ID Card"
-          error="ID is not valid"
+          validator={isIDValid}
+          help="An israeli ID card."
         />
         <Input
           label="Password"
           id="password"
           type="password"
           placeholder="Password"
-          error="not valid"
+          validator={isPasswordValid}
+          ref={insertedPassword}
+          help="6-12 characters.
+                At least one lowercase, one uppercase, 
+                one digit, one of #?!@$ %^&*- ."
         />
         <Input
           label="Confirm Password"
           id="passwordConfirm"
           type="password"
           placeholder="Confirm Password"
-          error=" not valid"
+          validator={(value: string) =>
+            isPasswordConfirmValid(insertedPassword.current!.value, value)
+          }
         />
         <Input
           label="First Name"
@@ -34,7 +53,8 @@ function Register() {
           type="text"
           autoComplete="given-name"
           placeholder="First Name"
-          error="ID is not valid"
+          validator={isFirstNameValid}
+          help="must contain between 5-32 characters."
         />
         <Input
           label="Last Name"
@@ -42,7 +62,8 @@ function Register() {
           type="text"
           autoComplete="family-name"
           placeholder="Last Name"
-          error="ID is not valid"
+          validator={isLastNameValid}
+          help="must contain between 5-32 characters."
         />
         <Input
           label="Email"
@@ -50,28 +71,29 @@ function Register() {
           type="email"
           autoComplete="email"
           placeholder="Email"
-          error="ID is not valid"
+          validator={isEmailValid}
         />
         <Input
           label="Mobile"
           id="mobile"
           type="number"
           placeholder="Mobile"
-          error="ID is not valid"
+          validator={isMobileValid}
+          help="An israeli mobile number."
         />
         <Input
           label="City"
           id="city"
           type="text"
           placeholder="City"
-          error="ID is not valid"
+          validator={isAddressValid}
         />
         <Input
           label="Street"
           id="street"
           type="text"
           placeholder="Street"
-          error="ID is not valid"
+          validator={isAddressValid}
         />
         <div className="btn-group">
           <button className="btn reset">reset</button>

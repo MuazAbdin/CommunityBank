@@ -1,6 +1,7 @@
 import { Form, Link } from "react-router-dom";
 import Input from "../components/Input";
 import Wrapper from "../assets/stylingWrappers/Login";
+import { isIDValid } from "../utils/validation";
 
 function Login() {
   return (
@@ -12,14 +13,12 @@ function Login() {
           id="IDcard"
           type="number"
           placeholder="ID Card"
-          error="ID is not valid"
         />
         <Input
           label="Password"
           id="password"
           type="password"
           placeholder="Password"
-          error="not valid"
         />
         <div className="btn-group">
           {/* <button className="btn reset">reset</button> */}

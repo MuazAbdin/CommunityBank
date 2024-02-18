@@ -33,6 +33,7 @@ const Wrapper = styled.main`
     font-size: 1.65rem;
     line-height: 1.2;
 
+    fieldset,
     div {
       justify-self: center;
       width: 70%;
