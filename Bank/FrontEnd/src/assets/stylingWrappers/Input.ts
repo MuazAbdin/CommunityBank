@@ -10,7 +10,10 @@ function getBackgroundColor(hasError: boolean, didEdit: boolean) {
   return hasError ? "var(--red-light)" : "var(--green-light)";
 }
 
-const Wrapper = styled.fieldset<{ $hasError: boolean; $didEdit: boolean }>`
+const Wrapper = styled.fieldset<{
+  $hasError: boolean;
+  $didEdit: boolean;
+}>`
   position: relative;
   border: none;
 
@@ -70,6 +73,7 @@ const Wrapper = styled.fieldset<{ $hasError: boolean; $didEdit: boolean }>`
     }
 
     .validation-result {
+      text-align: justify;
       align-self: flex-start;
       color: var(--red-dark);
       font-size: 0.75rem;

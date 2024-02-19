@@ -11,11 +11,11 @@ interface IInputProps {
 }
 
 const Input = forwardRef(function Input(
-  { label, id, validator, help, ...props }: IInputProps & any,
+  { label, id, validator, help, isSubmitted, ...props }: IInputProps & any,
   ref
 ) {
   const { value, hasError, didEdit, handleInputChange, handleInputBlur } =
-    useInput(validator);
+    useInput(validator, isSubmitted);
 
   return (
     <Wrapper $hasError={hasError} $didEdit={didEdit}>

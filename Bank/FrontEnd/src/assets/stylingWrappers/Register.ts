@@ -64,6 +64,11 @@ const Wrapper = styled.main`
     font-weight: 500;
   }
 
+  .btn:disabled {
+    cursor: not-allowed;
+    background-color: var(--grey-500);
+  }
+
   .reset {
     background-color: var(--red-dark);
     color: var(--red-light);

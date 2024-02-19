@@ -1,103 +1,58 @@
-import { Form, Link } from "react-router-dom";
+import {
+  ActionFunctionArgs,
+  Form,
+  Link,
+  redirect,
+  useActionData,
+  useNavigation,
+} from "react-router-dom";
+import { toast } from "react-toastify";
 import Input from "../components/Input";
 import Wrapper from "../assets/stylingWrappers/Register";
-import {
-  isAddressValid,
-  isEmailValid,
-  isFirstNameValid,
-  isIDValid,
-  isLastNameValid,
-  isMobileValid,
-  isPasswordConfirmValid,
-  isPasswordValid,
-} from "../utils/validation";
 import { useRef } from "react";
+import { REGISTER_FIELDS } from "../utils/constants";
 
 function Register() {
+  const actionData = useActionData() as { result: string };
   const insertedPassword = useRef<HTMLInputElement>();
+
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
+
   return (
     <Wrapper>
-      <Form>
+      <Form method="POST" id="register-form" noValidate>
         <h3 className="title">Register</h3>
-        <Input
-          label="ID Card"
-          id="IDcard"
-          type="number"
-          placeholder="ID Card"
-          validator={isIDValid}
-          help="An israeli ID card."
-        />
-        <Input
-          label="Password"
-          id="password"
-          type="password"
-          placeholder="Password"
-          validator={isPasswordValid}
-          ref={insertedPassword}
-          help="6-12 characters.
-                At least one lowercase, one uppercase, 
-                one digit, one of #?!@$ %^&*- ."
-        />
-        <Input
-          label="Confirm Password"
-          id="passwordConfirm"
-          type="password"
-          placeholder="Confirm Password"
-          validator={(value: string) =>
-            isPasswordConfirmValid(insertedPassword.current!.value, value)
-          }
-        />
-        <Input
-          label="First Name"
-          id="firstName"
-          type="text"
-          autoComplete="given-name"
-          placeholder="First Name"
-          validator={isFirstNameValid}
-          help="must contain between 5-32 characters."
-        />
-        <Input
-          label="Last Name"
-          id="lastName"
-          type="text"
-          autoComplete="family-name"
-          placeholder="Last Name"
-          validator={isLastNameValid}
-          help="must contain between 5-32 characters."
-        />
-        <Input
-          label="Email"
-          id="email"
-          type="email"
-          autoComplete="email"
-          placeholder="Email"
-          validator={isEmailValid}
-        />
-        <Input
-          label="Mobile"
-          id="mobile"
-          type="number"
-          placeholder="Mobile"
-          validator={isMobileValid}
-          help="An israeli mobile number."
-        />
-        <Input
-          label="City"
-          id="city"
-          type="text"
-          placeholder="City"
-          validator={isAddressValid}
-        />
-        <Input
-          label="Street"
-          id="street"
-          type="text"
-          placeholder="Street"
-          validator={isAddressValid}
-        />
+        {REGISTER_FIELDS.map((f) => {
+          const validator =
+            f.id === "passwordConfirm"
+              ? (value: string) =>
+                  f.validator(insertedPassword.current!.value, value)
+              : f.validator;
+
+          return (
+            <Input
+              key={f.id}
+              label={f.label}
+              id={f.id}
+              type={f.id}
+              autoComplete={f.autoComplete ?? null}
+              ref={f.id === "password" ? insertedPassword : null}
+              placeholder={f.placeholder}
+              validator={validator}
+              help={f.help}
+              isSubmitted={actionData?.result === "emptyFields"}
+            />
+          );
+        })}
+
         <div className="btn-group">
-          <button className="btn reset">reset</button>
-          <button className="btn">submit</button>
+          {/* <button name="reset" className="btn reset">
+            reset
+          </button> */}
+          <button name="submit" className="btn" disabled={isSubmitting}>
+            {isSubmitting ? "submitting ..." : "submit"}
+          </button>
         </div>
         <div className="links-group">
           <Link to="../login">Already have an account?</Link>
@@ -108,3 +63,26 @@ function Register() {
 }
 
 export default Register;
+
+export async function action({ request }: ActionFunctionArgs) {
+  const fd = await request.formData();
+  const data = Object.fromEntries(
+    [...fd.entries()].filter((entry) => entry[0] !== "submit")
+  );
+  console.log(data);
+  if (Object.keys(data).filter((k) => data[k] === "").length > 0)
+    return { result: "emptyFields" };
+
+  try {
+    const response = await fetch("http://localhost:3000/v1/auth/register", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
+    });
+    toast.success("Registration successful");
+    return redirect("/login");
+  } catch (error) {
+    toast.error(error?.response?.data?.msg);
+    return error;
+  }
+}

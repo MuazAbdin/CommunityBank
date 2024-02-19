@@ -1,10 +1,13 @@
 import { ChangeEvent, useState } from "react";
 
-export function useInput(validator: (v: string) => boolean) {
+export function useInput(
+  validator: (v: string) => boolean,
+  isSubmitted: boolean
+) {
   const [value, setValue] = useState("");
   const [didEdit, setDidEdit] = useState(false);
 
-  const hasError = didEdit && validator && !validator(value);
+  const hasError = (isSubmitted || didEdit) && validator && !validator(value);
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
     setValue(event.currentTarget.value);
@@ -15,5 +18,11 @@ export function useInput(validator: (v: string) => boolean) {
     setDidEdit(true);
   }
 
-  return { value, hasError, didEdit, handleInputChange, handleInputBlur };
+  return {
+    value,
+    hasError,
+    didEdit: isSubmitted || didEdit,
+    handleInputChange,
+    handleInputBlur,
+  };
 }

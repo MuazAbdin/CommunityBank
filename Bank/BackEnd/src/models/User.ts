@@ -29,12 +29,6 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
-      validate: {
-        validator: (v: string) =>
-          /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{6,12}$/.test(
-            v
-          ),
-      },
     },
     email: {
       type: String,
