@@ -3,9 +3,12 @@ import HomeLayout from "../pages/HomeLayout";
 import Register from "../pages/Register";
 import Landing from "../pages/Landing";
 import Login from "../pages/Login";
+import DashboardLayout from "../pages/DashboardLayout";
 
 import { action as registerAction } from "../pages/Register";
 import { action as loginAction } from "../pages/Login";
+import Accounts from "../pages/Accounts";
+import Overview from "../pages/Overview";
 
 const router = createBrowserRouter([
   {
@@ -26,11 +29,20 @@ const router = createBrowserRouter([
         element: <Login />,
         action: loginAction,
       },
-      // {
-      //   path: "dashboard",
-      //   element: <DashboardLayout />,
-      //   children: [],
-      // },
+      {
+        path: "dashboard",
+        element: <DashboardLayout />,
+        children: [
+          {
+            index: true,
+            element: <Overview />,
+          },
+          {
+            path: "accounts",
+            element: <Accounts />,
+          },
+        ],
+      },
     ],
   },
 ]);
