@@ -12,6 +12,9 @@ import accountRouter from "./routes/accountRouter.js";
 import loanRouter from "./routes/loanRouter.js";
 import authRouter from "./routes/authRouter.js";
 
+// middleware
+import errorHandlerMiddleware from "./middlewares/errorHandlerMiddleware.js";
+
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
@@ -38,13 +41,7 @@ app.use("/v1/users", userRouter);
 app.use("/v1/loans", loanRouter);
 app.use("/v1/auth", authRouter);
 
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.log(err);
-  // @ts-ignore
-  const statusCode = err.statusCode || 500;
-  const msg = err.message || "something went wrong, try again later";
-  res.status(statusCode).send({ msg });
-});
+app.use(errorHandlerMiddleware);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
