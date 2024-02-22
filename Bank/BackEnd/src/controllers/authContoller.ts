@@ -1,7 +1,8 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import User from "../models/User.js";
 import { comparePassword, generateToken, hashPassword } from "../utils/auth.js";
+import { UnauthenticatedError } from "../errors/customErrors.js";
 
 export async function register(req: Request, res: Response) {
   const isFirstUser = (await User.countDocuments()) === 0;
@@ -22,12 +23,15 @@ export async function register(req: Request, res: Response) {
   res.status(StatusCodes.CREATED).send({ msg: "user registered successfully" });
 }
 
-export async function login(req: Request, res: Response) {
+export async function login(req: Request, res: Response, next: NextFunction) {
   const { IDcard, password } = req.body;
   const user = await User.findOne({ IDcard: IDcard });
-  if (!user) throw new Error();
+  // if (!user) throw new UnauthenticatedError("invalid credentials");
+  if (!user) return next(new UnauthenticatedError("invalid credentials"));
   const isPasswordValid = await comparePassword(password, user.password);
-  if (!isPasswordValid) throw new Error();
+  // if (!isPasswordValid) throw new UnauthenticatedError("invalid credentials");
+  if (!isPasswordValid)
+    return next(new UnauthenticatedError("invalid credentials"));
 
   const token = generateToken({
     userId: user._id,

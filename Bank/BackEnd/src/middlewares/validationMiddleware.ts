@@ -10,7 +10,10 @@ import {
 } from "../errors/customErrors.js";
 import { RunnableValidationChains } from "express-validator/src/middlewares/schema.js";
 import { Request, Response, NextFunction } from "express";
-import { userSchema } from "../errors/validationSchemas.js";
+import {
+  loginSchema,
+  userSchema as registerSchema,
+} from "../errors/validationSchemas.js";
 
 function processValidations(req: Request, res: Response, next: NextFunction) {
   const errors = validationResult(req);
@@ -30,9 +33,19 @@ function validationRunner(
   return [validations, processValidations];
 }
 
-// @ts-ignore
-export const validateRegisterInput = validationRunner(checkSchema(userSchema));
+const { IDcard, ...editDetailsSchema } = registerSchema;
 
-export const validateLoginInput = validationRunner(checkSchema({}));
+export const validateRegisterInput = validationRunner(
+  // @ts-ignore
+  checkSchema(registerSchema)
+);
 
-export const validateEditDetailsInput = validationRunner(checkSchema({}));
+export const validateLoginInput = validationRunner(
+  // @ts-ignore
+  checkSchema(loginSchema)
+);
+
+export const validateEditDetailsInput = validationRunner(
+  // @ts-ignore
+  checkSchema(editDetailsSchema)
+);
