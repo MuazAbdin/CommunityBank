@@ -4,10 +4,6 @@ import User from "../models/User.js";
 import { comparePassword, generateToken, hashPassword } from "../utils/auth.js";
 
 export async function register(req: Request, res: Response) {
-  const { IDcard } = req.body;
-  const user = await User.findOne({ IDcard: IDcard });
-  if (user) throw new Error();
-
   const isFirstUser = (await User.countDocuments()) === 0;
   const role = isFirstUser ? "admin" : "user";
   const hashedPassword = await hashPassword(req.body.password);

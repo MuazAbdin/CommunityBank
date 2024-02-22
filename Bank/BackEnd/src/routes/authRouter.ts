@@ -1,9 +1,11 @@
 import { Router } from "express";
 import { login, logout, register } from "../controllers/authContoller.js";
+import { validateRegisterInput } from "../middlewares/validationMiddleware.js";
 
 const router = Router();
 
-router.post("/register", register);
+// @ts-ignore
+router.post("/register", validateRegisterInput, register);
 router.post("/login", login);
 router.get("/logout", logout);
 
