@@ -2,25 +2,42 @@ import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import User from "../models/User.js";
 import { comparePassword, generateToken, hashPassword } from "../utils/auth.js";
-import { UnauthenticatedError } from "../errors/customErrors.js";
+import {
+  BadRequestError,
+  UnauthenticatedError,
+} from "../errors/customErrors.js";
+import { handleDBErrors } from "../errors/dbErrors.js";
 
-export async function register(req: Request, res: Response) {
+export async function register(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   const isFirstUser = (await User.countDocuments()) === 0;
   const role = isFirstUser ? "admin" : "user";
-  const hashedPassword = await hashPassword(req.body.password);
+  // const hashedPassword = await hashPassword(req.body.password);
 
   const newUser = {
     IDcard: req.body.IDcard,
     name: { first: req.body.firstName, last: req.body.lastName },
-    password: hashedPassword,
+    // password: hashedPassword,
+    password: req.body.password,
     email: req.body.email,
     mobile: req.body.mobile,
     address: { city: req.body.city, street: req.body.street },
     role: role,
   };
 
-  await User.create(newUser);
-  res.status(StatusCodes.CREATED).send({ msg: "user registered successfully" });
+  try {
+    await User.create(newUser);
+    res
+      .status(StatusCodes.CREATED)
+      .send({ msg: "user registered successfully" });
+  } catch (error: any) {
+    // db validation errors
+    const errorValues = handleDBErrors(error);
+    return next(new BadRequestError("Invalid inputs", errorValues));
+  }
 }
 
 export async function login(req: Request, res: Response, next: NextFunction) {
@@ -34,7 +51,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
     return next(new UnauthenticatedError("invalid credentials"));
 
   const token = generateToken({
-    userId: user._id,
+    userId: user._id.toString(),
     IDcard: user.IDcard,
     role: user.role,
   });

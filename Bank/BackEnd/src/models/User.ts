@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { hashPassword, hashPasswordSync } from "../utils/auth.js";
 
 const defaultString = {
   type: String,
@@ -29,6 +30,7 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
+      set: (v: string) => hashPasswordSync(v),
     },
     email: {
       type: String,
