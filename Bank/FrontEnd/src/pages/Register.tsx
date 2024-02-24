@@ -25,7 +25,7 @@ export async function action({ request }: ActionFunctionArgs) {
   );
   console.log(data);
   if (Object.keys(data).filter((k) => data[k] === "").length > 0)
-    return { result: "emptyFields" };
+    return { msg: "Invalid inputs" };
 
   try {
     const response = await fetch("http://localhost:3000/v1/auth/register", {
@@ -33,6 +33,10 @@ export async function action({ request }: ActionFunctionArgs) {
       body: JSON.stringify(data),
       headers: { "Content-Type": "application/json" },
     });
+    if (response.status === 400) {
+      const responseData = await response.json();
+      return responseData;
+    }
     toast.success("Registration successful");
     return redirect("/login");
   } catch (error) {

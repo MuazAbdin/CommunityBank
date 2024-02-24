@@ -6,9 +6,10 @@ import {
 } from "../errors/customErrors.js";
 import { verifyToken } from "../utils/auth.js";
 import { ITokenPayload } from "../interfaces/IToken.js";
+import User from "../models/User.js";
 
-export function authenticateUser(
-  req: Request,
+export async function authenticateUser(
+  req: Request & { user?: ITokenPayload },
   res: Response,
   next: NextFunction
 ) {
@@ -17,7 +18,7 @@ export function authenticateUser(
 
   try {
     const { userId, IDcard, role } = verifyToken(token) as ITokenPayload;
-    // req.user = { userId, role,  };
+    req.user = { userId, IDcard, role };
     next();
   } catch (error) {
     next(new UnauthenticatedError("authentication invalid"));

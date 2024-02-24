@@ -3,6 +3,7 @@ dotenv.config();
 import express, { Request, Response, NextFunction } from "express";
 const app = express();
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
 import connectDB from "./utils/db.js";
 
 // routers
@@ -30,6 +31,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 

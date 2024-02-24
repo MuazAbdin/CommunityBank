@@ -68,6 +68,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 }
 
 export async function logout(req: Request, res: Response) {
+  // res.clearCookie("token");
   res.cookie("token", "logout", {
     httpOnly: true,
     expires: new Date(Date.now()),

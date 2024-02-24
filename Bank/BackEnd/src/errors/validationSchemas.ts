@@ -18,9 +18,9 @@ type validator = (
 
 export const userSchema = {
   IDcard: {
-    errorMessage: "IDcard is invalid",
+    errorMessage: "invalid",
     trim: true,
-    notEmpty: { errorMessage: "IDcard is required", bail: true },
+    notEmpty: { errorMessage: "required", bail: true },
     matches: { bail: true, options: /\d{9}/ },
     custom: {
       errorMessage: "ID already exists",
@@ -32,9 +32,9 @@ export const userSchema = {
     },
   },
   password: {
-    errorMessage: "password is invalid",
+    errorMessage: "invalid",
     trim: true,
-    notEmpty: { errorMessage: "password is required", bail: true },
+    notEmpty: { errorMessage: "required", bail: true },
     matches: {
       options:
         /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{6,12}$/,
@@ -42,8 +42,9 @@ export const userSchema = {
   },
   passwordConfirm: {
     trim: true,
+    notEmpty: { errorMessage: "required", bail: true },
     custom: {
-      errorMessage: "not matching the password",
+      errorMessage: "password is not match",
       options: ((value, { req }) => {
         const reqBody = req.body as unknown as IRequestBodyUserDetails;
         return value === reqBody.password;
@@ -52,42 +53,42 @@ export const userSchema = {
   },
 
   firstName: {
-    errorMessage: "first name is invalid",
+    errorMessage: "invalid",
     trim: true,
-    notEmpty: { errorMessage: "first name is required", bail: true },
+    notEmpty: { errorMessage: "required", bail: true },
     toLowerCase: true,
     matches: { options: /\w{3,35}/ },
   },
   lastName: {
-    errorMessage: "last name is invalid",
+    errorMessage: "invalid",
     trim: true,
-    notEmpty: { errorMessage: "last name is required", bail: true },
+    notEmpty: { errorMessage: "required", bail: true },
     toLowerCase: true,
     matches: { options: /\w{3,35}/ },
   },
   email: {
-    errorMessage: "email is invalid",
+    errorMessage: "invalid",
     trim: true,
-    notEmpty: { errorMessage: "email is required", bail: true },
+    notEmpty: { errorMessage: "required", bail: true },
     isEmail: true,
   },
   mobile: {
-    errorMessage: "mobile is invalid",
+    errorMessage: "invalid",
     trim: true,
-    notEmpty: true,
+    notEmpty: { errorMessage: "required", bail: true },
     matches: { options: /05\d{8}/ },
   },
   city: {
-    errorMessage: "city is invalid",
+    errorMessage: "invalid",
     trim: true,
-    notEmpty: { errorMessage: "city is required", bail: true },
+    notEmpty: { errorMessage: "required", bail: true },
     toLowerCase: true,
     matches: { options: /\w{3,35}/ },
   },
   street: {
-    errorMessage: "street is invalid",
+    errorMessage: "invalid",
     trim: true,
-    notEmpty: { errorMessage: "street is required", bail: true },
+    notEmpty: { errorMessage: "required", bail: true },
     toLowerCase: true,
     matches: { options: /\w{3,35}/ },
   },
@@ -95,12 +96,12 @@ export const userSchema = {
 
 export const loginSchema = {
   IDcard: {
-    errorMessage: "IDcard is required",
+    errorMessage: "required",
     trim: true,
     notEmpty: true,
   },
   password: {
-    errorMessage: "password is required",
+    errorMessage: "required",
     trim: true,
     notEmpty: true,
   },

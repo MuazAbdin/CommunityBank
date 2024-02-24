@@ -1,19 +1,21 @@
 import { Form, useActionData, useNavigation } from "react-router-dom";
 import Input from "./Input";
-import { useRef } from "react";
+import { PropsWithChildren, useRef } from "react";
 import { REGISTER_FIELDS } from "../utils/constants";
+import { IUserDetailsFormProps } from "../interfaces/components";
+
+interface IUserFormActionData {
+  msg: string;
+  data?: { name: string; value: string; message: string }[];
+}
 
 function UserDetailsForm({
   title,
   buttonText,
   className,
   children,
-}: {
-  title: string;
-  buttonText: string;
-  className: string;
-}) {
-  const actionData = useActionData() as { result: string };
+}: PropsWithChildren<IUserDetailsFormProps>) {
+  const actionData = useActionData() as IUserFormActionData;
   const insertedPassword = useRef<HTMLInputElement>();
 
   const navigation = useNavigation();
@@ -26,21 +28,34 @@ function UserDetailsForm({
         const validator =
           f.id === "passwordConfirm"
             ? (value: string) =>
-                f.validator(insertedPassword.current!.value, value)
+                f.validator(insertedPassword.current?.value || "", value)
             : f.validator;
+
+        let severErrorMsg = "";
+        let prevValue = "";
+
+        if (actionData && actionData.data) {
+          const inputItem = actionData.data.find((item) => item.name === f.id);
+          if (inputItem) {
+            severErrorMsg = inputItem.message;
+            prevValue = inputItem.value;
+          }
+        }
 
         return (
           <Input
             key={f.id}
             label={f.label}
             id={f.id}
-            type={f.id}
-            autoComplete={f.autoComplete ?? null}
+            type={f.type}
+            autoComplete={f.autoComplete ?? "off"}
             ref={f.id === "password" ? insertedPassword : null}
             placeholder={f.placeholder}
             validator={validator}
+            severErrorMsg={severErrorMsg}
+            prevValue={prevValue}
             help={f.help}
-            isSubmitted={actionData?.result === "emptyFields"}
+            isSubmitted={actionData?.msg === "Invalid inputs"}
             disabled={f.id === "IDcard" && title === "edit details"}
           />
         );

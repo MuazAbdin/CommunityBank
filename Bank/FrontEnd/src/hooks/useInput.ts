@@ -1,13 +1,18 @@
 import { ChangeEvent, useState } from "react";
+import { IInputValidator } from "../utils/validation";
 
 export function useInput(
-  validator: (v: string) => boolean,
+  validator: IInputValidator | undefined,
   isSubmitted: boolean
 ) {
   const [value, setValue] = useState("");
   const [didEdit, setDidEdit] = useState(false);
 
-  const hasError = (isSubmitted || didEdit) && validator && !validator(value);
+  const { result, message } = validator
+    ? validator(value)
+    : { result: true, message: "valid" };
+
+  const hasError = (isSubmitted || didEdit) && !result;
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
     setValue(event.currentTarget.value);
@@ -21,6 +26,7 @@ export function useInput(
   return {
     value,
     hasError,
+    errorMessage: message,
     didEdit: isSubmitted || didEdit,
     handleInputChange,
     handleInputBlur,

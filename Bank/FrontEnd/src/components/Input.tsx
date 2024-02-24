@@ -3,26 +3,45 @@ import Wrapper from "../assets/stylingWrappers/Input";
 import { useInput } from "../hooks/useInput";
 import { GrValidate } from "react-icons/gr";
 import { TfiHelpAlt } from "react-icons/tfi";
+import { IInputValidator } from "../utils/validation";
 
 interface IInputProps {
   label: string;
   id: string;
-  validator?: (v: string) => boolean;
+  validator?: IInputValidator;
 }
 
 const Input = forwardRef(function Input(
-  { label, id, validator, help, isSubmitted, ...props }: IInputProps & any,
+  {
+    label,
+    id,
+    validator,
+    help,
+    isSubmitted,
+    severErrorMsg,
+    prevValue,
+    ...props
+  }: IInputProps & any,
   ref
 ) {
-  const { value, hasError, didEdit, handleInputChange, handleInputBlur } =
-    useInput(validator, isSubmitted);
+  const {
+    value,
+    hasError,
+    errorMessage,
+    didEdit,
+    handleInputChange,
+    handleInputBlur,
+  } = useInput(validator, isSubmitted);
+
+  const showErrorMessage = hasError || severErrorMsg !== "";
+  const validationMessage = severErrorMsg !== "" ? severErrorMsg : errorMessage;
 
   return (
-    <Wrapper $hasError={hasError} $didEdit={didEdit}>
+    <Wrapper $hasError={showErrorMessage} $didEdit={didEdit}>
       {help && <InputHelp message={help} />}
       <div className="main-container">
         <span className="input-field">
-          {validator && <GrValidate className="validate-icon" />}
+          {!showErrorMessage && <GrValidate className="validate-icon" />}
           <input
             id={id}
             name={id}
@@ -35,10 +54,8 @@ const Input = forwardRef(function Input(
           {help && <TfiHelpAlt className="help-icon" />}
         </span>
         <label htmlFor={id}>{label}</label>
-        {validator && (
-          <div className="validation-result">
-            {label} is {value === "" ? "required" : "invalid"}
-          </div>
+        {showErrorMessage && (
+          <div className="validation-result">{validationMessage}</div>
         )}
       </div>
     </Wrapper>
