@@ -11,6 +11,7 @@ function UserDetailsForm({
   title,
   buttonText,
   className,
+  values,
   children,
 }: PropsWithChildren<IUserDetailsFormProps>) {
   const actionData = useActionData() as IUserFormActionData;
@@ -30,14 +31,9 @@ function UserDetailsForm({
             : f.validator;
 
         let severErrorMsg = "";
-        let prevValue = "";
-
         if (actionData && actionData.data) {
           const inputItem = actionData.data.find((item) => item.name === f.id);
-          if (inputItem) {
-            severErrorMsg = inputItem.message;
-            prevValue = inputItem.value;
-          }
+          if (inputItem) severErrorMsg = inputItem.message;
         }
 
         return (
@@ -51,7 +47,7 @@ function UserDetailsForm({
             placeholder={f.placeholder}
             validator={validator}
             severErrorMsg={severErrorMsg}
-            prevValue={prevValue}
+            prevValue={values?.[f.id] || ""}
             help={f.help}
             isSubmitted={actionData?.msg === "Invalid inputs"}
             disabled={f.id === "IDcard" && title === "edit details"}

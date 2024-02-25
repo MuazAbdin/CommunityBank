@@ -23,6 +23,15 @@ const Wrapper = styled.main`
     align-items: center;
     font-size: 1.25em;
     color: var(--text-color);
+
+    .logout-btn {
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-radius: 50px;
+      padding: 0.5rem 1.25rem;
+    }
   }
 
   a:visited {

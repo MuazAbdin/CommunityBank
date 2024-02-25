@@ -4,9 +4,10 @@ import { IInputValidator } from "../utils/validation";
 export function useInput(
   validator: IInputValidator | undefined,
   errorMessage: string,
-  isSubmitted: boolean
+  isSubmitted: boolean,
+  prevValue: string
 ) {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(prevValue);
   const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {

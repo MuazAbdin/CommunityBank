@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { getCurrentUser } from "../controllers/userController.js";
 
 const router = Router();
 
@@ -12,7 +13,7 @@ router.get("/admin/stats", () => {});
 router.get("/admin/stats/:userID", () => {});
 
 // get current user
-router.get("/current", () => {});
+router.get("/current", getCurrentUser);
 
 // get current user details
 router.get("/current/details", () => {});

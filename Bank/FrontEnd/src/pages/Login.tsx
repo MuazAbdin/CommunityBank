@@ -11,6 +11,8 @@ import Wrapper from "../assets/stylingWrappers/Login";
 import "react-toastify/dist/ReactToastify.css";
 import { IUserFormActionData } from "../interfaces/components";
 import { toast } from "react-toastify";
+import axios from "axios";
+import { fetcher } from "../utils/fetcher";
 
 function Login() {
   const actionData = useActionData() as IUserFormActionData;
@@ -89,11 +91,11 @@ export async function action({ request }: ActionFunctionArgs) {
   }
 
   try {
-    const response = await fetch("http://localhost:3000/v1/auth/login", {
+    const response = await fetcher("/v1/auth/login", {
       method: "POST",
       body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" },
     });
+
     if (response.status === 400) {
       const responseData = await response.json();
       return responseData;
@@ -103,6 +105,7 @@ export async function action({ request }: ActionFunctionArgs) {
       toast.error("Login Failed");
       return data;
     }
+
     toast.success("Logged in successfully");
     return redirect("/dashboard");
   } catch (error) {

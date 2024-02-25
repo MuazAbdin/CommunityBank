@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, useEffect } from "react";
 import Wrapper from "../assets/stylingWrappers/Input";
 import { useInput } from "../hooks/useInput";
 import { GrValidate } from "react-icons/gr";
@@ -33,7 +33,7 @@ const Input = forwardRef(function Input(
     showMessage,
     handleInputChange,
     handleInputBlur,
-  } = useInput(validator, severErrorMsg, isSubmitted);
+  } = useInput(validator, severErrorMsg, isSubmitted, prevValue);
 
   return (
     <Wrapper $hasError={hasError} $showMessage={showMessage}>

@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import Wrapper from "../assets/stylingWrappers/Register";
 import StyledUserForm from "../assets/stylingWrappers/StyledUserForm";
 import { validateAllFields } from "../utils/validation";
+import { fetcher } from "../utils/fetcher";
 
 function Register() {
   return (
@@ -30,11 +31,11 @@ export async function action({ request }: ActionFunctionArgs) {
   if (preSubmitValidation.msg === "Invalid inputs") return preSubmitValidation;
 
   try {
-    const response = await fetch("http://localhost:3000/v1/auth/register", {
+    const response = await fetcher("v1/auth/register", {
       method: "POST",
       body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" },
     });
+
     if (response.status === 400) {
       const responseData = await response.json();
       return responseData;

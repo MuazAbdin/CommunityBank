@@ -60,7 +60,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 
   res.cookie("token", token, {
     httpOnly: true,
-    expires: new Date(Date.now() + 0.25 * HOUR),
+    expires: new Date(Date.now() + 24 * HOUR),
     secure: process.env.NODE_ENV === "production",
   });
 
@@ -68,10 +68,10 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 }
 
 export async function logout(req: Request, res: Response) {
-  // res.clearCookie("token");
-  res.cookie("token", "logout", {
-    httpOnly: true,
-    expires: new Date(Date.now()),
-  });
+  res.clearCookie("token");
+  // res.cookie("token", "logout", {
+  //   httpOnly: true,
+  //   expires: new Date(Date.now()),
+  // });
   res.status(StatusCodes.OK).json({ msg: "user logged out!" });
 }
