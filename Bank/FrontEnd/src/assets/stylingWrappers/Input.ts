@@ -1,18 +1,18 @@
 import styled from "styled-components";
 
-function getColor(hasError: boolean, didEdit: boolean) {
-  if (!didEdit) return "#d2f4ff";
+function getColor(hasError: boolean, showMessage: boolean) {
+  if (!showMessage) return "#d2f4ff";
   return hasError ? "var(--red-dark)" : "var(--green-dark)";
 }
 
-function getBackgroundColor(hasError: boolean, didEdit: boolean) {
-  if (!didEdit) return "#d2f4ff";
+function getBackgroundColor(hasError: boolean, showMessage: boolean) {
+  if (!showMessage) return "#d2f4ff";
   return hasError ? "var(--red-light)" : "var(--green-light)";
 }
 
 const Wrapper = styled.fieldset<{
   $hasError: boolean;
-  $didEdit: boolean;
+  $showMessage: boolean;
 }>`
   position: relative;
   border: none;
@@ -41,10 +41,11 @@ const Wrapper = styled.fieldset<{
     width: 100%;
     display: flex;
     flex-direction: column;
-    border: 2px solid ${(props) => getColor(props.$hasError, props.$didEdit)};
+    border: 2px solid
+      ${(props) => getColor(props.$hasError, props.$showMessage)};
     border-radius: 0.5rem;
     background-color: ${(props) =>
-      getBackgroundColor(props.$hasError, props.$didEdit)};
+      getBackgroundColor(props.$hasError, props.$showMessage)};
     overflow: hidden;
     position: relative;
 
@@ -96,7 +97,7 @@ const Wrapper = styled.fieldset<{
 
       .validate-icon {
         display: ${(props) => {
-          if (!props.$didEdit) return "none";
+          if (!props.$showMessage) return "none";
           return props.$hasError ? "none" : "block";
         }};
         color: var(--green-dark);
@@ -110,7 +111,7 @@ const Wrapper = styled.fieldset<{
       font-size: 1.25rem;
       font-family: var(--main-font);
       background-color: ${(props) =>
-        getBackgroundColor(props.$hasError, props.$didEdit)};
+        getBackgroundColor(props.$hasError, props.$showMessage)};
       border: none;
       border-radius: var(--border-radius);
     }

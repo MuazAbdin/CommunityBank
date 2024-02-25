@@ -28,20 +28,17 @@ const Input = forwardRef(function Input(
     value,
     hasError,
     errorMessage,
-    didEdit,
+    showMessage,
     handleInputChange,
     handleInputBlur,
-  } = useInput(validator, isSubmitted);
-
-  const showErrorMessage = hasError || severErrorMsg !== "";
-  const validationMessage = severErrorMsg !== "" ? severErrorMsg : errorMessage;
+  } = useInput(validator, prevValue, severErrorMsg, isSubmitted);
 
   return (
-    <Wrapper $hasError={showErrorMessage} $didEdit={didEdit}>
+    <Wrapper $hasError={hasError} $showMessage={showMessage}>
       {help && <InputHelp message={help} />}
       <div className="main-container">
         <span className="input-field">
-          {!showErrorMessage && <GrValidate className="validate-icon" />}
+          {showMessage && <GrValidate className="validate-icon" />}
           <input
             id={id}
             name={id}
@@ -54,9 +51,7 @@ const Input = forwardRef(function Input(
           {help && <TfiHelpAlt className="help-icon" />}
         </span>
         <label htmlFor={id}>{label}</label>
-        {showErrorMessage && (
-          <div className="validation-result">{validationMessage}</div>
-        )}
+        {showMessage && <div className="validation-result">{errorMessage}</div>}
       </div>
     </Wrapper>
   );

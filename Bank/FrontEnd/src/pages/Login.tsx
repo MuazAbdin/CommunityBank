@@ -27,6 +27,7 @@ function Login() {
           id="IDcard"
           type="number"
           placeholder="ID Card"
+          autoComplete="off"
           // validator={isIDValid}
           // isSubmitted={actionData?.result === "emptyFields"}
         />
@@ -70,7 +71,7 @@ export async function action({ request }: ActionFunctionArgs) {
     //   body: JSON.stringify(data),
     //   headers: { "Content-Type": "application/json" },
     // });
-    toast.success("Registration successful");
+    toast.success("Login successfully");
     return redirect("/login");
   } catch (error) {
     toast.error(error?.response?.data?.msg);

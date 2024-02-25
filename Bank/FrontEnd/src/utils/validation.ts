@@ -1,4 +1,5 @@
 import isEmail from "validator/lib/isEmail";
+import { REGISTER_FIELDS } from "./constants";
 
 export interface IInputValidator {
   (v1: string, v2?: string): { result: boolean; message: string };
@@ -64,3 +65,20 @@ export const isMobileValid: IInputValidator = function (mobile) {
 export const isAddressValid: IInputValidator = function (address) {
   return validateDefaultString(address);
 };
+
+export function validateAllFields(fields: any) {
+  const results = REGISTER_FIELDS.map((f) => {
+    const validator =
+      f.id === "passwordConfirm"
+        ? (value: string) => f.validator(fields.password || "", value)
+        : f.validator;
+    return { name: f.id, value: fields[f.id], ...validator(fields[f.id]) };
+  });
+  const data = results
+    .filter((r) => !r.result)
+    .map((r) => {
+      return { name: r.name, value: r.value, message: r.message };
+    });
+  const msg = data.length === 0 ? "valid inputs" : "Invalid inputs";
+  return { msg, data };
+}
