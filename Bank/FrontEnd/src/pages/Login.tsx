@@ -8,43 +8,59 @@ import {
 } from "react-router-dom";
 import Input from "../components/Input";
 import Wrapper from "../assets/stylingWrappers/Login";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { IUserFormActionData } from "../interfaces/components";
+import { toast } from "react-toastify";
 
 function Login() {
-  const actionData = useActionData() as { result: string };
+  const actionData = useActionData() as IUserFormActionData;
+  // console.log(actionData);
+  let IDcardErrorMessage = "";
+  let passwordErrorMessage = "";
+  if (actionData?.data) {
+    const IDcardInput = actionData.data.find((item) => item.name === "IDcard");
+    if (IDcardInput) IDcardErrorMessage = IDcardInput.message;
+    const passwordInput = actionData.data.find(
+      (item) => item.name === "password"
+    );
+    if (passwordInput) passwordErrorMessage = passwordInput.message;
+  }
+
+  const invalidCredentials = actionData?.msg === "invalid credentials";
 
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
 
   return (
     <Wrapper>
-      <ToastContainer position="bottom-left" />
       <Form method="POST" id="login-form" noValidate>
         <h3 className="title">Login</h3>
+        {invalidCredentials && (
+          <div className="invalid-credentials">{actionData?.msg}</div>
+        )}
         <Input
           label="ID Card"
           id="IDcard"
           type="number"
           placeholder="ID Card"
           autoComplete="off"
-          // validator={isIDValid}
-          // isSubmitted={actionData?.result === "emptyFields"}
+          severErrorMsg={IDcardErrorMessage}
+          isSubmitted={actionData?.msg === "Invalid inputs"}
+          formID="login-form"
         />
         <Input
           label="Password"
           id="password"
           type="password"
           placeholder="Password"
-          // validator={isPasswordValid}
-          // isSubmitted={actionData?.result === "emptyFields"}
+          autoComplete="off"
+          severErrorMsg={passwordErrorMessage}
+          isSubmitted={actionData?.msg === "Invalid inputs"}
+          formID="login-form"
         />
-        <div className="btn-group">
-          {/* <button className="btn reset">reset</button> */}
-          <button name="submit" className="btn" disabled={isSubmitting}>
-            {isSubmitting ? "submitting ..." : "submit"}
-          </button>
-        </div>
+        <button name="submit" className="btn" disabled={isSubmitting}>
+          {isSubmitting ? "submitting ..." : "submit"}
+        </button>
         <div className="links-group">
           <Link to="../register">Don't have an account?</Link>
           <Link to="/">Forgot your password?</Link>
@@ -62,17 +78,33 @@ export async function action({ request }: ActionFunctionArgs) {
     [...fd.entries()].filter((entry) => entry[0] !== "submit")
   );
   console.log(data);
-  if (Object.keys(data).filter((k) => data[k] === "").length > 0)
-    return { result: "emptyFields" };
+  const missedFields = Object.keys(data).filter((k) => data[k] === "");
+  if (missedFields.length > 0) {
+    return {
+      msg: "Invalid inputs",
+      data: missedFields.map((k) => {
+        return { name: k, value: "", message: "required" };
+      }),
+    };
+  }
 
   try {
-    // const response = await fetch("http://localhost:3000/v1/auth/register", {
-    //   method: "POST",
-    //   body: JSON.stringify(data),
-    //   headers: { "Content-Type": "application/json" },
-    // });
-    toast.success("Login successfully");
-    return redirect("/login");
+    const response = await fetch("http://localhost:3000/v1/auth/login", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
+    });
+    if (response.status === 400) {
+      const responseData = await response.json();
+      return responseData;
+    }
+    if (response.status === 401) {
+      const data = await response.json();
+      toast.error("Login Failed");
+      return data;
+    }
+    toast.success("Logged in successfully");
+    return redirect("/dashboard");
   } catch (error) {
     toast.error(error?.response?.data?.msg);
     return error;

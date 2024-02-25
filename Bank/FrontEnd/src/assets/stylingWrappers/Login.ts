@@ -34,40 +34,25 @@ const Wrapper = styled.main`
     line-height: 1.2;
 
     fieldset,
-    div {
+    div,
+    button {
       justify-self: center;
       width: 70%;
     }
-  }
 
-  .btn-group {
-    padding-top: 1.5rem;
-    align-self: stretch;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1.25rem;
-  }
+    .btn {
+      padding: 0.75rem 0;
+      font-size: 1.65rem;
+      font-weight: 500;
+    }
 
-  .btn-group a {
-    flex-grow: 1;
-  }
-
-  .btn {
-    width: 100%;
-    padding: 0.75rem 0;
-    font-size: 1.65rem;
-    font-weight: 500;
-  }
-
-  .reset {
-    background-color: var(--red-dark);
-    color: var(--red-light);
-  }
-
-  .reset:hover {
-    background-color: var(--red-light);
-    color: var(--red-dark);
+    .invalid-credentials {
+      padding: 0.5rem 0;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--red-dark);
+      background-color: var(--red-light);
+    }
   }
 
   .links-group {

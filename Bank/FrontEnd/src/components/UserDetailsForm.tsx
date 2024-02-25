@@ -2,12 +2,10 @@ import { Form, useActionData, useNavigation } from "react-router-dom";
 import Input from "./Input";
 import { PropsWithChildren, useRef } from "react";
 import { REGISTER_FIELDS } from "../utils/constants";
-import { IUserDetailsFormProps } from "../interfaces/components";
-
-interface IUserFormActionData {
-  msg: string;
-  data?: { name: string; value: string; message: string }[];
-}
+import {
+  IUserDetailsFormProps,
+  IUserFormActionData,
+} from "../interfaces/components";
 
 function UserDetailsForm({
   title,

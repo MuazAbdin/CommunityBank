@@ -9,6 +9,7 @@ interface IInputProps {
   label: string;
   id: string;
   validator?: IInputValidator;
+  formID?: string;
 }
 
 const Input = forwardRef(function Input(
@@ -20,6 +21,7 @@ const Input = forwardRef(function Input(
     isSubmitted,
     severErrorMsg,
     prevValue,
+    formID,
     ...props
   }: IInputProps & any,
   ref
@@ -31,14 +33,16 @@ const Input = forwardRef(function Input(
     showMessage,
     handleInputChange,
     handleInputBlur,
-  } = useInput(validator, prevValue, severErrorMsg, isSubmitted);
+  } = useInput(validator, severErrorMsg, isSubmitted);
 
   return (
     <Wrapper $hasError={hasError} $showMessage={showMessage}>
       {help && <InputHelp message={help} />}
       <div className="main-container">
         <span className="input-field">
-          {showMessage && <GrValidate className="validate-icon" />}
+          {formID !== "login-form" && showMessage && (
+            <GrValidate className="validate-icon" />
+          )}
           <input
             id={id}
             name={id}

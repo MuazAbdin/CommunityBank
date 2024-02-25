@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import MainHeader from "../components/MainHeader";
 import MainFooter from "../components/MainFooter";
+import { ToastContainer } from "react-toastify";
 
 function HomeLayout() {
   const [isDark, setIsDark] = useState(getTheme());
@@ -13,6 +14,7 @@ function HomeLayout() {
 
   return (
     <div id="app-container" className={isDark ? "dark-theme" : ""}>
+      <ToastContainer position="bottom-left" />
       <MainHeader isDark={isDark} themeToggle={themeToggle} />
       <Outlet />
       <MainFooter />

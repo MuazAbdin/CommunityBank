@@ -24,7 +24,7 @@ export function useInput(
   }
 
   function handleInputBlur() {
-    setShowMessage(true);
+    if (validator) setShowMessage(true);
   }
 
   return {

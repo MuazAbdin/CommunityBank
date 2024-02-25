@@ -1,5 +1,5 @@
 import { ActionFunctionArgs, Link, redirect } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 import Wrapper from "../assets/stylingWrappers/Register";
 import StyledUserForm from "../assets/stylingWrappers/StyledUserForm";
@@ -8,7 +8,6 @@ import { validateAllFields } from "../utils/validation";
 function Register() {
   return (
     <Wrapper>
-      <ToastContainer position="bottom-left" />
       <StyledUserForm title="register" buttonText="submit">
         <div className="links-group">
           <Link to="../login">Already have an account?</Link>
@@ -40,7 +39,7 @@ export async function action({ request }: ActionFunctionArgs) {
       const responseData = await response.json();
       return responseData;
     }
-    toast.success("Registration successfully");
+    toast.success("Registered successfully");
     return redirect("/login");
   } catch (error) {
     toast.error(error?.response?.data?.msg);
