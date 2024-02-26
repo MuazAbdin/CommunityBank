@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { getCurrentUser } from "../controllers/userController.js";
+import {
+  editCurrentUserDetails,
+  getCurrentUser,
+} from "../controllers/userController.js";
 
 const router = Router();
 
@@ -15,10 +18,7 @@ router.get("/admin/stats/:userID", () => {});
 // get current user
 router.get("/current", getCurrentUser);
 
-// get current user details
-router.get("/current/details", () => {});
-
 // edit current user details
-router.patch("/current/details", () => {});
+router.patch("/current", editCurrentUserDetails);
 
 export default router;

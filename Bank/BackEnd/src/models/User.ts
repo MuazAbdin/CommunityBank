@@ -59,7 +59,10 @@ const userSchema = new Schema(
 );
 
 userSchema.statics.findOneWithoutPassword = async function (userId) {
-  return await this.findOne({ _id: userId }, { password: 0 });
+  return await this.findOne(
+    { _id: userId },
+    { password: 0, createdAt: 0, __v: 0 }
+  );
 };
 
 export default model("User", userSchema);

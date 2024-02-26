@@ -1,11 +1,16 @@
+import { IInputField } from "../utils/constants";
+
 export interface IMainHeaderProps {
   isDark: boolean;
   themeToggle: () => void;
 }
 
 export interface IUserDetailsFormProps {
+  formID: string;
+  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   title: string;
   buttonText: string;
+  fields: IInputField[];
   values?: { [key: string]: string };
   className?: string;
 }

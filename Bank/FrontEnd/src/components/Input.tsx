@@ -10,6 +10,10 @@ interface IInputProps {
   id: string;
   validator?: IInputValidator;
   formID?: string;
+  help?: string;
+  isSubmitted?: boolean;
+  severErrorMsg?: string;
+  prevValue?: string;
 }
 
 const Input = forwardRef(function Input(

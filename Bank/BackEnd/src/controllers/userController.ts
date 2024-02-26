@@ -14,3 +14,9 @@ export async function getCurrentUser(
   );
   res.status(StatusCodes.OK).json({ user: userWithoutPassword });
 }
+
+export async function editCurrentUserDetails(
+  req: Request & { user: ITokenPayload },
+  res: Response,
+  next: NextFunction
+) {}

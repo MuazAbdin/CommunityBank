@@ -79,6 +79,31 @@ export function validateAllFields(fields: any) {
     .map((r) => {
       return { name: r.name, value: r.value, message: r.message };
     });
-  const msg = data.length === 0 ? "valid inputs" : "Invalid inputs";
+  const msg = data.length === 0 ? "" : "Invalid inputs";
   return { msg, data };
 }
+
+// export function validateLoginFields(fields: any) {
+//   const missedFields = Object.keys(fields).filter((k) => fields[k] === "");
+//   if (missedFields.length > 0) {
+//     return {
+//       msg: "Invalid inputs",
+//       data: missedFields.map((k) => {
+//         return { name: k, value: "", message: "required" };
+//       }),
+//     };
+//   }
+//   return { msg: "", data: [] };
+// }
+
+// export function validateForm(fields: any) {
+//   const fieldsKeys = Object.keys(fields);
+//   if (
+//     fieldsKeys.length === 2 &&
+//     fieldsKeys[0] === "IDcard" &&
+//     fieldsKeys[1] === "password"
+//   ) {
+//     return validateLoginFields(fields);
+//   }
+//   return validateAllFields(fields);
+// }
