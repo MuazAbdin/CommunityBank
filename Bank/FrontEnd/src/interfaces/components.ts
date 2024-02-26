@@ -11,7 +11,7 @@ export interface IUserDetailsFormProps {
   title: string;
   buttonText: string;
   fields: IInputField[];
-  values?: { [key: string]: string };
+  values?: UserDetails;
   className?: string;
 }
 

@@ -55,14 +55,14 @@ function getFormMetadata(fields: any) {
         name: "changePassword",
         url: "",
         successMessage: "Changed successfully",
-        redirectPath: "/",
+        redirectPath: "/login",
       };
     case 7:
       return {
         name: "editDetails",
         url: "",
         successMessage: "Updated successfully",
-        redirectPath: "/",
+        redirectPath: "/dashboard",
       };
     default:
       return {

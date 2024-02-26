@@ -1,4 +1,3 @@
-import { isEmpty } from "./validation";
 import {
   IInputValidator,
   isAddressValid,
@@ -126,7 +125,7 @@ export const CHANGE_PASSWORD_FIELDS = [
     id: "oldPassword",
     type: "password",
     placeholder: "Old Password",
-    validator: isEmpty,
+    // validator: isEmpty,
   },
   {
     label: "New Password",

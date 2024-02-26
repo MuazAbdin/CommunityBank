@@ -3,7 +3,7 @@ import { fetcher } from "../utils/fetcher";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-function PageHeader({ name = "Muaz Abdin", balance = 2500 }: IPageHeaderProps) {
+function PageHeader({ name }: { name: string }) {
   const navigate = useNavigate();
 
   async function handleLogout() {
@@ -12,20 +12,15 @@ function PageHeader({ name = "Muaz Abdin", balance = 2500 }: IPageHeaderProps) {
     return navigate("/login");
   }
 
-  const balanceStyle: string = balance < 500 ? "red" : "var(--highlight-color)";
-
   return (
     <header>
-      <div>
+      <div className="welcome-msg">
         Hello, <strong>{name}</strong>
       </div>
       <button className="btn logout-btn" onClick={handleLogout}>
         <FaRightFromBracket />
         <span>Logout</span>
       </button>
-      {/* <div>
-        Balance: <strong style={{ color: balanceStyle }}>${balance}</strong>
-      </div> */}
     </header>
   );
 }

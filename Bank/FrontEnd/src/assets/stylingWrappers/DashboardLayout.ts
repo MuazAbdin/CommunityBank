@@ -17,12 +17,17 @@ const Wrapper = styled.main`
   align-items: flex-start;
 
   header {
+    padding: 0rem 1rem;
     grid-area: header;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 1.25em;
     color: var(--text-color);
+
+    .welcome-msg {
+      text-transform: capitalize;
+    }
 
     .logout-btn {
       font-size: 1.1rem;

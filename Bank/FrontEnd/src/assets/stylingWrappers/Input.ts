@@ -116,6 +116,17 @@ const Wrapper = styled.fieldset<{
       border-radius: var(--border-radius);
     }
 
+    #firstName,
+    #lastName,
+    #city,
+    #street {
+      text-transform: capitalize;
+    }
+
+    input:disabled {
+      background-color: var(--grey-200);
+    }
+
     input:focus {
       outline: none;
       /* padding-top: 1.25rem; */

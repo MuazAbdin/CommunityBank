@@ -11,7 +11,8 @@ import { action as registerAction } from "../pages/Register";
 import { action as loginAction } from "../pages/Login";
 // import { action as editDetailsAction } from "../pages/Overview";
 // import { action as submitFormAction } from "../components/UserDetailsForm";
-import { loader as OverviewLoader } from "../pages/Overview";
+// import { loader as OverviewLoader } from "../pages/Overview";
+import { loader as userLoader } from "../pages/DashboardLayout";
 
 const router = createBrowserRouter([
   {
@@ -35,11 +36,11 @@ const router = createBrowserRouter([
       {
         path: "dashboard",
         element: <DashboardLayout />,
+        loader: userLoader,
         children: [
           {
             index: true,
             element: <Overview />,
-            loader: OverviewLoader,
             // action: submitFormAction,
           },
           {
