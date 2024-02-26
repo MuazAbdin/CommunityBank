@@ -1,11 +1,8 @@
-import { ActionFunctionArgs, Link, redirect } from "react-router-dom";
+import { ActionFunctionArgs, Link } from "react-router-dom";
 import Wrapper from "../assets/stylingWrappers/Register";
 import StyledUserForm from "../assets/stylingWrappers/StyledUserForm";
-import { LOGIN_FIELDS, REGISTER_FIELDS } from "../utils/constants";
-import { validateAllFields } from "../utils/validation";
-import { fetcher } from "../utils/fetcher";
-import { toast } from "react-toastify";
-import { action as submitFormAction } from "../components/UserDetailsForm";
+import { REGISTER_FIELDS } from "../utils/constants";
+import { action as submitAction } from "../utils/submitAction";
 
 function Register() {
   return (
@@ -28,5 +25,5 @@ function Register() {
 export default Register;
 
 export async function action({ params, request }: ActionFunctionArgs) {
-  return submitFormAction({ params, request });
+  return submitAction({ params, request });
 }

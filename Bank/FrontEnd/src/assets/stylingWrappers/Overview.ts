@@ -1,15 +1,20 @@
 import styled from "styled-components";
 
 const Wrapper = styled.section`
+  padding: 0.5rem;
+  height: 100%;
   grid-area: content;
+  overflow-y: scroll;
   /* margin-top: 1rem; */
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 
   .overview-details {
     border-radius: 1rem;
     padding: 2rem;
     background-color: var(--background-color-transparent);
     box-shadow: 0 0 10px var(--text-color);
-    margin-bottom: 2rem;
 
     .title {
       font-size: 2.5rem;

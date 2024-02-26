@@ -1,4 +1,4 @@
-import { forwardRef, useEffect } from "react";
+import { forwardRef } from "react";
 import Wrapper from "../assets/stylingWrappers/Input";
 import { useInput } from "../hooks/useInput";
 import { GrValidate } from "react-icons/gr";

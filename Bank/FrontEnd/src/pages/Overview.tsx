@@ -1,11 +1,11 @@
-import { ActionFunctionArgs, redirect, useLoaderData } from "react-router-dom";
+import { ActionFunctionArgs, useLoaderData } from "react-router-dom";
 import Wrapper from "../assets/stylingWrappers/Overview";
 import StyledUserForm from "../assets/stylingWrappers/StyledUserForm";
 import OverviewDetails from "../components/OverviewDetails";
 import { fetcher } from "../utils/fetcher";
 import { UserDetails } from "../interfaces/components";
-import { validateAllFields } from "../utils/validation";
-import { toast } from "react-toastify";
+import { CHANGE_PASSWORD_FIELDS, EDIT_USER_FIELDS } from "../utils/constants";
+import { action as submitAction } from "../utils/submitAction";
 
 function Overview() {
   const { user } = useLoaderData() as { user: UserDetails & any };
@@ -23,7 +23,21 @@ function Overview() {
   return (
     <Wrapper>
       <OverviewDetails />
-      <StyledUserForm title="edit details" buttonText="save" values={values} />
+      <StyledUserForm
+        formID="editDetails-form"
+        title="edit details"
+        method="PATCH"
+        buttonText="save"
+        values={values}
+        fields={EDIT_USER_FIELDS}
+      />
+      <StyledUserForm
+        formID="changePassword-form"
+        title="change password"
+        method="PATCH"
+        buttonText="save"
+        fields={CHANGE_PASSWORD_FIELDS}
+      />
     </Wrapper>
   );
 }
@@ -37,30 +51,6 @@ export async function loader() {
   return response;
 }
 
-export async function action({ request }: ActionFunctionArgs) {
-  const fd = await request.formData();
-  const data = Object.fromEntries(
-    [...fd.entries()].filter((entry) => entry[0] !== "submit")
-  );
-  // console.log(data);
-  const preSubmitValidation = validateAllFields(data);
-  // console.log(preSubmitValidation);
-  if (preSubmitValidation.msg === "Invalid inputs") return preSubmitValidation;
-
-  try {
-    const response = await fetcher("v1/users/current", {
-      method: "PATCH",
-      body: JSON.stringify(data),
-    });
-
-    if (response.status === 400) {
-      const responseData = await response.json();
-      return responseData;
-    }
-    return toast.success("Updated successfully");
-    // return redirect("/login");
-  } catch (error) {
-    toast.error(error?.response?.data?.msg);
-    return error;
-  }
+export async function action({ params, request }: ActionFunctionArgs) {
+  return submitAction({ params, request });
 }

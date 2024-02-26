@@ -9,18 +9,10 @@ const Wrapper = styled.main`
   background-repeat: no-repeat;
   overflow-y: scroll;
 
-  .title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1.25rem;
-    font-size: 3rem;
-    font-family: var(--subtitle-font);
-    padding-bottom: 2rem;
-  }
-
   form {
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 1rem;
     border-radius: 1rem;
     padding: 2rem;
@@ -33,17 +25,43 @@ const Wrapper = styled.main`
     font-size: 1.65rem;
     line-height: 1.2;
 
+    .title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.25rem;
+      font-size: 3rem;
+      font-family: var(--subtitle-font);
+      padding-bottom: 2rem;
+    }
+
     fieldset,
-    div,
-    button {
-      justify-self: center;
+    div {
+      align-self: center;
       width: 70%;
     }
 
     .btn {
+      align-self: center;
+      width: 70%;
       padding: 0.75rem 0;
       font-size: 1.65rem;
       font-weight: 500;
+    }
+
+    .links-group {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-secondary-color);
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      gap: 2rem;
+    }
+
+    .links-group > a:hover {
+      text-decoration: underline;
     }
 
     .invalid-credentials {
@@ -53,21 +71,6 @@ const Wrapper = styled.main`
       color: var(--red-dark);
       background-color: var(--red-light);
     }
-  }
-
-  .links-group {
-    margin-top: 1rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text-secondary-color);
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    gap: 2rem;
-  }
-
-  .links-group > a:hover {
-    text-decoration: underline;
   }
 `;
 

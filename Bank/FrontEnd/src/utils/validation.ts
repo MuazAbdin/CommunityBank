@@ -11,6 +11,11 @@ const validateDefaultString: IInputValidator = function (v) {
   return { result: true, message: "valid" };
 };
 
+export const isEmpty: IInputValidator = function (str) {
+  if (str.length === 0) return { result: false, message: "required" };
+  return { result: true, message: "valid" };
+};
+
 export const isIDValid: IInputValidator = function (IDcard) {
   if (IDcard.length === 0) return { result: false, message: "required" };
   if (!/\d{9}/.test(IDcard)) return { result: false, message: "invalid" };
@@ -83,27 +88,27 @@ export function validateAllFields(fields: any) {
   return { msg, data };
 }
 
-// export function validateLoginFields(fields: any) {
-//   const missedFields = Object.keys(fields).filter((k) => fields[k] === "");
-//   if (missedFields.length > 0) {
-//     return {
-//       msg: "Invalid inputs",
-//       data: missedFields.map((k) => {
-//         return { name: k, value: "", message: "required" };
-//       }),
-//     };
-//   }
-//   return { msg: "", data: [] };
-// }
+export function validateLoginFields(fields: any) {
+  const missedFields = Object.keys(fields).filter((k) => fields[k] === "");
+  if (missedFields.length > 0) {
+    return {
+      msg: "Invalid inputs",
+      data: missedFields.map((k) => {
+        return { name: k, value: "", message: "required" };
+      }),
+    };
+  }
+  return { msg: "", data: [] };
+}
 
-// export function validateForm(fields: any) {
-//   const fieldsKeys = Object.keys(fields);
-//   if (
-//     fieldsKeys.length === 2 &&
-//     fieldsKeys[0] === "IDcard" &&
-//     fieldsKeys[1] === "password"
-//   ) {
-//     return validateLoginFields(fields);
-//   }
-//   return validateAllFields(fields);
-// }
+export function validateForm(fields: any) {
+  const fieldsKeys = Object.keys(fields);
+  if (
+    fieldsKeys.length === 2 &&
+    fieldsKeys[0] === "IDcard" &&
+    fieldsKeys[1] === "password"
+  ) {
+    return validateLoginFields(fields);
+  }
+  return validateAllFields(fields);
+}
