@@ -10,7 +10,7 @@ const accountSchema = new Schema(
       required: true,
       enum: ["checking", "savings"],
     },
-    balance: { type: Number, required: true },
+    balance: { type: Number, required: true, default: 0 },
     lastVisit: { type: Date, required: true, default: Date.now() },
   },
   { timestamps: true }

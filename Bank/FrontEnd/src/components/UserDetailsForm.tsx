@@ -4,6 +4,7 @@ import { PropsWithChildren, useRef } from "react";
 import {
   IUserDetailsFormProps,
   IUserFormActionData,
+  UserDetails,
 } from "../interfaces/components";
 
 function UserDetailsForm({
@@ -54,7 +55,7 @@ function UserDetailsForm({
             ref={f.id === "password" ? insertedPassword : null}
             validator={validator}
             severErrorMsg={severErrorMsg}
-            prevValue={values?.[f.id] || ""}
+            prevValue={values?.[f.id as keyof UserDetails] || ""}
             help={f.help}
             isSubmitted={actionData?.msg === "Invalid inputs"}
             disabled={f.disabled}

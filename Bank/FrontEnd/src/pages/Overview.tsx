@@ -1,11 +1,12 @@
 import Wrapper from "../assets/stylingWrappers/Overview";
+import StyledAccountForm from "../assets/stylingWrappers/StyledAccountForm";
 
 function Overview() {
   return (
     <section className="content">
       <Wrapper className="overview-details">
-        <h3 className="title">accounts</h3>
-        <p className="no-accounts-msg">You haven't open any account yet</p>
+        <h3 className="title">overview</h3>
+        <p className="no-accounts-msg">You haven't opened any account yet</p>
         {/* <table>
         <thead
           className="table-head"
@@ -32,6 +33,7 @@ function Overview() {
         </tbody>
       </table> */}
       </Wrapper>
+      <StyledAccountForm />
     </section>
   );
 }

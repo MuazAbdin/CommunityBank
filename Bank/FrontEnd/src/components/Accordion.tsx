@@ -42,6 +42,7 @@ export default Accordion;
 function AccordionItem({ id, title, Icon, subsectoins }: IAccordionItem) {
   const { openedItemID, toggleItemID } = useAccordionContext();
   const isOpen = openedItemID === id;
+  // const disabled = subsectoins.length === 0;
   return (
     <li className={`accordion-item ${isOpen ? "open" : ""}`}>
       <article className="accordion-item-container">
@@ -55,21 +56,22 @@ function AccordionItem({ id, title, Icon, subsectoins }: IAccordionItem) {
         </h3>
         {isOpen && (
           <menu className="accordion-item__subsections">
-            {subsectoins.map((section) => {
-              return (
-                <li key={section.name} className="accordion-subsection__item">
-                  <NavLink
-                    to={section.to}
-                    end
-                    className={({ isActive }) =>
-                      isActive ? "active" : undefined
-                    }
-                  >
-                    {section.name}
-                  </NavLink>
-                </li>
-              );
-            })}
+            {subsectoins.length > 0 &&
+              subsectoins.map((section) => {
+                return (
+                  <li key={section.name} className="accordion-subsection__item">
+                    <NavLink
+                      to={section.to}
+                      end
+                      className={({ isActive }) =>
+                        isActive ? "active" : undefined
+                      }
+                    >
+                      {section.name}
+                    </NavLink>
+                  </li>
+                );
+              })}
           </menu>
         )}
       </article>

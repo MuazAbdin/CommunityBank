@@ -7,10 +7,7 @@ const PROFILE_SECTIONS = [
   { name: "edit details", to: "edit-details" },
   { name: "change password", to: "change-password" },
 ];
-const ACCOUNTS = [
-  { name: "account 1", to: "accounts" },
-  { name: "account 2", to: "accounts" },
-];
+const ACCOUNTS: { name: string; to: string }[] = [];
 
 function Aside() {
   return (
