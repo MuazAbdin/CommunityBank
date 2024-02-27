@@ -4,8 +4,8 @@ import Accordion from "./Accordion";
 
 const PROFILE_SECTIONS = [
   { name: "overview", to: "" },
-  { name: "edit details", to: "/" },
-  { name: "change password", to: "/" },
+  { name: "edit details", to: "edit-details" },
+  { name: "change password", to: "change-password" },
 ];
 const ACCOUNTS = [
   { name: "account 1", to: "accounts" },

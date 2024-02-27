@@ -1,37 +1,39 @@
-import { ActionFunctionArgs, useOutletContext } from "react-router-dom";
 import Wrapper from "../assets/stylingWrappers/Overview";
-import StyledUserForm from "../assets/stylingWrappers/StyledUserForm";
-import OverviewDetails from "../components/OverviewDetails";
-import { UserDetails } from "../interfaces/components";
-import { CHANGE_PASSWORD_FIELDS, EDIT_USER_FIELDS } from "../utils/constants";
-import { action as submitAction } from "../utils/submitAction";
 
 function Overview() {
-  const values = useOutletContext<UserDetails>();
   return (
-    <Wrapper>
-      <OverviewDetails />
-      <StyledUserForm
-        formID="editDetails-form"
-        title="edit details"
-        method="PATCH"
-        buttonText="save"
-        values={values}
-        fields={EDIT_USER_FIELDS}
-      />
-      <StyledUserForm
-        formID="changePassword-form"
-        title="change password"
-        method="PATCH"
-        buttonText="save"
-        fields={CHANGE_PASSWORD_FIELDS}
-      />
-    </Wrapper>
+    <section className="content">
+      <Wrapper className="overview-details">
+        <h3 className="title">accounts</h3>
+        <p className="no-accounts-msg">You haven't open any account yet</p>
+        {/* <table>
+        <thead
+          className="table-head"
+          style={{ backgroundColor: "var(--yellow-light)" }}
+        >
+          <tr>
+            <th></th>
+            <th>number</th>
+            <th>type</th>
+            <th>balance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>080345</td>
+            <td>checking</td>
+            <td>$2500</td>
+          </tr>
+          <tr>
+            <td>092367</td>
+            <td>savings</td>
+            <td>$5000</td>
+          </tr>
+        </tbody>
+      </table> */}
+      </Wrapper>
+    </section>
   );
 }
 
 export default Overview;
-
-export async function action({ params, request }: ActionFunctionArgs) {
-  return submitAction({ params, request });
-}

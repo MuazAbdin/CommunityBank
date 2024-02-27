@@ -39,6 +39,17 @@ const Wrapper = styled.main`
     }
   }
 
+  .content {
+    padding: 0.5rem;
+    height: 100%;
+    grid-area: content;
+    overflow-y: scroll;
+    /* margin-top: 1rem; */
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
   /* a:visited {
     text-decoration: none;
     color: var(--highlight-color);

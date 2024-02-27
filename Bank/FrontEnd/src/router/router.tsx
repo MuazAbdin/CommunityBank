@@ -13,6 +13,8 @@ import { action as loginAction } from "../pages/Login";
 // import { action as submitFormAction } from "../components/UserDetailsForm";
 // import { loader as OverviewLoader } from "../pages/Overview";
 import { loader as userLoader } from "../pages/DashboardLayout";
+import EditUserDetails from "../pages/EditUserDetails";
+import ChangeUserPassword from "../pages/ChangeUserPassword";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +44,14 @@ const router = createBrowserRouter([
             index: true,
             element: <Overview />,
             // action: submitFormAction,
+          },
+          {
+            path: "edit-details",
+            element: <EditUserDetails />,
+          },
+          {
+            path: "change-password",
+            element: <ChangeUserPassword />,
           },
           {
             path: "accounts",
