@@ -7,7 +7,9 @@ const PROFILE_SECTIONS = [
   { name: "edit details", to: "edit-details" },
   { name: "change password", to: "change-password" },
 ];
-const ACCOUNTS: { name: string; to: string }[] = [];
+const ACCOUNTS: { name: string; to: string }[] = [
+  { name: "24-891-384549", to: "accounts/384549" },
+];
 
 function Aside() {
   return (

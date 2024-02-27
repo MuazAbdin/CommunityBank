@@ -16,7 +16,7 @@ const Wrapper = styled.main`
   justify-items: stretch;
   align-items: flex-start;
 
-  header {
+  & > header {
     padding: 0rem 1rem;
     grid-area: header;
     display: flex;
@@ -48,6 +48,11 @@ const Wrapper = styled.main`
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+  }
+
+  a:link {
+    text-decoration: none;
+    color: var(--text-color);
   }
 
   /* a:visited {

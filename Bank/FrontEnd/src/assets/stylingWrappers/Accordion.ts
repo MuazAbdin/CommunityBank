@@ -43,7 +43,7 @@ const Wrapper = styled.menu`
   }
 
   .accordion-item__subsections {
-    list-style-type: none;
+    list-style-type: disclosure-closed;
     margin: 0;
     padding: 0;
     display: flex;

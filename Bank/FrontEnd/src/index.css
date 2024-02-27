@@ -2,6 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Protest+Strike&family=Ubuntu:wght@300;400;500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Protest+Strike&family=Ubuntu:wght@300;400;500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Sigmar&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap");
 
 *,
 ::after,
@@ -48,6 +49,7 @@ html {
   --title-font: "Sigmar", sans-serif;
   --subtitle-font: "Protest Strike", sans-serif;
   --main-font: "Ubuntu", sans-serif;
+  --numbers-font: "Kode Mono", monospace;
 
   /* MEASUREMENTS */
   --small-text: 0.875rem;
@@ -59,7 +61,6 @@ html {
   --fixed-width: 600px;
   --fluid-width: 90vw;
   --nav-height: 6rem;
-  /* grid-template-areas: "IDcard ." "password passwordConfirm" " "; */
 
   /* BOX SHADOW */
   --shadow-1: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);

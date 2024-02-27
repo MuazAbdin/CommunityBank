@@ -4,7 +4,7 @@ import Register from "../pages/Register";
 import Landing from "../pages/Landing";
 import Login from "../pages/Login";
 import DashboardLayout from "../pages/DashboardLayout";
-import Accounts from "../pages/Accounts";
+import Account from "../pages/Account";
 import Overview from "../pages/Overview";
 
 import { action as registerAction } from "../pages/Register";
@@ -15,6 +15,10 @@ import { action as loginAction } from "../pages/Login";
 import { loader as userLoader } from "../pages/DashboardLayout";
 import EditUserDetails from "../pages/EditUserDetails";
 import ChangeUserPassword from "../pages/ChangeUserPassword";
+import Current from "../pages/Current";
+import Transfer from "../pages/Transfer";
+import Loan from "../pages/Loan";
+import Breakdown from "../pages/Breakdown";
 
 const router = createBrowserRouter([
   {
@@ -54,8 +58,14 @@ const router = createBrowserRouter([
             element: <ChangeUserPassword />,
           },
           {
-            path: "accounts",
-            element: <Accounts />,
+            path: "accounts/:number",
+            element: <Account />,
+            children: [
+              { index: true, element: <Current /> },
+              { path: "transfer", element: <Transfer /> },
+              { path: "loan", element: <Loan /> },
+              { path: "breakdown", element: <Breakdown /> },
+            ],
           },
         ],
       },
