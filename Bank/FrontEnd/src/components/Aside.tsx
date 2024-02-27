@@ -1,32 +1,35 @@
 import { FaFileInvoiceDollar, FaRegCircleUser } from "react-icons/fa6";
-import { NavLink } from "react-router-dom";
 import Wrapper from "../assets/stylingWrappers/Aside";
+import Accordion from "./Accordion";
+
+const PROFILE_SECTIONS = [
+  { name: "overview", to: "" },
+  { name: "edit details", to: "/" },
+  { name: "change password", to: "/" },
+];
+const ACCOUNTS = [
+  { name: "account 1", to: "accounts" },
+  { name: "account 2", to: "accounts" },
+];
 
 function Aside() {
   return (
     <Wrapper>
       <nav>
-        <menu>
-          <NavLink
-            to=""
-            end
-            className={({ isActive }) => (isActive ? "active" : undefined)}
-          >
-            <li>
-              <FaRegCircleUser />
-              <span>overview</span>
-            </li>
-          </NavLink>
-          <NavLink
-            to="accounts"
-            className={({ isActive }) => (isActive ? "active" : undefined)}
-          >
-            <li>
-              <FaFileInvoiceDollar />
-              <span>accounts</span>
-            </li>
-          </NavLink>
-        </menu>
+        <Accordion>
+          <Accordion.Item
+            id="nav-profile"
+            title="profile"
+            Icon={FaRegCircleUser}
+            subsectoins={PROFILE_SECTIONS}
+          />
+          <Accordion.Item
+            id="nav-accounts"
+            title="accounts"
+            Icon={FaFileInvoiceDollar}
+            subsectoins={ACCOUNTS}
+          />
+        </Accordion>
       </nav>
     </Wrapper>
   );

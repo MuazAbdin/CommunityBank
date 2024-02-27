@@ -39,14 +39,14 @@ const Wrapper = styled.main`
     }
   }
 
-  a:visited {
+  /* a:visited {
     text-decoration: none;
     color: var(--highlight-color);
   }
 
   .active {
     background-color: var(--highlight-background-color);
-  }
+  } */
 `;
 
 export default Wrapper;

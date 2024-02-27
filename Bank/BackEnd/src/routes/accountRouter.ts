@@ -2,19 +2,22 @@ import { Router } from "express";
 
 const router = Router();
 
-// get the accounts (admin only) {filter by optional parameters}
+// get all accounts in the bank (admin only) {filter by optional parameters}
 router.get("/admin", () => {});
 
 // get users stats (admin only)
 router.get("/admin/stats", () => {});
 
-// get current user
-router.get("/current", () => {});
+// get current user accounts
+router.get("/accounts", () => {});
 
-// get current user details
-router.get("/current/details", () => {});
+// get current specific account
+router.get("/accounts/:number", () => {});
 
-// edit current user details
-router.patch("/current/details", () => {});
+// create new account for the current user
+router.post("/accounts", () => {});
+
+// delete a specific account for the current user
+router.delete("/accounts/:number", () => {});
 
 export default router;

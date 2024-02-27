@@ -24,3 +24,15 @@ export async function authenticateUser(
     next(new UnauthenticatedError("authentication invalid"));
   }
 }
+
+export async function getCurrentUserDetails(
+  req: Request & { user: ITokenPayload },
+  res: Response,
+  next: NextFunction
+) {
+  //@ts-ignore
+  const userWithoutPassword = await User.findOneWithoutPassword(
+    req.user.userId
+  );
+  next();
+}
