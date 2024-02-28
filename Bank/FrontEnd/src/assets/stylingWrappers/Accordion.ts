@@ -37,6 +37,7 @@ const Wrapper = styled.menu`
     }
 
     span {
+      font-size: 1.25rem;
       flex-grow: 1;
       text-align: justify;
     }

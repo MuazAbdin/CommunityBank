@@ -1,7 +1,12 @@
 import Transaction from "./Transaction";
 import Wrapper from "../assets/stylingWrappers/TransactionsTable.ts";
+import { ITransactionProps } from "../interfaces/components.ts";
 
-function TransactionsTable({ transactions }) {
+function TransactionsTable({
+  transactions,
+}: {
+  transactions: ITransactionProps[];
+}) {
   return (
     <Wrapper>
       <caption>Transactions</caption>

@@ -1,7 +1,7 @@
-import React from "react";
+import StyledTransferForm from "../assets/stylingWrappers/StyledTransferForm";
 
 function Transfer() {
-  return <div>Transfer</div>;
+  return <StyledTransferForm />;
 }
 
 export default Transfer;

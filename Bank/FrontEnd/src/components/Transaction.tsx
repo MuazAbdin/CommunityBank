@@ -1,4 +1,4 @@
-import { useNavigation, useSubmit } from "react-router-dom";
+import { ITransactionProps } from "../interfaces/components";
 
 function getDate(date: Date): string {
   const month = date.getUTCMonth() + 1; // months from 1-12
@@ -6,25 +6,9 @@ function getDate(date: Date): string {
   return `${day}/${month}`;
 }
 
-function Transaction(props) {
+function Transaction(props: ITransactionProps) {
   const { _id, createdAt, vendor, category, amount } = props;
   const amountStyle: string = amount < 0 ? "red" : "green";
-  const submit = useSubmit();
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === "submitting";
-
-  async function handleDelete() {
-    if (isSubmitting) return;
-    const proceed = window.confirm("Are you sure?");
-    if (!proceed) return;
-    submit(
-      { _id },
-      {
-        method: "DELETE",
-        action: "/dashboard",
-      }
-    );
-  }
 
   return (
     <tr>

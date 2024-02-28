@@ -6,7 +6,7 @@ const TRANSACTIONS = [
     createdAt: "2024-02-24T09:08:58.437+00:00",
     vendor: "elevation",
     category: "salary",
-    amount: "1500",
+    amount: 1500,
   },
 ];
 

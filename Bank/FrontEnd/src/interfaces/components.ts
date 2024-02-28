@@ -27,3 +27,11 @@ export interface UserDetails {
   mobile: string;
   address: { city: string; street: string };
 }
+
+export interface ITransactionProps {
+  _id: string;
+  createdAt: string;
+  vendor: string;
+  category: string;
+  amount: number;
+}

@@ -1,14 +1,16 @@
-import { forwardRef } from "react";
+import { ComponentPropsWithoutRef, ForwardedRef, forwardRef } from "react";
 import Wrapper from "../assets/stylingWrappers/Input";
 import { useInput } from "../hooks/useInput";
 import { GrValidate } from "react-icons/gr";
 import { TfiHelpAlt } from "react-icons/tfi";
 import { IInputValidator } from "../utils/validation";
+import { IInputFormatter } from "../utils/inputFormatters";
 
 interface IInputProps {
   label: string;
   id: string;
   validator?: IInputValidator;
+  formatter?: IInputFormatter;
   formID?: string;
   help?: string;
   isSubmitted?: boolean;
@@ -21,14 +23,15 @@ const Input = forwardRef(function Input(
     label,
     id,
     validator,
+    formatter,
     help,
     isSubmitted,
     severErrorMsg,
     prevValue,
     formID,
     ...props
-  }: IInputProps & any,
-  ref
+  }: IInputProps & ComponentPropsWithoutRef<"input">,
+  ref: ForwardedRef<HTMLInputElement>
 ) {
   const {
     value,
@@ -37,7 +40,7 @@ const Input = forwardRef(function Input(
     showMessage,
     handleInputChange,
     handleInputBlur,
-  } = useInput(validator, severErrorMsg, isSubmitted, prevValue);
+  } = useInput(validator, formatter, severErrorMsg, isSubmitted, prevValue);
 
   return (
     <Wrapper $hasError={hasError} $showMessage={showMessage}>

@@ -1,5 +1,6 @@
 import isEmail from "validator/lib/isEmail";
 import { REGISTER_FIELDS } from "./constants";
+import { isInt } from "validator";
 
 export interface IInputValidator {
   (v1: string, v2?: string): { result: boolean; message: string };
@@ -13,6 +14,18 @@ const validateDefaultString: IInputValidator = function (v) {
 
 export const isEmpty: IInputValidator = function (str) {
   if (str.length === 0) return { result: false, message: "required" };
+  return { result: true, message: "valid" };
+};
+
+export const isAmountValid: IInputValidator = function (amount) {
+  if (amount.length === 0) return { result: false, message: "required" };
+  if (!isInt(amount, { min: 1 })) return { result: false, message: "invalid" };
+  return { result: true, message: "valid" };
+};
+
+export const isAccountNumValid: IInputValidator = function (accountNum) {
+  if (accountNum.length === 0) return { result: false, message: "required" };
+  if (!/\d{11}/.test(accountNum)) return { result: false, message: "invalid" };
   return { result: true, message: "valid" };
 };
 

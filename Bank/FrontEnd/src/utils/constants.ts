@@ -1,6 +1,13 @@
 import {
+  IInputFormatter,
+  accountNumFormatter,
+  moneyAmountFormatter,
+} from "./inputFormatters";
+import {
   IInputValidator,
+  isAccountNumValid,
   isAddressValid,
+  isAmountValid,
   isEmailValid,
   isFirstNameValid,
   isIDValid,
@@ -19,6 +26,7 @@ export interface IInputField {
   validator?: IInputValidator;
   help?: string;
   disabled?: boolean;
+  formatter?: IInputFormatter;
 }
 
 export const REGISTER_FIELDS = [
@@ -52,7 +60,7 @@ export const REGISTER_FIELDS = [
     autoComplete: "given-name",
     placeholder: "First Name",
     validator: isFirstNameValid,
-    help: "must contain between 5-32 characters.",
+    help: "Must contain between 5-32 characters.",
   },
   {
     label: "Last Name",
@@ -61,7 +69,7 @@ export const REGISTER_FIELDS = [
     autoComplete: "family-name",
     placeholder: "Last Name",
     validator: isLastNameValid,
-    help: "must contain between 5-32 characters.",
+    help: "Must contain between 5-32 characters.",
   },
   {
     label: "Email",
@@ -141,5 +149,33 @@ export const CHANGE_PASSWORD_FIELDS = [
     type: "password",
     placeholder: "Confirm Password",
     validator: isPasswordConfirmValid,
+  },
+];
+
+export const TRANSFER_FIELDS: IInputField[] = [
+  {
+    label: "Amount",
+    id: "transferAmount",
+    type: "text",
+    placeholder: "Amount",
+    validator: isAmountValid,
+    help: "Minimum amount is ₪1.",
+    formatter: moneyAmountFormatter,
+  },
+  {
+    label: "Transfer to",
+    id: "transferTo",
+    type: "text",
+    placeholder: "Transfer to",
+    validator: isAccountNumValid,
+    help: "A valid CommunityBank account number.",
+    formatter: accountNumFormatter,
+  },
+  {
+    label: "Transfer on",
+    id: "transferOn",
+    type: "date",
+    placeholder: "Transfer on",
+    // min: new Date().toLocaleDateString("fr-ca"),
   },
 ];

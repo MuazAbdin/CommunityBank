@@ -18,7 +18,7 @@ function UserDetailsForm({
   children,
 }: PropsWithChildren<IUserDetailsFormProps>) {
   const actionData = useActionData() as IUserFormActionData;
-  const insertedPassword = useRef<HTMLInputElement>();
+  const insertedPassword = useRef<HTMLInputElement>(null);
 
   const invalidCredentials = actionData?.msg === "invalid credentials";
 
@@ -55,7 +55,7 @@ function UserDetailsForm({
             ref={f.id === "password" ? insertedPassword : null}
             validator={validator}
             severErrorMsg={severErrorMsg}
-            prevValue={values?.[f.id as keyof UserDetails] || ""}
+            prevValue={values?.[f.id as Extract<UserDetails, "IDcard">] || ""}
             help={f.help}
             isSubmitted={actionData?.msg === "Invalid inputs"}
             disabled={f.disabled}
