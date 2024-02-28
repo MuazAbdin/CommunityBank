@@ -6,6 +6,7 @@ const Wrapper = styled.main`
   background-color: var(--background-color-transparent);
   font-family: var(--main-font);
   padding: 1rem;
+  padding-bottom: 0;
   display: grid;
   gap: 1rem;
   grid-template-rows: auto 1fr;

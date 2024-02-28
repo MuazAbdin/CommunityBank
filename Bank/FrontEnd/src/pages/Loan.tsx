@@ -1,7 +1,11 @@
-import React from "react";
+import StyledLoanForm from "../assets/stylingWrappers/StyledLoanForm";
 
 function Loan() {
-  return <div>Loan</div>;
+  return (
+    <section className="account-subsection-container">
+      <StyledLoanForm />
+    </section>
+  );
 }
 
 export default Loan;

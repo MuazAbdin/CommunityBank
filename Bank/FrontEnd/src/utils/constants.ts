@@ -156,7 +156,7 @@ export const TRANSFER_FIELDS: IInputField[] = [
   {
     label: "Amount",
     id: "transferAmount",
-    type: "text",
+    type: "number",
     placeholder: "Amount",
     validator: isAmountValid,
     help: "Minimum amount is ₪1.",
@@ -177,5 +177,28 @@ export const TRANSFER_FIELDS: IInputField[] = [
     type: "date",
     placeholder: "Transfer on",
     // min: new Date().toLocaleDateString("fr-ca"),
+  },
+];
+
+export const LOAN_FIELDS: IInputField[] = [
+  {
+    label: "Loan Amount",
+    id: "loanAmount",
+    type: "number",
+    placeholder: "Loan Amount",
+    validator: isAmountValid,
+    help: "Minimum amount is ₪1.",
+  },
+  {
+    label: "Loan Term",
+    id: "loanTerm",
+    type: "number",
+    placeholder: "Loan Term",
+  },
+  {
+    label: "Interest Rate",
+    id: "interestRate",
+    type: "number",
+    placeholder: "Interest Rate",
   },
 ];
