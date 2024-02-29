@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 const Wrapper = styled.main`
+  width: min(100%, 1024px);
+  margin: auto;
   flex-grow: 1;
   overflow-y: scroll;
   background-color: var(--background-color-transparent);

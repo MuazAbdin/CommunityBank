@@ -21,6 +21,7 @@ const Wrapper = styled.menu`
   }
 
   .accordion-item__title {
+    font-size: 1.25em;
     font-weight: 500;
     cursor: pointer;
     display: flex;
