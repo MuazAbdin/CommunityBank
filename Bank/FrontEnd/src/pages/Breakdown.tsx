@@ -1,7 +1,14 @@
-import React from "react";
+import Table from "../components/Table";
 
 function Breakdown() {
-  return <div>Breakdown</div>;
+  return (
+    <section className="account-subsection-container">
+      <Table
+        tableCaption="Transactions"
+        tableHeader={["", "Category", "Amount"]}
+      ></Table>
+    </section>
+  );
 }
 
 export default Breakdown;

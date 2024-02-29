@@ -10,7 +10,7 @@ const Wrapper = styled.table`
 
   caption {
     font-family: var(--subtitle-font);
-    font-size: 1.5em;
+    font-size: 1.75rem;
     font-weight: 600;
   }
 
@@ -31,8 +31,8 @@ const Wrapper = styled.table`
     display: table-cell;
     counter-increment: rowNumber;
     content: counter(rowNumber) ".";
-    padding-right: 0.3em;
-    text-align: right;
+    /* padding-right: 0.3rem; */
+    /* text-align: right; */
   }
 `;
 

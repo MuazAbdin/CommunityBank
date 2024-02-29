@@ -1,4 +1,5 @@
-import TransactionsTable from "../components/TransactionsTable";
+import Table from "../components/Table";
+import Transaction from "../components/Transaction";
 
 const TRANSACTIONS = [
   {
@@ -13,7 +14,14 @@ const TRANSACTIONS = [
 function Current() {
   return (
     <section className="account-subsection-container">
-      <TransactionsTable transactions={TRANSACTIONS} />
+      <Table
+        tableCaption="Transactions"
+        tableHeader={["", "Date", "Vendor", "Category", "Amount"]}
+      >
+        {TRANSACTIONS.map((t) => (
+          <Transaction key={t._id} {...t} />
+        ))}
+      </Table>
     </section>
   );
 }
