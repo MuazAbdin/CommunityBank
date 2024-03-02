@@ -9,9 +9,7 @@ export async function getCurrentUser(
   next: NextFunction
 ) {
   //@ts-ignore
-  const userWithoutPassword = await User.findOneWithoutPassword(
-    req.user.userId
-  );
+  const userWithoutPassword = await User.findOneWithoutPassword(req.user._id);
   res.status(StatusCodes.OK).json({ user: userWithoutPassword });
 }
 

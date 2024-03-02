@@ -7,6 +7,7 @@ import {
 import { verifyToken } from "../utils/auth.js";
 import { ITokenPayload } from "../interfaces/IToken.js";
 import User from "../models/User.js";
+import { StatusCodes } from "http-status-codes";
 
 export async function authenticateUser(
   req: Request & { user?: ITokenPayload },
@@ -18,7 +19,8 @@ export async function authenticateUser(
 
   try {
     const { userId, IDcard, role } = verifyToken(token) as ITokenPayload;
-    req.user = { userId, IDcard, role };
+    //@ts-ignore
+    req.user = await User.findOneWithoutPassword(userId);
     next();
   } catch (error) {
     next(new UnauthenticatedError("authentication invalid"));

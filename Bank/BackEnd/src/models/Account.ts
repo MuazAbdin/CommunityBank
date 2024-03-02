@@ -4,7 +4,11 @@ import { Schema, model } from "mongoose";
 
 const accountSchema = new Schema(
   {
-    number: { type: Number, required: true },
+    number: {
+      type: Number,
+      required: true,
+      set: (v: number) => 24891e6 + v,
+    },
     user: { type: Schema.Types.ObjectId, ref: "User" },
     type: {
       type: String,
