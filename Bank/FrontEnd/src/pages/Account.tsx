@@ -14,3 +14,13 @@ function Account() {
 }
 
 export default Account;
+
+export async function loader() {
+  // const response = await fetcher("/v1/accounts");
+  // if (!response.ok) throw response;
+  // const { user, accounts } = (await response.json()) as {
+  //   user: UserDetails;
+  //   accounts: AccountDetails[];
+  // };
+  // return { user, accounts };
+}

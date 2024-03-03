@@ -48,7 +48,7 @@ app.use(express.json());
 
 connectDB();
 
-app.use("/api/v1/transactions", transactionRouter);
+app.use("/api/v1/transactions", authenticateUser, transactionRouter);
 app.use("/api/v1/accounts", authenticateUser, accountRouter);
 app.use("/api/v1/users", authenticateUser, userRouter);
 app.use("/api/v1/loans", loanRouter);

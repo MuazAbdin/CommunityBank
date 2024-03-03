@@ -1,3 +1,4 @@
+import StyledSearch from "../assets/stylingWrappers/Search";
 import Table from "../components/Table";
 import Transaction from "../components/Transaction";
 
@@ -14,6 +15,7 @@ const TRANSACTIONS = [
 function Current() {
   return (
     <section className="account-subsection-container">
+      <StyledSearch />
       <Table
         tableCaption="Transactions"
         tableHeader={["", "Date", "Vendor", "Category", "Amount"]}
