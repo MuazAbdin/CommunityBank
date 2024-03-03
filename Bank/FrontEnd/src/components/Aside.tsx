@@ -1,17 +1,18 @@
 import { FaFileInvoiceDollar, FaRegCircleUser } from "react-icons/fa6";
 import Wrapper from "../assets/stylingWrappers/Aside";
 import Accordion from "./Accordion";
+import { accountNumFormatter } from "../utils/inputFormatters";
 
 const PROFILE_SECTIONS = [
   { name: "overview", to: "" },
   { name: "edit details", to: "edit-details" },
   { name: "change password", to: "change-password" },
 ];
-const ACCOUNTS: { name: string; to: string }[] = [
-  { name: "24-891-384549", to: "accounts/384549" },
-];
 
-function Aside() {
+function Aside({ accountsNums }: { accountsNums: string[] }) {
+  const accounts = accountsNums.map((num) => {
+    return { name: accountNumFormatter(num), to: `${num.split("-")[2]}` };
+  });
   return (
     <Wrapper>
       <nav>
@@ -26,7 +27,7 @@ function Aside() {
             id="nav-accounts"
             title="accounts"
             Icon={FaFileInvoiceDollar}
-            subsectoins={ACCOUNTS}
+            subsectoins={accounts}
           />
         </Accordion>
       </nav>

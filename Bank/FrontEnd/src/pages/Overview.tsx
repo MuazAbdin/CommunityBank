@@ -1,37 +1,37 @@
+import { useOutletContext } from "react-router-dom";
 import Wrapper from "../assets/stylingWrappers/Overview";
 import StyledAccountForm from "../assets/stylingWrappers/StyledAccountForm";
+import { AccountDetails, UserDetails } from "../types/components";
+import Table from "../components/Table";
+import { accountNumFormatter } from "../utils/inputFormatters";
 
 function Overview() {
+  const { accountsValues } = useOutletContext() as {
+    userValues: UserDetails;
+    accountsValues: AccountDetails[];
+  };
+
   return (
     <section className="content">
+      <h3 className="section-title">overview</h3>
       <Wrapper className="overview-details">
-        <h3 className="title">overview</h3>
-        <p className="no-accounts-msg">You haven't opened any account yet</p>
-        {/* <table>
-        <thead
-          className="table-head"
-          style={{ backgroundColor: "var(--yellow-light)" }}
+        <Table
+          tableCaption="Accounts"
+          tableHeader={["", "number", "type", "balance"]}
         >
-          <tr>
-            <th></th>
-            <th>number</th>
-            <th>type</th>
-            <th>balance</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>080345</td>
-            <td>checking</td>
-            <td>$2500</td>
-          </tr>
-          <tr>
-            <td>092367</td>
-            <td>savings</td>
-            <td>$5000</td>
-          </tr>
-        </tbody>
-      </table> */}
+          {accountsValues.map((acc) => {
+            return (
+              <tr key={acc.number}>
+                <td>{accountNumFormatter(acc.number)}</td>
+                <td>{acc.type}</td>
+                <td>₪ {acc.balance}</td>
+              </tr>
+            );
+          })}
+        </Table>
+        {accountsValues.length === 0 && (
+          <p className="no-accounts-msg">You haven't opened any account yet</p>
+        )}
       </Wrapper>
       <StyledAccountForm />
     </section>

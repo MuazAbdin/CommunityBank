@@ -5,7 +5,7 @@ import { IRequestBodyAccountType } from "../types/IHttp.js";
 
 export async function getCurrentUserAccounts(req: Request, res: Response) {
   const accounts = await Account.find({ user: req.user!._id });
-  res.status(StatusCodes.OK).json({ accounts });
+  res.status(StatusCodes.OK).send({ user: req.user, accounts });
 }
 
 export async function createNewAccout(req: Request, res: Response) {
@@ -18,7 +18,7 @@ export async function createNewAccout(req: Request, res: Response) {
   const account = await Account.create(newAccount);
   res
     .status(StatusCodes.CREATED)
-    .send({ msg: "account created successfully", account });
+    .send({ msg: "account created successfully", account, user: req.user });
 }
 
 export async function getAccount(req: Request, res: Response) {
@@ -29,7 +29,7 @@ export async function getAccount(req: Request, res: Response) {
     { new: true }
   );
   // console.log(moment(account?.lastVisit).format("LLLL"));
-  res.status(StatusCodes.OK).send({ account });
+  res.status(StatusCodes.OK).send({ user: req.user, account });
 }
 
 export async function deleteAccount(req: Request, res: Response) {
@@ -37,5 +37,5 @@ export async function deleteAccount(req: Request, res: Response) {
   const account = await Account.findOneAndDelete({ number: reqParams.number });
   res
     .status(StatusCodes.OK)
-    .send({ msg: "account deleted successfully ", account });
+    .send({ msg: "account deleted successfully ", account, user: req.user });
 }

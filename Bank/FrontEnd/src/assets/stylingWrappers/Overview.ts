@@ -6,12 +6,6 @@ const Wrapper = styled.section`
   background-color: var(--background-color-transparent);
   box-shadow: 0 0 10px var(--text-color);
 
-  .title {
-    font-size: 2.5rem;
-    font-family: var(--subtitle-font);
-    margin-bottom: 0.5rem;
-  }
-
   .no-accounts-msg {
     font-size: 1.5rem;
     font-weight: 500;

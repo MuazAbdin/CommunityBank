@@ -51,6 +51,12 @@ const Wrapper = styled.main`
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+
+    .section-title {
+      font-size: 2.5rem;
+      font-family: var(--subtitle-font);
+      margin-bottom: 0.5rem;
+    }
   }
 
   a:link {

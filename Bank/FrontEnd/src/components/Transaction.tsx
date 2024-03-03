@@ -1,4 +1,4 @@
-import { ITransactionProps } from "../interfaces/components";
+import { ITransactionProps } from "../types/components";
 
 function getDate(date: Date): string {
   const month = date.getUTCMonth() + 1; // months from 1-12

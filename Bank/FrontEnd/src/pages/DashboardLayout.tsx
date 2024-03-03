@@ -2,12 +2,14 @@ import { Outlet, useLoaderData } from "react-router-dom";
 import Wrapper from "../assets/stylingWrappers/DashboardLayout";
 import Aside from "../components/Aside";
 import PageHeader from "../components/PageHeader";
-import { UserDetails } from "../interfaces/components";
 import { fetcher } from "../utils/fetcher";
+import { AccountDetails, UserDetails } from "../types/components";
 
 function DashboardLayout() {
-  const { user } = useLoaderData() as { user: UserDetails & any };
-  const values = {
+  const { user, accounts } = useLoaderData() as Awaited<
+    ReturnType<typeof loader>
+  >;
+  const userValues = {
     IDcard: user.IDcard,
     firstName: user.name.first,
     lastName: user.name.last,
@@ -17,11 +19,20 @@ function DashboardLayout() {
     street: user.address.street,
   };
 
+  const accountsValues = accounts.map((acc) => {
+    return {
+      number: acc.number,
+      type: acc.type,
+      balance: acc.balance,
+      lastVisit: acc.lastVisit,
+    };
+  });
+
   return (
     <Wrapper>
-      <Aside />
-      <PageHeader name={`${values.firstName} ${values.lastName}`} />
-      <Outlet context={values} />
+      <Aside accountsNums={accountsValues.map((acc) => acc.number)} />
+      <PageHeader name={`${userValues.firstName} ${userValues.lastName}`} />
+      <Outlet context={{ userValues, accountsValues }} />
     </Wrapper>
   );
 }
@@ -30,7 +41,13 @@ export default DashboardLayout;
 
 // in the back end made get current middleware before all routes
 export async function loader() {
-  const response = await fetcher("/v1/users/current");
+  // const response = await fetcher("/v1/users/current");
+  const response = await fetcher("/v1/accounts");
   if (!response.ok) throw response;
-  return response;
+  const { user, accounts } = (await response.json()) as {
+    user: UserDetails;
+    accounts: AccountDetails[];
+  };
+  return { user, accounts };
+  // return json(response);
 }

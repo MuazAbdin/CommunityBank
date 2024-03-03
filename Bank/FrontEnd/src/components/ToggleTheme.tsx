@@ -1,6 +1,6 @@
 import { BsSunFill, BsMoonFill } from "react-icons/bs";
 import Wrapper from "../assets/stylingWrappers/ToggleTheme";
-import { IMainHeaderProps } from "../interfaces/components";
+import { IMainHeaderProps } from "../types/components";
 
 function ToggleTheme({ isDark, themeToggle }: IMainHeaderProps) {
   return (

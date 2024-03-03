@@ -1,4 +1,4 @@
-import { UserDetails } from "../interfaces/components";
+import { UserDetails } from "../types/components";
 
 export interface IInputFormatter {
   (value: string, symbol?: string): string;

@@ -1,6 +1,6 @@
 import { ActionFunctionArgs, useOutletContext } from "react-router-dom";
 import StyledUserForm from "../assets/stylingWrappers/StyledUserForm";
-import { UserDetails } from "../interfaces/components";
+import { UserDetails } from "../types/components";
 import { EDIT_USER_FIELDS } from "../utils/constants";
 import { action as submitAction } from "../utils/submitAction";
 

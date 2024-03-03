@@ -5,7 +5,7 @@ import {
   IUserDetailsFormProps,
   IUserFormActionData,
   UserDetails,
-} from "../interfaces/components";
+} from "../types/components";
 
 function UserDetailsForm({
   formID,

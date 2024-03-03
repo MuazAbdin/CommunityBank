@@ -3,7 +3,7 @@ import Wrapper from "../assets/stylingWrappers/MainHeader.ts";
 import { FaLocationDot, FaEnvelope } from "react-icons/fa6";
 import Logo from "./Logo.tsx";
 import ToggleTheme from "./ToggleTheme.tsx";
-import { IMainHeaderProps } from "../interfaces/components.ts";
+import { IMainHeaderProps } from "../types/components.ts";
 
 function MainHeader({ isDark, themeToggle }: IMainHeaderProps) {
   return (

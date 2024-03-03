@@ -28,6 +28,13 @@ export interface UserDetails {
   address: { city: string; street: string };
 }
 
+export interface AccountDetails {
+  number: string;
+  type: "savings" | "checking";
+  balance: number;
+  lastVisit: Date;
+}
+
 export interface ITransactionProps {
   _id: string;
   createdAt: string;

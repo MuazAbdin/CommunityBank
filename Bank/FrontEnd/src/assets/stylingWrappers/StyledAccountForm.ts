@@ -11,11 +11,11 @@ const StyledAccountForm = styled(NewAccountForm)`
   background-color: var(--background-color-transparent);
   box-shadow: 0 0 10px var(--text-color);
   font-family: var(--main-font);
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   line-height: 1.2;
 
   .title {
-    font-size: 2.5rem;
+    font-size: 1.75rem;
     font-family: var(--subtitle-font);
   }
 
@@ -65,7 +65,7 @@ const StyledAccountForm = styled(NewAccountForm)`
     padding-top: 1.5rem;
     width: 50%;
     padding: 0.75rem 0;
-    font-size: 1.65rem;
+    font-size: 1.25rem;
     font-weight: 500;
   }
 
