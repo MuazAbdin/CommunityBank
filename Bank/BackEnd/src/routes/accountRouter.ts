@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createNewAccout,
+  deleteAccount,
   getAccount,
   getCurrentUserAccounts,
 } from "../controllers/accountController.js";
@@ -23,6 +24,6 @@ router.get("/:number", getAccount);
 router.post("/", createNewAccout);
 
 // delete a specific account for the current user
-router.delete("/:number", () => {});
+router.delete("/:number", deleteAccount);
 
 export default router;

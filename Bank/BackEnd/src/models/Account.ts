@@ -1,7 +1,6 @@
 import { Schema, model } from "mongoose";
 
-// restraining orders
-
+// restraining orders??
 const accountSchema = new Schema(
   {
     number: {
@@ -19,19 +18,7 @@ const accountSchema = new Schema(
     balance: { type: Number, required: true, default: 0 },
     lastVisit: { type: Date, required: true, default: Date.now() },
   },
-  {
-    timestamps: true,
-    statics: {
-      async findOneByNumber(accountNumber: string) {
-        return this.findOneAndUpdate(
-          { number: accountNumber },
-          { lastVisit: Date.now() },
-          { new: true }
-        );
-        // return await this.find({ number: accountNumber });
-      },
-    },
-  }
+  { timestamps: true }
 );
 
 export default model("Account", accountSchema);

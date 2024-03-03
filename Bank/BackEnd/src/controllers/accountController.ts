@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import Account from "../models/Account.js";
 import { IRequestBodyAccountType } from "../types/IHttp.js";
-import moment from "moment";
 
 export async function getCurrentUserAccounts(req: Request, res: Response) {
   const accounts = await Account.find({ user: req.user!._id });
@@ -24,7 +23,19 @@ export async function createNewAccout(req: Request, res: Response) {
 
 export async function getAccount(req: Request, res: Response) {
   const reqParams = req.params as { number: string };
-  const account = await Account.findOneByNumber(reqParams.number);
+  const account = await Account.findOneAndUpdate(
+    { number: reqParams.number },
+    { lastVisit: Date.now() },
+    { new: true }
+  );
   // console.log(moment(account?.lastVisit).format("LLLL"));
   res.status(StatusCodes.OK).send({ account });
+}
+
+export async function deleteAccount(req: Request, res: Response) {
+  const reqParams = req.params as { number: string };
+  const account = await Account.findOneAndDelete({ number: reqParams.number });
+  res
+    .status(StatusCodes.OK)
+    .send({ msg: "account deleted successfully ", account });
 }
