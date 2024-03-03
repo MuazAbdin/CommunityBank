@@ -1,8 +1,12 @@
 import { Form, useNavigation } from "react-router-dom";
 import Input from "./Input";
 import { TRANSFER_FIELDS } from "../utils/constants";
+import { PropsWithChildren } from "react";
 
-function TransferForm({ className }: { className?: string }) {
+function TransferForm({
+  className,
+  children,
+}: PropsWithChildren<{ className?: string }>) {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
   return (
@@ -24,14 +28,10 @@ function TransferForm({ className }: { className?: string }) {
             help={f.help}
             // isSubmitted={actionData?.msg === "Invalid inputs"}
             formID="transfer-form"
-            min={
-              f.type === "date"
-                ? new Date().toLocaleDateString("fr-ca")
-                : undefined
-            }
           />
         );
       })}
+      {children}
       <button name="submit" className="btn" disabled={isSubmitting}>
         {isSubmitting ? "submitting ..." : "transfer"}
       </button>

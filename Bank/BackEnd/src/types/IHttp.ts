@@ -1,5 +1,18 @@
 import { Types } from "mongoose";
 
+const CATEGORIES = [
+  "Entertainment",
+  "Food",
+  "Government",
+  "Healthcare",
+  "Housing",
+  "Insurance",
+  "Miscellaneous",
+  "Payments",
+  "Salary",
+  "Transportation",
+] as const;
+
 /* Request Body types */
 export interface IRequestBodyUserDetails {
   IDcard: string;
@@ -14,7 +27,20 @@ export interface IRequestBodyUserDetails {
 }
 
 export interface IRequestBodyAccountType {
-  type: ["checking", "savings"];
+  type: "checking" | "savings";
+}
+
+export interface IRequestBodyTransaction {
+  amount: string;
+  vendor: string;
+  category: (typeof CATEGORIES)[number];
+  date: Date;
+}
+
+export interface IRequestQueryTransactions {
+  text: string;
+  from: Date;
+  to: Date;
 }
 
 export interface IUserWithoutPasswordDetails {
@@ -27,9 +53,19 @@ export interface IUserWithoutPasswordDetails {
   // updatedAt: string;
 }
 
+export interface IAccountDetails {
+  _id: Types.ObjectId;
+  number: string;
+  user: Types.ObjectId;
+  type: "checking" | "savings";
+  balance: number;
+  lastVisit: Date;
+}
+
 /* Extend Express Request interface */
 declare module "express-serve-static-core" {
   export interface Request {
     user?: IUserWithoutPasswordDetails;
+    account?: IAccountDetails;
   }
 }

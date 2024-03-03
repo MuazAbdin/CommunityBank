@@ -5,6 +5,7 @@ const StyledSearch = styled(Search)`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   gap: 1rem;
   padding: 0.75rem;
   font-size: 1rem;

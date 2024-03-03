@@ -1,16 +1,16 @@
 import { Schema, model } from "mongoose";
 
 const CATEGORIES = [
-  "Entertainment",
-  "Food",
-  "Government",
-  "Healthcare",
-  "Housing",
-  "Insurance",
-  "Miscellaneous",
-  "Payments",
-  "Salary",
-  "Transportation",
+  "entertainment",
+  "food",
+  "government",
+  "healthcare",
+  "housing",
+  "insurance",
+  "miscellaneous",
+  "payments",
+  "salary",
+  "transportation",
 ];
 
 const transactionSchema = new Schema(

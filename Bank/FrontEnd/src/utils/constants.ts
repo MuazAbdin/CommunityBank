@@ -171,13 +171,13 @@ export const TRANSFER_FIELDS: IInputField[] = [
     help: "A valid CommunityBank account number.",
     formatter: accountNumFormatter,
   },
-  {
-    label: "Transfer on",
-    id: "transferOn",
-    type: "date",
-    placeholder: "Transfer on",
-    // min: new Date().toLocaleDateString("fr-ca"),
-  },
+  // {
+  //   label: "Transfer on",
+  //   id: "transferOn",
+  //   type: "date",
+  //   placeholder: "Transfer on",
+  //   // min: new Date().toLocaleDateString("fr-ca"),
+  // },
 ];
 
 export const LOAN_FIELDS: IInputField[] = [

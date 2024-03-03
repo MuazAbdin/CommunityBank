@@ -17,6 +17,7 @@ import authRouter from "./routes/authRouter.js";
 // middleware
 import errorHandlerMiddleware from "./middlewares/errorHandlerMiddleware.js";
 import { authenticateUser } from "./middlewares/authMiddleware.js";
+import { getAccount } from "./middlewares/accountMiddleware.js";
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
@@ -48,7 +49,12 @@ app.use(express.json());
 
 connectDB();
 
-app.use("/api/v1/transactions", authenticateUser, transactionRouter);
+app.use(
+  "/api/v1/transactions/:number",
+  authenticateUser,
+  getAccount,
+  transactionRouter
+);
 app.use("/api/v1/accounts", authenticateUser, accountRouter);
 app.use("/api/v1/users", authenticateUser, userRouter);
 app.use("/api/v1/loans", loanRouter);
