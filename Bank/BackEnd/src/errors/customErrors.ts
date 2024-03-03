@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import { ICustomError } from "../interfaces/ICustomError.js";
+import { ICustomError } from "../types/ICustomError.js";
 
 export class NotFoundError extends Error implements ICustomError {
   statusCode = StatusCodes.NOT_FOUND;

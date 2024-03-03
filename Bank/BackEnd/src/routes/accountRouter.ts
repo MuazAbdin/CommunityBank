@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createNewAccout,
+  getAccount,
   getCurrentUserAccounts,
 } from "../controllers/accountController.js";
 
@@ -13,14 +14,12 @@ router.get("/admin", () => {});
 router.get("/admin/stats", () => {});
 
 // get current user accounts
-// @ts-ignore
 router.get("/", getCurrentUserAccounts);
 
 // get specific account for the current user
-router.get("/:number", () => {});
+router.get("/:number", getAccount);
 
 // create new account for the current user
-// @ts-ignore
 router.post("/", createNewAccout);
 
 // delete a specific account for the current user

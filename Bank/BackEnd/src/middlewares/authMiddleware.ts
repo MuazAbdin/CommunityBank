@@ -3,14 +3,16 @@ import {
   UnauthenticatedError,
   UnauthorizedError,
   BadRequestError,
+  NotFoundError,
 } from "../errors/customErrors.js";
 import { verifyToken } from "../utils/auth.js";
-import { ITokenPayload } from "../interfaces/IToken.js";
+import { ITokenPayload } from "../types/IToken.js";
 import User from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
+import { IUserWithoutPasswordDetails } from "../types/IHttp.js";
 
 export async function authenticateUser(
-  req: Request & { user?: ITokenPayload },
+  req: Request,
   res: Response,
   next: NextFunction
 ) {
@@ -19,22 +21,23 @@ export async function authenticateUser(
 
   try {
     const { userId, IDcard, role } = verifyToken(token) as ITokenPayload;
-    //@ts-ignore
-    req.user = await User.findOneWithoutPassword(userId);
+    const user = await User.findOneWithoutPassword(userId);
+    if (!user) next(new NotFoundError("User Not Found"));
+    req.user = user!;
     next();
   } catch (error) {
     next(new UnauthenticatedError("authentication invalid"));
   }
 }
 
-export async function getCurrentUserDetails(
-  req: Request & { user: ITokenPayload },
-  res: Response,
-  next: NextFunction
-) {
-  //@ts-ignore
-  const userWithoutPassword = await User.findOneWithoutPassword(
-    req.user.userId
-  );
-  next();
-}
+// export async function getCurrentUserDetails(
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) {
+//   //@ts-ignore
+//   const userWithoutPassword = await User.findOneWithoutPassword(
+//     req.user.userId
+//   );
+//   next();
+// }

@@ -26,7 +26,7 @@ const userSchema = new Schema(
       required: true,
       validate: { validator: (v: string) => /\d{9}/.test(v) },
     },
-    name: name,
+    name: { type: name, required: true },
     password: {
       type: String,
       required: true,
@@ -45,7 +45,7 @@ const userSchema = new Schema(
       required: true,
       validate: { validator: (v: string) => /05\d{8}/.test(v) },
     },
-    address: address,
+    address: { type: address, required: true },
     role: {
       type: String,
       lowercase: true,
@@ -55,14 +55,17 @@ const userSchema = new Schema(
     },
     // accountList: [{ type: Schema.Types.ObjectId, ref: "Account" }],
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    statics: {
+      async findOneWithoutPassword(userId: string) {
+        return await this.findOne(
+          { _id: userId },
+          { password: 0, createdAt: 0, updatedAt: 0, __v: 0 }
+        );
+      },
+    },
+  }
 );
-
-userSchema.statics.findOneWithoutPassword = async function (userId) {
-  return await this.findOne(
-    { _id: userId },
-    { password: 0, createdAt: 0, __v: 0 }
-  );
-};
 
 export default model("User", userSchema);

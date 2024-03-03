@@ -1,4 +1,4 @@
-import { IRequestBodyUserDetails } from "../interfaces/IHttp.js";
+import { IRequestBodyUserDetails } from "../types/IHttp.js";
 import User from "../models/User.js";
 import { BadRequestError } from "./customErrors.js";
 

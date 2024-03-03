@@ -1,5 +1,6 @@
-import { ObjectId } from "mongoose";
+import { Types } from "mongoose";
 
+/* Request Body types */
 export interface IRequestBodyUserDetails {
   IDcard: string;
   password: string;
@@ -12,15 +13,23 @@ export interface IRequestBodyUserDetails {
   street: string;
 }
 
-export interface IRequestBodyNewAccount {
+export interface IRequestBodyAccountType {
   type: ["checking", "savings"];
 }
+
 export interface IUserWithoutPasswordDetails {
-  _id: ObjectId;
+  _id: Types.ObjectId;
   IDcard: string;
   name: { first: string; last: string };
   email: string;
   mobile: string;
   address: { city: string; street: string };
-  updatedAt: string;
+  // updatedAt: string;
+}
+
+/* Extend Express Request interface */
+declare module "express-serve-static-core" {
+  export interface Request {
+    user?: IUserWithoutPasswordDetails;
+  }
 }

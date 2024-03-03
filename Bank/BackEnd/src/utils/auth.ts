@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { ITokenPayload } from "../interfaces/IToken.js";
+import { ITokenPayload } from "../types/IToken.js";
 
 export async function hashPassword(password: string) {
   const salt = await bcrypt.genSalt(10);

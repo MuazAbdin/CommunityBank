@@ -5,11 +5,11 @@ import { Schema, model } from "mongoose";
 const accountSchema = new Schema(
   {
     number: {
-      type: Number,
+      type: String,
       required: true,
-      set: (v: number) => 24891e6 + v,
+      set: (v: number) => "24891" + v,
     },
-    user: { type: Schema.Types.ObjectId, ref: "User" },
+    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
     type: {
       type: String,
       lowercase: true,
@@ -19,7 +19,19 @@ const accountSchema = new Schema(
     balance: { type: Number, required: true, default: 0 },
     lastVisit: { type: Date, required: true, default: Date.now() },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    statics: {
+      async findOneByNumber(accountNumber: string) {
+        return this.findOneAndUpdate(
+          { number: accountNumber },
+          { lastVisit: Date.now() },
+          { new: true }
+        );
+        // return await this.find({ number: accountNumber });
+      },
+    },
+  }
 );
 
 export default model("Account", accountSchema);

@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
-import { ICustomError } from "../interfaces/ICustomError.js";
+import { ICustomError } from "../types/ICustomError.js";
 import { StatusCodes } from "http-status-codes";
 
 const errorHandlerMiddleware = (
