@@ -35,9 +35,19 @@ export interface AccountDetails {
   lastVisit: Date;
 }
 
-export interface ITransactionProps {
+export interface TransactionDetails {
   _id: string;
-  createdAt: string;
+  account: string;
+  type: string;
+  amount: number;
+  vendor: string;
+  category: string;
+  date: Date;
+}
+
+export interface ITransactionProps {
+  // _id: string;
+  date: Date;
   vendor: string;
   category: string;
   amount: number;

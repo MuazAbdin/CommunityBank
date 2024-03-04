@@ -11,7 +11,7 @@ const PROFILE_SECTIONS = [
 
 function Aside({ accountsNums }: { accountsNums: string[] }) {
   const accounts = accountsNums.map((num) => {
-    return { name: accountNumFormatter(num), to: `${num.slice(-6)}` };
+    return { name: accountNumFormatter(num), to: `accounts/${num.slice(-6)}` };
   });
   return (
     <Wrapper>

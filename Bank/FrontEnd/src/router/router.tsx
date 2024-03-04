@@ -9,10 +9,8 @@ import Overview from "../pages/Overview";
 
 import { action as registerAction } from "../pages/Register";
 import { action as loginAction } from "../pages/Login";
-// import { action as editDetailsAction } from "../pages/Overview";
-// import { action as submitFormAction } from "../components/UserDetailsForm";
-// import { loader as OverviewLoader } from "../pages/Overview";
 import { loader as userLoader } from "../pages/DashboardLayout";
+import { loader as accountLoader } from "../pages/Account";
 import EditUserDetails from "../pages/EditUserDetails";
 import ChangeUserPassword from "../pages/ChangeUserPassword";
 import Current from "../pages/Current";
@@ -61,6 +59,7 @@ const router = createBrowserRouter([
           {
             path: "accounts/:number",
             element: <Account />,
+            loader: accountLoader,
             children: [
               { index: true, element: <Current /> },
               { path: "transfer", element: <Transfer /> },

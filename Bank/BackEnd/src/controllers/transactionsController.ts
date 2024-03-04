@@ -9,7 +9,10 @@ import Transaction from "../models/Transaction.js";
 export async function getAllTransactions(req: Request, res: Response) {
   const filters = req.query as unknown as IRequestQueryTransactions;
   console.log(filters);
-  res.status(StatusCodes.OK).send("ok");
+  const transactions = await Transaction.find({ account: req.account!._id });
+  res
+    .status(StatusCodes.OK)
+    .send({ user: req.user, account: req.account, transactions });
 }
 
 export async function createTransaction(req: Request, res: Response) {

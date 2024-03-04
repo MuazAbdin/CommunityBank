@@ -7,12 +7,12 @@ function getDate(date: Date): string {
 }
 
 function Transaction(props: ITransactionProps) {
-  const { _id, createdAt, vendor, category, amount } = props;
+  const { date, vendor, category, amount } = props;
   const amountStyle: string = amount < 0 ? "red" : "green";
 
   return (
     <tr>
-      <td>{getDate(new Date(createdAt))}</td>
+      <td>{getDate(new Date(date))}</td>
       <td>{vendor}</td>
       <td>{category}</td>
       <td
@@ -21,7 +21,7 @@ function Transaction(props: ITransactionProps) {
           fontWeight: 600,
         }}
       >
-        ${amount}
+        ₪ {amount}
       </td>
     </tr>
   );

@@ -1,18 +1,13 @@
+import { useOutletContext } from "react-router-dom";
 import StyledSearch from "../assets/stylingWrappers/Search";
 import Table from "../components/Table";
 import Transaction from "../components/Transaction";
-
-const TRANSACTIONS = [
-  {
-    _id: "1234",
-    createdAt: "2024-02-24T09:08:58.437+00:00",
-    vendor: "elevation",
-    category: "salary",
-    amount: 1500,
-  },
-];
+import { TransactionDetails } from "../types/components";
 
 function Current() {
+  const { transactions } = useOutletContext() as {
+    transactions: TransactionDetails[];
+  };
   return (
     <section className="account-subsection-container">
       <StyledSearch />
@@ -20,7 +15,7 @@ function Current() {
         tableCaption="Transactions"
         tableHeader={["", "Date", "Vendor", "Category", "Amount"]}
       >
-        {TRANSACTIONS.map((t) => (
+        {transactions.map((t) => (
           <Transaction key={t._id} {...t} />
         ))}
       </Table>

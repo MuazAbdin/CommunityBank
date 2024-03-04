@@ -1,13 +1,20 @@
 import Wrapper from "../assets/stylingWrappers/AccountHeader";
+import { accountNumFormatter } from "../utils/inputFormatters";
 
-function AccountHeader() {
+function AccountHeader({
+  number,
+  balance,
+}: {
+  number: string;
+  balance: number;
+}) {
   return (
     <Wrapper>
       <div className="account-number">
-        account no. <strong>&lt;24-891-384549&gt;</strong>
+        account no. <strong>&lt;{accountNumFormatter(number)}&gt;</strong>
       </div>
       <div className="account-balance">
-        balance: <strong>₪2500</strong>
+        balance: <strong>₪{balance}</strong>
       </div>
     </Wrapper>
   );
