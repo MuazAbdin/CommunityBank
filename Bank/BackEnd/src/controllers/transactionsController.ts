@@ -5,6 +5,7 @@ import {
   IRequestQueryTransactions,
 } from "../types/IHttp.js";
 import Transaction from "../models/Transaction.js";
+import Account from "../models/Account.js";
 
 export async function getAllTransactions(req: Request, res: Response) {
   const filters = req.query as unknown as IRequestQueryTransactions;
@@ -27,8 +28,14 @@ export async function createTransaction(req: Request, res: Response) {
     date: reqBody.date,
   };
   const transaction = await Transaction.create(newTransaction);
+  const account = await Account.findOneAndUpdate(
+    { _id: req.account?._id },
+    { $inc: { balance: parseInt(reqBody.amount) }, lastVisit: Date.now() },
+    { new: true }
+  );
   res.status(StatusCodes.CREATED).send({
     msg: "transaction created successfully",
+    account,
     transaction,
   });
 }

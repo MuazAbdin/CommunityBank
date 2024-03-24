@@ -1,4 +1,4 @@
-import { ActionFunctionArgs, Link } from "react-router-dom";
+import { ActionFunctionArgs, Link, LoaderFunctionArgs } from "react-router-dom";
 import Wrapper from "../assets/stylingWrappers/Register";
 import StyledUserForm from "../assets/stylingWrappers/StyledUserForm";
 import { REGISTER_FIELDS } from "../utils/constants";
@@ -23,6 +23,8 @@ function Register() {
 }
 
 export default Register;
+
+export async function loader({ request }: LoaderFunctionArgs) {}
 
 export async function action({ params, request }: ActionFunctionArgs) {
   return submitAction({ params, request });

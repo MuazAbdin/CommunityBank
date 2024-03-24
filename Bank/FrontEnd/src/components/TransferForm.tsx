@@ -10,7 +10,7 @@ function TransferForm({
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
   return (
-    <Form id="transfer-form" className={className} noValidate>
+    <Form method="POST" id="transfer-form" className={className} noValidate>
       <h3 className="title">transfer</h3>
       {TRANSFER_FIELDS.map((f) => {
         return (

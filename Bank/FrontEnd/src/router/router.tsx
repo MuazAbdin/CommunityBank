@@ -9,6 +9,7 @@ import Overview from "../pages/Overview";
 
 import { action as registerAction } from "../pages/Register";
 import { action as loginAction } from "../pages/Login";
+import { action as transferAction } from "../pages/Transfer";
 import { loader as userLoader } from "../pages/DashboardLayout";
 import { loader as accountLoader } from "../pages/Account";
 import EditUserDetails from "../pages/EditUserDetails";
@@ -62,7 +63,11 @@ const router = createBrowserRouter([
             loader: accountLoader,
             children: [
               { index: true, element: <Current /> },
-              { path: "transfer", element: <Transfer /> },
+              {
+                path: "transfer",
+                element: <Transfer />,
+                action: transferAction,
+              },
               { path: "loan", element: <Loan /> },
               { path: "breakdown", element: <Breakdown /> },
             ],

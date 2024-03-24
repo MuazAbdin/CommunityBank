@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
 dotenv.config();
-import express, { Request, Response, NextFunction } from "express";
+import express from "express";
 const app = express();
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
@@ -22,18 +22,6 @@ import { getAccount } from "./middlewares/accountMiddleware.js";
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
-
-// app.use((req: Request, res: Response, next: NextFunction) => {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   // res.header("Access-Control-Allow-Credentials", "true");
-//   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Content-Type, Authorization, Content-Length, X-Requested-With"
-//   );
-
-//   next();
-// });
 
 app.use(
   cors({
