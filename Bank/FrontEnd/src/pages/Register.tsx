@@ -25,8 +25,6 @@ function Register() {
 
 export default Register;
 
-export async function loader({ request }: LoaderFunctionArgs) {}
-
 export async function action({ params, request }: ActionFunctionArgs) {
   return customAction({
     params,

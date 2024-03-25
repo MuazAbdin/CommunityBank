@@ -42,7 +42,7 @@ export default DashboardLayout;
 // in the back end made get current middleware before all routes
 export async function loader() {
   // const response = await fetcher("/v1/users/current");
-  const response = await fetcher("/v1/accounts");
+  const response = await fetcher("accounts");
   if (!response.ok) throw response;
   const { user, accounts } = (await response.json()) as {
     user: UserDetails;

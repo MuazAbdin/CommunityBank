@@ -21,7 +21,7 @@ export const userSchema = {
     errorMessage: "invalid",
     trim: true,
     notEmpty: { errorMessage: "required", bail: true },
-    matches: { bail: true, options: /\d{9}/ },
+    matches: { bail: true, options: /^\d{9}$/ },
     custom: {
       errorMessage: "ID already exists",
       options: (async (value, { req }) => {
@@ -57,14 +57,14 @@ export const userSchema = {
     trim: true,
     notEmpty: { errorMessage: "required", bail: true },
     toLowerCase: true,
-    matches: { options: /\w{3,35}/ },
+    matches: { options: /^[\w\d\s.-_]{3,35}$/ },
   },
   lastName: {
     errorMessage: "invalid",
     trim: true,
     notEmpty: { errorMessage: "required", bail: true },
     toLowerCase: true,
-    matches: { options: /\w{3,35}/ },
+    matches: { options: /^[\w\d\s.-_]{3,35}$/ },
   },
   email: {
     errorMessage: "invalid",
@@ -76,21 +76,21 @@ export const userSchema = {
     errorMessage: "invalid",
     trim: true,
     notEmpty: { errorMessage: "required", bail: true },
-    matches: { options: /05\d{8}/ },
+    matches: { options: /^05\d{8}$/ },
   },
   city: {
     errorMessage: "invalid",
     trim: true,
     notEmpty: { errorMessage: "required", bail: true },
     toLowerCase: true,
-    matches: { options: /\w{3,35}/ },
+    matches: { options: /^[\w\d\s.-_]{3,35}$/ },
   },
   street: {
     errorMessage: "invalid",
     trim: true,
     notEmpty: { errorMessage: "required", bail: true },
     toLowerCase: true,
-    matches: { options: /\w{3,35}/ },
+    matches: { options: /^[\w\d\s.-_]{3,35}$/ },
   },
 };
 

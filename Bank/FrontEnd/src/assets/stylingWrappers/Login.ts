@@ -70,6 +70,7 @@ const Wrapper = styled.main`
       font-weight: 500;
       color: var(--red-dark);
       background-color: var(--red-light);
+      border-radius: var(--border-radius);
     }
   }
 `;

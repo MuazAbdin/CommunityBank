@@ -7,6 +7,7 @@ const Wrapper = styled.section`
   box-shadow: 0 0 10px var(--text-color);
 
   .no-accounts-msg {
+    margin-top: 1rem;
     font-size: 1.5rem;
     font-weight: 500;
     text-shadow: 1px 1px 2px var(--red-dark);

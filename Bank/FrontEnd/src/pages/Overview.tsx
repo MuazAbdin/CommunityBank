@@ -17,7 +17,7 @@ function Overview() {
       <Wrapper className="overview-details">
         <Table
           tableCaption="Accounts"
-          tableHeader={["", "number", "type", "balance"]}
+          tableHeader={["", "number", "type", "balance", "BADC", ""]} // BADC: Bank account Details Confirmation
         >
           {accountsValues.map((acc) => {
             return (

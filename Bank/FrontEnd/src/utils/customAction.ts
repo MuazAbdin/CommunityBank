@@ -64,37 +64,3 @@ export async function customAction({
     return error;
   }
 }
-
-function getFormMetadata(fields: any) {
-  const fieldsKeys = Object.keys(fields);
-  switch (fieldsKeys.length) {
-    case 2: // login
-      return {
-        name: "login",
-        url: "/v1/auth/login",
-        successMessage: "Logged in successfully",
-        redirectPath: "/dashboard",
-      };
-    case 3:
-      return {
-        name: "changePassword",
-        url: "",
-        successMessage: "Changed successfully",
-        redirectPath: "/login",
-      };
-    case 7:
-      return {
-        name: "editDetails",
-        url: "",
-        successMessage: "Updated successfully",
-        redirectPath: "/dashboard",
-      };
-    default:
-      return {
-        name: "register",
-        url: "v1/auth/register",
-        successMessage: "Registered successfully",
-        redirectPath: "/login",
-      };
-  }
-}

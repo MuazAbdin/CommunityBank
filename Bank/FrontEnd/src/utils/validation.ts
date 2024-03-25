@@ -8,7 +8,8 @@ export interface IInputValidator {
 
 const validateDefaultString: IInputValidator = function (v) {
   if (v.length === 0) return { result: false, message: "required" };
-  if (!/\w{3,35}/.test(v)) return { result: false, message: "invalid" };
+  if (!/^[\w\d\s.-_]{3,35}$/.test(v))
+    return { result: false, message: "invalid" };
   return { result: true, message: "valid" };
 };
 
@@ -25,13 +26,14 @@ export const isAmountValid: IInputValidator = function (amount) {
 
 export const isAccountNumValid: IInputValidator = function (accountNum) {
   if (accountNum.length === 0) return { result: false, message: "required" };
-  if (!/\d{11}/.test(accountNum)) return { result: false, message: "invalid" };
+  if (!/^\d{11}$/.test(accountNum))
+    return { result: false, message: "invalid" };
   return { result: true, message: "valid" };
 };
 
 export const isIDValid: IInputValidator = function (IDcard) {
   if (IDcard.length === 0) return { result: false, message: "required" };
-  if (!/\d{9}/.test(IDcard)) return { result: false, message: "invalid" };
+  if (!/^\d{9}$/.test(IDcard)) return { result: false, message: "invalid" };
   return { result: true, message: "valid" };
 };
 
@@ -75,7 +77,7 @@ export const isEmailValid: IInputValidator = function (email) {
 
 export const isMobileValid: IInputValidator = function (mobile) {
   if (mobile.length === 0) return { result: false, message: "required" };
-  const result = /05\d{8}/.test(mobile);
+  const result = /^05\d{8}$/.test(mobile);
   if (!result) return { result: false, message: "invalid" };
   return { result: true, message: "valid" };
 };
