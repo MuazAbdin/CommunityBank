@@ -30,9 +30,7 @@ export async function register(
 
   try {
     await User.create(newUser);
-    res
-      .status(StatusCodes.CREATED)
-      .send({ msg: "user registered successfully" });
+    res.status(StatusCodes.CREATED).send({ msg: "Registered successfully" });
   } catch (error: any) {
     // db validation errors
     const errorValues = handleDBErrors(error);
@@ -64,7 +62,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
     secure: process.env.NODE_ENV === "production",
   });
 
-  res.status(StatusCodes.OK).send({ msg: "user logged in successfully" });
+  res.status(StatusCodes.OK).send({ msg: "Logged in successfully" });
 }
 
 export async function logout(req: Request, res: Response) {
@@ -73,5 +71,5 @@ export async function logout(req: Request, res: Response) {
   //   httpOnly: true,
   //   expires: new Date(Date.now()),
   // });
-  res.status(StatusCodes.OK).json({ msg: "user logged out!" });
+  res.status(StatusCodes.OK).json({ msg: "Logged out successfully!" });
 }

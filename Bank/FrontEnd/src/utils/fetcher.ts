@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = "http://localhost:3000/api/v1/";
 
 export function fetcher(URL: string, options?: any) {
   return fetch(`${BASE_URL}${URL}`, {

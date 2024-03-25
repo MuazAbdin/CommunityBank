@@ -15,12 +15,13 @@ const CATEGORIES = [
 
 const transactionSchema = new Schema(
   {
-    account: { type: Schema.Types.ObjectId, ref: "Account" },
+    senderAccount: { type: Schema.Types.ObjectId, ref: "Account" },
+    receiverAccount: { type: Schema.Types.ObjectId, ref: "Account" },
     type: {
       type: String,
       lowercase: true,
       required: true,
-      enum: ["deposit", "withdrawal", "transfer"],
+      enum: ["deposit", "withdrawal", "transfer", "loan payment"],
     },
     amount: { type: Number, required: true, min: 0.01 },
     vendor: { type: String, lowercase: true, trim: true, required: true },

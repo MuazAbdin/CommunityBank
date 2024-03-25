@@ -1,5 +1,5 @@
 import isEmail from "validator/lib/isEmail";
-import { REGISTER_FIELDS } from "./constants";
+import { EDIT_USER_FIELDS, REGISTER_FIELDS } from "./constants";
 import { isInt } from "validator";
 
 export interface IInputValidator {
@@ -84,7 +84,8 @@ export const isAddressValid: IInputValidator = function (address) {
   return validateDefaultString(address);
 };
 
-export function validateAllFields(fields: any) {
+/* Whole form presubmit validators */
+export function validateRegisterFields(fields: any) {
   const results = REGISTER_FIELDS.map((f) => {
     const validator =
       f.id === "passwordConfirm"
@@ -114,14 +115,15 @@ export function validateLoginFields(fields: any) {
   return { msg: "", data: [] };
 }
 
-export function validateForm(fields: any) {
-  const fieldsKeys = Object.keys(fields);
-  if (
-    fieldsKeys.length === 2 &&
-    fieldsKeys[0] === "IDcard" &&
-    fieldsKeys[1] === "password"
-  ) {
-    return validateLoginFields(fields);
-  }
-  return validateAllFields(fields);
+export function validateEditUserDetailsFields(fields: any) {
+  const results = EDIT_USER_FIELDS.map((f) => {
+    return { name: f.id, value: fields[f.id], ...f.validator(fields[f.id]) };
+  });
+  const data = results
+    .filter((r) => !r.result)
+    .map((r) => {
+      return { name: r.name, value: r.value, message: r.message };
+    });
+  const msg = data.length === 0 ? "" : "Invalid inputs";
+  return { msg, data };
 }

@@ -2,7 +2,8 @@ import { ActionFunctionArgs, Link, LoaderFunctionArgs } from "react-router-dom";
 import Wrapper from "../assets/stylingWrappers/Register";
 import StyledUserForm from "../assets/stylingWrappers/StyledUserForm";
 import { REGISTER_FIELDS } from "../utils/constants";
-import { action as submitAction } from "../utils/submitAction";
+import { customAction } from "../utils/customAction";
+import { validateRegisterFields } from "../utils/validation";
 
 function Register() {
   return (
@@ -27,5 +28,13 @@ export default Register;
 export async function loader({ request }: LoaderFunctionArgs) {}
 
 export async function action({ params, request }: ActionFunctionArgs) {
-  return submitAction({ params, request });
+  return customAction({
+    params,
+    request,
+    url: "auth/register",
+    successMessage: "Registered successfully",
+    redirectPath: "/login",
+    preSubmitValidator: validateRegisterFields,
+    specialErrors: [400], // BadRequestError (invalid inputs)
+  });
 }

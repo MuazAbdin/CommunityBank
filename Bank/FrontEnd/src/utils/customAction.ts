@@ -1,41 +1,66 @@
 import { ActionFunctionArgs, redirect } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
-import { validateForm } from "./validation";
 import { fetcher } from "./fetcher";
 import { toast } from "react-toastify";
+import { HTTPError } from "./cutomErrors";
 
-export async function action({ request }: ActionFunctionArgs) {
+interface ICustomAcionFunctionArgs extends ActionFunctionArgs {
+  preSubmitValidator?: (fields: any) => {
+    msg: string;
+    data: {
+      name: string;
+      value: any;
+      message: string;
+    }[];
+  };
+  specialErrors?: number[];
+  url: string;
+  successMessage?: string;
+  redirectPath?: string;
+}
+
+export async function customAction({
+  params,
+  request,
+  url,
+  successMessage = "Submitted successfully",
+  redirectPath = "",
+  preSubmitValidator = ([]) => ({ msg: "", data: [] }),
+  specialErrors = [],
+}: ICustomAcionFunctionArgs) {
   const fd = await request.formData();
   const data = Object.fromEntries(
     [...fd.entries()].filter((entry) => entry[0] !== "submit")
   );
   console.log(data);
-  const preSubmitValidation = validateForm(data);
+  const preSubmitValidation = preSubmitValidator(data);
   console.log(preSubmitValidation);
   if (preSubmitValidation.msg === "Invalid inputs") return preSubmitValidation;
 
-  const { url, successMessage, redirectPath } = getFormMetadata(data);
   try {
     const response = await fetcher(url, {
       method: request.method,
       body: JSON.stringify(data),
     });
 
-    if (response.status === 400) {
-      const responseData = await response.json();
-      return responseData;
+    if (!response.ok) {
+      if (specialErrors.includes(response.status)) {
+        const responseData = await response.json();
+        toast.error(responseData?.msg || "Something went wrong");
+        return responseData;
+      }
+      throw new HTTPError(response);
     }
 
-    // if (response.status === 401) {
-    //   const data = await response.json();
-    //   toast.error("Login Failed");
-    //   return data;
-    // }
-
-    toast.success(successMessage);
+    const responseData = await response.json();
+    toast.success(responseData?.msg || successMessage);
     return redirect(redirectPath);
-  } catch (error) {
-    toast.error(error?.response?.data?.msg);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      toast.error(error.message);
+      throw error;
+    }
+    console.log(error);
     return error;
   }
 }

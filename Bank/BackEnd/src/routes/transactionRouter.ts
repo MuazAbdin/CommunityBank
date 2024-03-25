@@ -13,6 +13,6 @@ router.get("/", getAllTransactions);
 router.post("/", createTransaction);
 
 // Getting stats of the account's transactions.
-router.get("//stats", () => {});
+router.get("/stats", () => {});
 
 export default router;

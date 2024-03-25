@@ -44,7 +44,7 @@ export const userSchema = {
     trim: true,
     notEmpty: { errorMessage: "required", bail: true },
     custom: {
-      errorMessage: "password is not match",
+      errorMessage: "passwords do not match",
       options: ((value, { req }) => {
         const reqBody = req.body as unknown as IRequestBodyUserDetails;
         return value === reqBody.password;

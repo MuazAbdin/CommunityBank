@@ -1,8 +1,9 @@
 import { ActionFunctionArgs, Link } from "react-router-dom";
 import Wrapper from "../assets/stylingWrappers/Login";
-import { action as submitAction } from "../utils/submitAction";
 import StyledUserForm from "../assets/stylingWrappers/StyledUserForm";
 import { LOGIN_FIELDS } from "../utils/constants";
+import { customAction } from "../utils/customAction";
+import { validateLoginFields } from "../utils/validation";
 
 function Login() {
   return (
@@ -26,5 +27,13 @@ function Login() {
 export default Login;
 
 export async function action({ params, request }: ActionFunctionArgs) {
-  return submitAction({ params, request });
+  return customAction({
+    params,
+    request,
+    url: "auth/login",
+    successMessage: "Logged in successfully",
+    redirectPath: "/dashboard",
+    preSubmitValidator: validateLoginFields,
+    specialErrors: [400, 401], // [invalid input, invalid credentials]
+  });
 }
