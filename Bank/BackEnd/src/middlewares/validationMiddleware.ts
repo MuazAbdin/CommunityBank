@@ -12,7 +12,8 @@ import { RunnableValidationChains } from "express-validator/src/middlewares/sche
 import { Request, Response, NextFunction } from "express";
 import {
   loginSchema,
-  userSchema as registerSchema,
+  registerSchema,
+  editDetailsSchema,
 } from "../errors/validationSchemas.js";
 
 function processValidations(req: Request, res: Response, next: NextFunction) {
@@ -33,8 +34,6 @@ function validationRunner(
   return [validations, processValidations];
 }
 
-const { IDcard, ...editDetailsSchema } = registerSchema;
-
 export const validateRegisterInput = validationRunner(
   // @ts-ignore
   checkSchema(registerSchema)
@@ -49,3 +48,8 @@ export const validateEditDetailsInput = validationRunner(
   // @ts-ignore
   checkSchema(editDetailsSchema)
 );
+
+// export const validateChangePasswordInput = validationRunner(
+//   // @ts-ignore
+//   checkSchema(changePasswordSchema)
+// );

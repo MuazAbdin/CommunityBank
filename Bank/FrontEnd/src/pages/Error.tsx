@@ -15,7 +15,7 @@ function Error() {
     localStorage.setItem("darkTheme", String(!isDark));
   }
   const error = useRouteError() as HTTPError;
-  // console.log(error);
+  console.log(error);
 
   return (
     <div id="app-container" className={isDark ? "dark-theme" : ""}>
@@ -23,10 +23,11 @@ function Error() {
       <MainHeader isDark={isDark} themeToggle={themeToggle} />
       <Wrapper>
         <FaTriangleExclamation />
-        <div>
+        <div className="error-header">
           <h1>{error.status}</h1>
           <span>{error.message ?? error.statusText}</span>
         </div>
+        <p className="error-data">{error.data ?? ""}</p>
       </Wrapper>
       <MainFooter />
     </div>

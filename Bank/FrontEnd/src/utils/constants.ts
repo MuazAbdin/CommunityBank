@@ -27,6 +27,7 @@ export interface IInputField {
   validator?: IInputValidator;
   help?: string;
   disabled?: boolean;
+  readOnly?: boolean;
   formatter?: IInputFormatter;
 }
 

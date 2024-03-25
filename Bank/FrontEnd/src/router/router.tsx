@@ -1,24 +1,30 @@
 import { createBrowserRouter } from "react-router-dom";
-import HomeLayout from "../pages/HomeLayout";
-import Register from "../pages/Register";
-import Landing from "../pages/Landing";
-import Login from "../pages/Login";
-import DashboardLayout from "../pages/DashboardLayout";
-import Account from "../pages/Account";
-import Overview from "../pages/Overview";
+
+import {
+  HomeLayout,
+  Landing,
+  Register,
+  Login,
+  DashboardLayout,
+  Overview,
+  EditUserDetails,
+  ChangeUserPassword,
+  Account,
+  Current,
+  Transfer,
+  Loan,
+  Breakdown,
+  Error,
+} from "../pages";
+
+import { loader as userLoader } from "../pages/DashboardLayout";
+import { loader as accountLoader } from "../pages/Account";
 
 import { action as registerAction } from "../pages/Register";
 import { action as loginAction } from "../pages/Login";
+import { action as editUserDetailsAction } from "../pages/EditUserDetails";
+
 import { action as transferAction } from "../pages/Transfer";
-import { loader as userLoader } from "../pages/DashboardLayout";
-import { loader as accountLoader } from "../pages/Account";
-import EditUserDetails from "../pages/EditUserDetails";
-import ChangeUserPassword from "../pages/ChangeUserPassword";
-import Current from "../pages/Current";
-import Transfer from "../pages/Transfer";
-import Loan from "../pages/Loan";
-import Breakdown from "../pages/Breakdown";
-import Error from "../pages/Error";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +60,7 @@ const router = createBrowserRouter([
           {
             path: "edit-details",
             element: <EditUserDetails />,
+            action: editUserDetailsAction,
           },
           {
             path: "change-password",

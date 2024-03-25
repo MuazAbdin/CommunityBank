@@ -123,7 +123,9 @@ const Wrapper = styled.fieldset<{
       text-transform: capitalize;
     }
 
-    input:disabled {
+    input:disabled,
+    input:read-only {
+      cursor: not-allowed;
       background-color: var(--grey-200);
     }
 

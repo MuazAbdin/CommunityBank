@@ -38,12 +38,14 @@ const StyledUserForm = styled(UserDetailsForm)`
     background-color: var(--grey-500);
   }
 
-  input:disabled {
+  input:disabled,
+  input:read-only {
     cursor: not-allowed;
     background-color: var(--grey-200);
   }
 
-  .main-container:has(input:disabled) {
+  .main-container:has(input:disabled),
+  .main-container:has(input:read-only) {
     background-color: var(--grey-200);
     border-color: var(--grey-200);
   }

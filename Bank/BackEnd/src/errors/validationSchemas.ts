@@ -16,7 +16,7 @@ type validator = (
   }
 ) => any;
 
-export const userSchema = {
+export const registerSchema = {
   IDcard: {
     errorMessage: "invalid",
     trim: true,
@@ -57,14 +57,14 @@ export const userSchema = {
     trim: true,
     notEmpty: { errorMessage: "required", bail: true },
     toLowerCase: true,
-    matches: { options: /^[\w\d\s.-_]{3,35}$/ },
+    matches: { options: /^[\w\d\s.\-_]{3,35}$/ },
   },
   lastName: {
     errorMessage: "invalid",
     trim: true,
     notEmpty: { errorMessage: "required", bail: true },
     toLowerCase: true,
-    matches: { options: /^[\w\d\s.-_]{3,35}$/ },
+    matches: { options: /^[\w\d\s.\-_]{3,35}$/ },
   },
   email: {
     errorMessage: "invalid",
@@ -83,14 +83,14 @@ export const userSchema = {
     trim: true,
     notEmpty: { errorMessage: "required", bail: true },
     toLowerCase: true,
-    matches: { options: /^[\w\d\s.-_]{3,35}$/ },
+    matches: { options: /^[\w\d\s.\-_]{3,35}$/ },
   },
   street: {
     errorMessage: "invalid",
     trim: true,
     notEmpty: { errorMessage: "required", bail: true },
     toLowerCase: true,
-    matches: { options: /^[\w\d\s.-_]{3,35}$/ },
+    matches: { options: /^[\w\d\s.\-_]{3,35}$/ },
   },
 };
 
@@ -105,4 +105,23 @@ export const loginSchema = {
     trim: true,
     notEmpty: true,
   },
+};
+
+export const editDetailsSchema = {
+  firstName: registerSchema.firstName,
+  lastName: registerSchema.lastName,
+  email: registerSchema.email,
+  mobile: registerSchema.mobile,
+  city: registerSchema.city,
+  street: registerSchema.street,
+};
+
+export const changePasswordSchema = {
+  oldPassword: {
+    errorMessage: "required",
+    trim: true,
+    notEmpty: true,
+  },
+  password: registerSchema.password,
+  passwordConfirm: registerSchema.passwordConfirm,
 };

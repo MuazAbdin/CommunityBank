@@ -11,7 +11,7 @@ export interface IUserDetailsFormProps {
   title: string;
   buttonText: string;
   fields: IInputField[];
-  values?: UserDetails;
+  values?: IUserValues;
   className?: string;
 }
 
@@ -52,3 +52,26 @@ export interface ITransactionProps {
   category: string;
   amount: number;
 }
+
+export interface IUserProfileContext {
+  userValues: IUserValues;
+  accountsValues: IAccountsValues;
+}
+
+export interface IUserValues {
+  IDcard: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  mobile: string;
+  city: string;
+  street: string;
+}
+
+export interface IAccountsValues {
+  number: string;
+  type: "savings" | "checking";
+  balance: number;
+  lastVisit: Date;
+}
+[];

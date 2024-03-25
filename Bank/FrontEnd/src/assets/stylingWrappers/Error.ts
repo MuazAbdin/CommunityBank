@@ -19,16 +19,21 @@ const Wrapper = styled.main`
 
   font-size: 5rem;
   font-weight: 700;
-  color: var(--primary-600);
+  color: var(--highlight-color);
   padding-top: 5rem;
 
-  div {
+  .error-header {
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 2.5rem;
     gap: 1.5rem;
     text-shadow: 2px 2px 5px;
+  }
+
+  .error-data {
+    font-size: 1.25rem;
+    color: var(--error-text-color);
   }
 `;
 

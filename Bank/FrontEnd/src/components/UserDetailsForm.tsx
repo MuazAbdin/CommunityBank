@@ -4,7 +4,7 @@ import { PropsWithChildren, useRef } from "react";
 import {
   IUserDetailsFormProps,
   IUserFormActionData,
-  UserDetails,
+  IUserValues,
 } from "../types/components";
 
 function UserDetailsForm({
@@ -43,7 +43,6 @@ function UserDetailsForm({
           const inputItem = actionData.data.find((item) => item.name === f.id);
           if (inputItem) severErrorMsg = inputItem.message;
         }
-
         return (
           <Input
             key={f.id}
@@ -55,10 +54,11 @@ function UserDetailsForm({
             ref={f.id === "password" ? insertedPassword : null}
             validator={validator}
             severErrorMsg={severErrorMsg}
-            prevValue={values?.[f.id as Extract<UserDetails, "IDcard">] || ""}
+            prevValue={values?.[f.id as Extract<IUserValues, "IDcard">] || ""}
             help={f.help}
             isSubmitted={actionData?.msg === "Invalid inputs"}
             disabled={f.disabled}
+            readOnly={f.readOnly}
             formID={formID}
           />
         );

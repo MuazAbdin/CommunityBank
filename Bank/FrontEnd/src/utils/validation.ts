@@ -8,7 +8,7 @@ export interface IInputValidator {
 
 const validateDefaultString: IInputValidator = function (v) {
   if (v.length === 0) return { result: false, message: "required" };
-  if (!/^[\w\d\s.-_]{3,35}$/.test(v))
+  if (!/^[\w\d\s.\-_]{3,35}$/.test(v))
     return { result: false, message: "invalid" };
   return { result: true, message: "valid" };
 };
@@ -118,7 +118,7 @@ export function validateLoginFields(fields: any) {
 }
 
 export function validateEditUserDetailsFields(fields: any) {
-  const results = EDIT_USER_FIELDS.map((f) => {
+  const results = EDIT_USER_FIELDS.filter((f) => f.id !== "IDcard").map((f) => {
     return { name: f.id, value: fields[f.id], ...f.validator(fields[f.id]) };
   });
   const data = results

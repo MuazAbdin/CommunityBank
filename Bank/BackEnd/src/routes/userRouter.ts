@@ -3,6 +3,7 @@ import {
   editCurrentUserDetails,
   getCurrentUser,
 } from "../controllers/userController.js";
+import { validateEditDetailsInput } from "../middlewares/validationMiddleware.js";
 
 const router = Router();
 
@@ -19,6 +20,7 @@ router.get("/admin/stats/:userID", () => {});
 router.get("/current", getCurrentUser);
 
 // edit current user details
-router.patch("/current", editCurrentUserDetails);
+//@ts-ignore
+router.patch("/current", validateEditDetailsInput, editCurrentUserDetails);
 
 export default router;
