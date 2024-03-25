@@ -62,7 +62,7 @@ function AccordionItem({ id, title, Icon, subsectoins }: IAccordionItem) {
                   <li key={section.name} className="accordion-subsection__item">
                     <NavLink
                       to={section.to}
-                      // end
+                      end
                       className={({ isActive }) =>
                         isActive ? "active" : undefined
                       }

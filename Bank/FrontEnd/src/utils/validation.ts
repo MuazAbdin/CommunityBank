@@ -1,5 +1,9 @@
 import isEmail from "validator/lib/isEmail";
-import { EDIT_USER_FIELDS, REGISTER_FIELDS } from "./constants";
+import {
+  CHANGE_PASSWORD_FIELDS,
+  EDIT_USER_FIELDS,
+  REGISTER_FIELDS,
+} from "./constants";
 import { isInt } from "validator";
 
 export interface IInputValidator {
@@ -119,6 +123,19 @@ export function validateLoginFields(fields: any) {
 
 export function validateEditUserDetailsFields(fields: any) {
   const results = EDIT_USER_FIELDS.filter((f) => f.id !== "IDcard").map((f) => {
+    return { name: f.id, value: fields[f.id], ...f.validator(fields[f.id]) };
+  });
+  const data = results
+    .filter((r) => !r.result)
+    .map((r) => {
+      return { name: r.name, value: r.value, message: r.message };
+    });
+  const msg = data.length === 0 ? "" : "Invalid inputs";
+  return { msg, data };
+}
+
+export function validateChangePasswordFields(fields: any) {
+  const results = CHANGE_PASSWORD_FIELDS.map((f) => {
     return { name: f.id, value: fields[f.id], ...f.validator(fields[f.id]) };
   });
   const data = results

@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { HTTPError } from "./cutomErrors";
 
 interface ICustomAcionFunctionArgs extends ActionFunctionArgs {
+  url: string;
   preSubmitValidator?: (fields: any) => {
     msg: string;
     data: {
@@ -14,7 +15,6 @@ interface ICustomAcionFunctionArgs extends ActionFunctionArgs {
     }[];
   };
   specialErrors?: number[];
-  url: string;
   successMessage?: string;
   redirectPath?: string;
 }
@@ -25,7 +25,7 @@ export async function customAction({
   url,
   successMessage = "Submitted successfully",
   redirectPath = "",
-  preSubmitValidator = ([]) => ({ msg: "", data: [] }),
+  preSubmitValidator,
   specialErrors = [],
 }: ICustomAcionFunctionArgs) {
   const fd = await request.formData();
@@ -33,9 +33,12 @@ export async function customAction({
     [...fd.entries()].filter((entry) => entry[0] !== "submit")
   );
   console.log(data);
-  const preSubmitValidation = preSubmitValidator(data);
-  console.log(preSubmitValidation);
-  if (preSubmitValidation.msg === "Invalid inputs") return preSubmitValidation;
+  if (preSubmitValidator) {
+    const preSubmitValidation = preSubmitValidator(data);
+    console.log(preSubmitValidation);
+    if (preSubmitValidation.msg === "Invalid inputs")
+      return preSubmitValidation;
+  }
 
   try {
     const response = await fetcher(url, {

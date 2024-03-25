@@ -23,6 +23,7 @@ import { loader as accountLoader } from "../pages/Account";
 import { action as registerAction } from "../pages/Register";
 import { action as loginAction } from "../pages/Login";
 import { action as editUserDetailsAction } from "../pages/EditUserDetails";
+import { action as changeUserPasswordAction } from "../pages/ChangeUserPassword";
 
 import { action as transferAction } from "../pages/Transfer";
 
@@ -55,7 +56,6 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <Overview />,
-            // action: submitFormAction,
           },
           {
             path: "edit-details",
@@ -65,6 +65,7 @@ const router = createBrowserRouter([
           {
             path: "change-password",
             element: <ChangeUserPassword />,
+            action: changeUserPasswordAction,
           },
           {
             path: "accounts/:number",

@@ -8,9 +8,9 @@ const Wrapper = styled.section`
 
   .no-accounts-msg {
     margin-top: 1rem;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     font-weight: 500;
-    text-shadow: 1px 1px 2px var(--red-dark);
+    color: var(--error-text-color);
   }
 
   table {
