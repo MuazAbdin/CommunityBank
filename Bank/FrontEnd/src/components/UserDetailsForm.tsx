@@ -21,6 +21,7 @@ function UserDetailsForm({
   const insertedPassword = useRef<HTMLInputElement>(null);
 
   const invalidCredentials = actionData?.msg === "invalid credentials";
+  const isSubmitted = actionData?.msg === "Invalid inputs";
 
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
@@ -52,11 +53,11 @@ function UserDetailsForm({
             placeholder={f.placeholder}
             autoComplete={f.autoComplete ?? "off"}
             ref={f.id === "password" ? insertedPassword : null}
-            validator={validator}
+            validator={!isSubmitted ? validator : undefined}
             severErrorMsg={severErrorMsg}
             prevValue={values?.[f.id as Extract<IUserValues, "IDcard">] || ""}
             help={f.help}
-            isSubmitted={actionData?.msg === "Invalid inputs"}
+            isSubmitted={isSubmitted}
             disabled={f.disabled}
             readOnly={f.readOnly}
             formID={formID}

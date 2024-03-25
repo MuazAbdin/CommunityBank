@@ -1,4 +1,4 @@
-import { ActionFunctionArgs } from "react-router-dom";
+import { ActionFunctionArgs, useActionData } from "react-router-dom";
 import StyledUserForm from "../assets/stylingWrappers/StyledUserForm";
 import { CHANGE_PASSWORD_FIELDS } from "../utils/constants";
 import { customAction } from "../utils/customAction";
@@ -24,7 +24,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
   return customAction({
     params,
     request,
-    url: "",
+    url: "users/current/password",
     successMessage: "Changed successfully",
     redirectPath: "/dashboard",
     preSubmitValidator: validateChangePasswordFields,

@@ -27,7 +27,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
   return customAction({
     params,
     request,
-    url: "users/current",
+    url: "users/current/details",
     successMessage: "Updated successfully",
     redirectPath: "/dashboard",
     preSubmitValidator: validateEditUserDetailsFields,

@@ -1,9 +1,13 @@
 import { Router } from "express";
 import {
+  changePassword,
   editCurrentUserDetails,
   getCurrentUser,
 } from "../controllers/userController.js";
-import { validateEditDetailsInput } from "../middlewares/validationMiddleware.js";
+import {
+  validateChangePasswordInput,
+  validateEditDetailsInput,
+} from "../middlewares/validationMiddleware.js";
 
 const router = Router();
 
@@ -20,7 +24,15 @@ router.get("/admin/stats/:userID", () => {});
 router.get("/current", getCurrentUser);
 
 // edit current user details
+router.patch(
+  "/current/details",
+  //@ts-ignore
+  validateEditDetailsInput,
+  editCurrentUserDetails
+);
+
+// edit current user details
 //@ts-ignore
-router.patch("/current", validateEditDetailsInput, editCurrentUserDetails);
+router.patch("/current/password", validateChangePasswordInput, changePassword);
 
 export default router;

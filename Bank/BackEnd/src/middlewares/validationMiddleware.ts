@@ -14,6 +14,7 @@ import {
   loginSchema,
   registerSchema,
   editDetailsSchema,
+  changePasswordSchema,
 } from "../errors/validationSchemas.js";
 
 function processValidations(req: Request, res: Response, next: NextFunction) {
@@ -49,7 +50,7 @@ export const validateEditDetailsInput = validationRunner(
   checkSchema(editDetailsSchema)
 );
 
-// export const validateChangePasswordInput = validationRunner(
-//   // @ts-ignore
-//   checkSchema(changePasswordSchema)
-// );
+export const validateChangePasswordInput = validationRunner(
+  // @ts-ignore
+  checkSchema(changePasswordSchema)
+);

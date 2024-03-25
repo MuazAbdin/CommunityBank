@@ -12,9 +12,9 @@ export function useInput(
   const [value, setValue] = useState(prevValue || "");
   const [showMessage, setShowMessage] = useState(false);
 
-  useEffect(() => {
-    if (isSubmitted) setShowMessage(true);
-  }, [isSubmitted]);
+  // useEffect(() => {
+  //   if (isSubmitted) setShowMessage(true);
+  // }, [isSubmitted]);
 
   const validationResult = {
     result: validator ? validator(value).result : errorMessage === "",
@@ -36,7 +36,7 @@ export function useInput(
     value,
     hasError: !validationResult.result,
     errorMessage: validationResult.message,
-    showMessage,
+    showMessage: isSubmitted || showMessage,
     handleInputChange,
     handleInputBlur,
   };

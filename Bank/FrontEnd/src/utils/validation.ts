@@ -136,7 +136,11 @@ export function validateEditUserDetailsFields(fields: any) {
 
 export function validateChangePasswordFields(fields: any) {
   const results = CHANGE_PASSWORD_FIELDS.map((f) => {
-    return { name: f.id, value: fields[f.id], ...f.validator(fields[f.id]) };
+    const validator =
+      f.id === "passwordConfirm"
+        ? (value: string) => f.validator(fields.password || "", value)
+        : f.validator;
+    return { name: f.id, value: fields[f.id], ...validator(fields[f.id]) };
   });
   const data = results
     .filter((r) => !r.result)

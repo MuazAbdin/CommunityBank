@@ -1,6 +1,11 @@
 import { IRequestBodyUserDetails } from "../types/IHttp.js";
 import User from "../models/User.js";
-import { BadRequestError } from "./customErrors.js";
+import {
+  BadRequestError,
+  NotFoundError,
+  UnauthenticatedError,
+} from "./customErrors.js";
+import { comparePassword } from "../utils/auth.js";
 
 type Location = "body" | "cookies" | "headers" | "params" | "query";
 type validator = (
@@ -120,7 +125,7 @@ export const changePasswordSchema = {
   oldPassword: {
     errorMessage: "required",
     trim: true,
-    notEmpty: true,
+    notEmpty: { errorMessage: "required", bail: true },
   },
   password: registerSchema.password,
   passwordConfirm: registerSchema.passwordConfirm,
