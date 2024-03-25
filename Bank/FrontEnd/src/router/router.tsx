@@ -18,11 +18,13 @@ import Current from "../pages/Current";
 import Transfer from "../pages/Transfer";
 import Loan from "../pages/Loan";
 import Breakdown from "../pages/Breakdown";
+import Error from "../pages/Error";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HomeLayout />,
+    errorElement: <Error />,
     children: [
       {
         index: true,
