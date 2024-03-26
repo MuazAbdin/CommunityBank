@@ -1,18 +1,27 @@
 import styled from "styled-components";
 
-function getColor(hasError: boolean, showMessage: boolean) {
-  if (!showMessage) return "#d2f4ff";
+function getColor(
+  hasError: boolean,
+  showMessage: boolean,
+  hideVerifyIcon: boolean
+) {
+  if (!showMessage || hideVerifyIcon) return "#d2f4ff";
   return hasError ? "var(--red-dark)" : "var(--green-dark)";
 }
 
-function getBackgroundColor(hasError: boolean, showMessage: boolean) {
-  if (!showMessage) return "#d2f4ff";
+function getBackgroundColor(
+  hasError: boolean,
+  showMessage: boolean,
+  hideVerifyIcon: boolean
+) {
+  if (!showMessage || hideVerifyIcon) return "#d2f4ff";
   return hasError ? "var(--red-light)" : "var(--green-light)";
 }
 
 const Wrapper = styled.fieldset<{
   $hasError: boolean;
   $showMessage: boolean;
+  $hideVerifyIcon: boolean;
 }>`
   position: relative;
   border: none;
@@ -42,10 +51,15 @@ const Wrapper = styled.fieldset<{
     display: flex;
     flex-direction: column;
     border: 2px solid
-      ${(props) => getColor(props.$hasError, props.$showMessage)};
+      ${(props) =>
+        getColor(props.$hasError, props.$showMessage, props.$hideVerifyIcon)};
     border-radius: 0.5rem;
     background-color: ${(props) =>
-      getBackgroundColor(props.$hasError, props.$showMessage)};
+      getBackgroundColor(
+        props.$hasError,
+        props.$showMessage,
+        props.$hideVerifyIcon
+      )};
     overflow: hidden;
     position: relative;
 
@@ -111,7 +125,11 @@ const Wrapper = styled.fieldset<{
       font-size: 1.25rem;
       font-family: var(--main-font);
       background-color: ${(props) =>
-        getBackgroundColor(props.$hasError, props.$showMessage)};
+        getBackgroundColor(
+          props.$hasError,
+          props.$showMessage,
+          props.$hideVerifyIcon
+        )};
       border: none;
       border-radius: var(--border-radius);
     }

@@ -1,9 +1,11 @@
-import { useOutletContext } from "react-router-dom";
+import { ActionFunctionArgs, useOutletContext } from "react-router-dom";
 import Wrapper from "../assets/stylingWrappers/Overview";
 import StyledAccountForm from "../assets/stylingWrappers/StyledAccountForm";
 import { AccountDetails, UserDetails } from "../types/components";
 import Table from "../components/Table";
 import { accountNumFormatter } from "../utils/inputFormatters";
+import { FaFileLines, FaTrashCan } from "react-icons/fa6";
+import { customAction } from "../utils/customAction";
 
 function Overview() {
   const { accountsValues } = useOutletContext() as {
@@ -25,6 +27,12 @@ function Overview() {
                 <td>{accountNumFormatter(acc.number)}</td>
                 <td>{acc.type}</td>
                 <td>₪ {acc.balance}</td>
+                <td>
+                  <FaFileLines />
+                </td>
+                <td>
+                  <FaTrashCan />
+                </td>
               </tr>
             );
           })}
@@ -39,3 +47,15 @@ function Overview() {
 }
 
 export default Overview;
+
+export async function action({ params, request }: ActionFunctionArgs) {
+  return customAction({
+    params,
+    request,
+    url: "",
+    successMessage: "Created successfully",
+    redirectPath: "/dashboard",
+    // preSubmitValidator: validateEditUserDetailsFields,
+    specialErrors: [400], // BadRequestError (invalid inputs)
+  });
+}

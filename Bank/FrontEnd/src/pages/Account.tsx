@@ -26,7 +26,7 @@ function Account() {
 export default Account;
 
 export async function loader({ params }: LoaderFunctionArgs) {
-  const response = await fetcher(`/v1/transactions/${params.number}`);
+  const response = await fetcher(`transactions/${params.number}`);
   if (!response.ok) throw response;
   const { user, account, transactions } = (await response.json()) as {
     user: UserDetails;

@@ -53,10 +53,12 @@ function UserDetailsForm({
             placeholder={f.placeholder}
             autoComplete={f.autoComplete ?? "off"}
             ref={f.id === "password" ? insertedPassword : null}
-            validator={!isSubmitted ? validator : undefined}
+            // validator={!isSubmitted ? validator : undefined}
+            validator={validator}
             severErrorMsg={severErrorMsg}
             prevValue={values?.[f.id as Extract<IUserValues, "IDcard">] || ""}
             help={f.help}
+            hideVerifyIcon={f.hideVerifyIcon}
             isSubmitted={isSubmitted}
             disabled={f.disabled}
             readOnly={f.readOnly}

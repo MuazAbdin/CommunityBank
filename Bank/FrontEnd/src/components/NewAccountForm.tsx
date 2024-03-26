@@ -5,7 +5,7 @@ function NewAccountForm({ className }: { className?: string }) {
   const isSubmitting = navigation.state === "submitting";
 
   return (
-    <Form className={className} noValidate>
+    <Form method="POST" className={className} noValidate>
       <h3 className="title">new account</h3>
       <p>Select account type:</p>
       <fieldset>

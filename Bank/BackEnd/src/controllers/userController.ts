@@ -44,7 +44,16 @@ export async function changePassword(
     const user = await User.findById(userID);
     if (!user) return next(new NotFoundError("User Not Found"));
     const isPasswordValid = await comparePassword(oldPassword, user.password);
-    if (!isPasswordValid) return next(new BadRequestError("Invalid inputs"));
+    if (!isPasswordValid)
+      return next(
+        new BadRequestError("Invalid inputs", [
+          {
+            name: "oldPassword",
+            value: oldPassword,
+            message: "Wrong Password",
+          },
+        ])
+      );
     user.password = password;
     await user.save();
     res.status(StatusCodes.OK).send({ msg: "Changed successfully" });

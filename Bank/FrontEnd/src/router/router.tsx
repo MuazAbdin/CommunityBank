@@ -25,6 +25,8 @@ import { action as loginAction } from "../pages/Login";
 import { action as editUserDetailsAction } from "../pages/EditUserDetails";
 import { action as changeUserPasswordAction } from "../pages/ChangeUserPassword";
 
+import { action as openAccountAction } from "../pages/Overview";
+
 import { action as transferAction } from "../pages/Transfer";
 
 const router = createBrowserRouter([
@@ -56,6 +58,7 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <Overview />,
+            action: openAccountAction,
           },
           {
             path: "edit-details",

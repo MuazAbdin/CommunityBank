@@ -11,6 +11,7 @@ interface IInputProps {
   id: string;
   validator?: IInputValidator;
   formatter?: IInputFormatter;
+  hideVerifyIcon?: boolean;
   formID?: string;
   help?: string;
   isSubmitted?: boolean;
@@ -25,6 +26,7 @@ const Input = forwardRef(function Input(
     validator,
     formatter,
     help,
+    hideVerifyIcon,
     isSubmitted,
     severErrorMsg,
     prevValue,
@@ -43,11 +45,15 @@ const Input = forwardRef(function Input(
   } = useInput(validator, formatter, severErrorMsg, isSubmitted, prevValue);
 
   return (
-    <Wrapper $hasError={hasError} $showMessage={showMessage}>
+    <Wrapper
+      $hasError={hasError}
+      $showMessage={showMessage}
+      $hideVerifyIcon={hideVerifyIcon || false}
+    >
       {help && <InputHelp message={help} />}
       <div className="main-container">
         <span className="input-field">
-          {formID !== "login-form" && showMessage && (
+          {!hideVerifyIcon && showMessage && (
             <GrValidate className="validate-icon" />
           )}
           <input

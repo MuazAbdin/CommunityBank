@@ -26,12 +26,13 @@ export interface IInputField {
   autoComplete?: string;
   validator?: IInputValidator;
   help?: string;
+  hideVerifyIcon?: boolean;
   disabled?: boolean;
   readOnly?: boolean;
   formatter?: IInputFormatter;
 }
 
-export const REGISTER_FIELDS = [
+export const REGISTER_FIELDS: IInputField[] = [
   {
     label: "ID Card",
     id: "IDcard",
@@ -105,13 +106,14 @@ export const REGISTER_FIELDS = [
   },
 ];
 
-export const LOGIN_FIELDS = [
+export const LOGIN_FIELDS: IInputField[] = [
   {
     label: "ID Card",
     id: "IDcard",
     type: "number",
     placeholder: "ID Card",
     autoComplete: "off",
+    hideVerifyIcon: true,
   },
   {
     label: "Password",
@@ -119,6 +121,7 @@ export const LOGIN_FIELDS = [
     type: "password",
     placeholder: "Password",
     autoComplete: "off",
+    hideVerifyIcon: true,
   },
 ];
 
@@ -129,13 +132,14 @@ export const EDIT_USER_FIELDS = REGISTER_FIELDS.filter(
   return f;
 });
 
-export const CHANGE_PASSWORD_FIELDS = [
+export const CHANGE_PASSWORD_FIELDS: IInputField[] = [
   {
     label: "Old Password",
     id: "oldPassword",
     type: "password",
     placeholder: "Old Password",
     validator: isEmpty,
+    hideVerifyIcon: true,
   },
   {
     label: "New Password",
