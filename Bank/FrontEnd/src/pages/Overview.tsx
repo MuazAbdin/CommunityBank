@@ -52,10 +52,9 @@ export async function action({ params, request }: ActionFunctionArgs) {
   return customAction({
     params,
     request,
-    url: "",
+    url: "accounts",
     successMessage: "Created successfully",
     redirectPath: "/dashboard",
-    // preSubmitValidator: validateEditUserDetailsFields,
-    specialErrors: [400], // BadRequestError (invalid inputs)
+    specialErrors: [],
   });
 }

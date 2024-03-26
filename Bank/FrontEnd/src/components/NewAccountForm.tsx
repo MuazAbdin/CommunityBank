@@ -1,6 +1,16 @@
+import { ChangeEvent, useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
 
+type accountType = "checking" | "savings";
+
 function NewAccountForm({ className }: { className?: string }) {
+  const [accountType, setAccountType] = useState<accountType>("checking");
+
+  const changeSelection = (event: ChangeEvent<HTMLInputElement>) => {
+    const inputValue = event.currentTarget.value as accountType;
+    setAccountType(inputValue);
+  };
+
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
 
@@ -13,8 +23,10 @@ function NewAccountForm({ className }: { className?: string }) {
           <input
             type="radio"
             id="checking"
-            name="account-type"
+            name="type"
             value="checking"
+            onChange={changeSelection}
+            checked={accountType === "checking"}
           />
           <label htmlFor="checking">checking</label>
         </div>
@@ -22,8 +34,10 @@ function NewAccountForm({ className }: { className?: string }) {
           <input
             type="radio"
             id="savings"
-            name="account-type"
+            name="type"
             value="savings"
+            onChange={changeSelection}
+            checked={accountType === "savings"}
           />
           <label htmlFor="savings">savings</label>
         </div>

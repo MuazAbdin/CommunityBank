@@ -93,9 +93,11 @@ export const isAddressValid: IInputValidator = function (address) {
 /* Whole form presubmit validators */
 export function validateRegisterFields(fields: any) {
   const results = REGISTER_FIELDS.map((f) => {
+    if (!f.validator)
+      return { name: f.id, value: fields[f.id], result: true, message: "" };
     const validator =
       f.id === "passwordConfirm"
-        ? (value: string) => f.validator(fields.password || "", value)
+        ? (value: string) => f.validator!(fields.password || "", value)
         : f.validator;
     return { name: f.id, value: fields[f.id], ...validator(fields[f.id]) };
   });
@@ -123,8 +125,11 @@ export function validateLoginFields(fields: any) {
 
 export function validateEditUserDetailsFields(fields: any) {
   const results = EDIT_USER_FIELDS.filter((f) => f.id !== "IDcard").map((f) => {
+    if (!f.validator)
+      return { name: f.id, value: fields[f.id], result: true, message: "" };
     return { name: f.id, value: fields[f.id], ...f.validator(fields[f.id]) };
   });
+
   const data = results
     .filter((r) => !r.result)
     .map((r) => {
@@ -136,9 +141,11 @@ export function validateEditUserDetailsFields(fields: any) {
 
 export function validateChangePasswordFields(fields: any) {
   const results = CHANGE_PASSWORD_FIELDS.map((f) => {
+    if (!f.validator)
+      return { name: f.id, value: fields[f.id], result: true, message: "" };
     const validator =
       f.id === "passwordConfirm"
-        ? (value: string) => f.validator(fields.password || "", value)
+        ? (value: string) => f.validator!(fields.password || "", value)
         : f.validator;
     return { name: f.id, value: fields[f.id], ...validator(fields[f.id]) };
   });
