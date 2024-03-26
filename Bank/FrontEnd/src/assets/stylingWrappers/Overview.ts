@@ -41,6 +41,24 @@ const Wrapper = styled.section`
       padding-right: 0.3em;
       text-align: right;
     }
+    .table-BADC-btn,
+    .table-del-btn {
+      cursor: pointer;
+      &:hover {
+        border: 2px solid;
+        border-radius: var(--border-radius);
+      }
+
+      svg {
+        display: block;
+        margin: auto;
+      }
+    }
+
+    .table-del-btn {
+      background-color: var(--red-light);
+      color: var(--red-dark);
+    }
   }
 `;
 

@@ -1,4 +1,8 @@
-import { ActionFunctionArgs, useOutletContext } from "react-router-dom";
+import {
+  ActionFunctionArgs,
+  useNavigate,
+  useOutletContext,
+} from "react-router-dom";
 import Wrapper from "../assets/stylingWrappers/Overview";
 import StyledAccountForm from "../assets/stylingWrappers/StyledAccountForm";
 import { AccountDetails, UserDetails } from "../types/components";
@@ -6,12 +10,17 @@ import Table from "../components/Table";
 import { accountNumFormatter } from "../utils/inputFormatters";
 import { FaFileLines, FaTrashCan } from "react-icons/fa6";
 import { customAction } from "../utils/customAction";
+import { fetcher } from "../utils/fetcher";
+import { HTTPError } from "../utils/cutomErrors";
+import { toast } from "react-toastify";
 
 function Overview() {
   const { accountsValues } = useOutletContext() as {
     userValues: UserDetails;
     accountsValues: AccountDetails[];
   };
+
+  const navigate = useNavigate();
 
   return (
     <section className="content">
@@ -27,10 +36,16 @@ function Overview() {
                 <td>{accountNumFormatter(acc.number)}</td>
                 <td>{acc.type}</td>
                 <td>₪ {acc.balance}</td>
-                <td>
+                <td className="table-BADC-btn" onClick={handleBADC}>
                   <FaFileLines />
                 </td>
-                <td>
+                <td
+                  className="table-del-btn"
+                  onClick={async () => {
+                    await handleDelete(acc.number);
+                    navigate("/dashboard");
+                  }}
+                >
                   <FaTrashCan />
                 </td>
               </tr>
@@ -58,3 +73,28 @@ export async function action({ params, request }: ActionFunctionArgs) {
     specialErrors: [],
   });
 }
+
+const handleBADC = async () => {};
+const handleDelete = async (accountNum: string) => {
+  try {
+    const response = await fetcher(`accounts/${accountNum.slice(5)}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      if (response.status === 404) {
+        const responseData = await response.json();
+        return toast.error(responseData.msg);
+      }
+      throw new HTTPError(response);
+    }
+    const responseData = await response.json();
+    toast.success(responseData.msg);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      toast.error(error.message);
+      throw error;
+    }
+    console.log(error);
+    return error;
+  }
+};

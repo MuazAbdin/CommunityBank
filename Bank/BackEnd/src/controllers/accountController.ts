@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import Account from "../models/Account.js";
 import { IRequestBodyAccountType } from "../types/IHttp.js";
 import { handleDBErrors } from "../errors/dbErrors.js";
-import { BadRequestError } from "../errors/customErrors.js";
+import { BadRequestError, NotFoundError } from "../errors/customErrors.js";
 
 export async function getCurrentUserAccounts(req: Request, res: Response) {
   const accounts = await Account.find({ user: req.user!._id });
@@ -45,10 +45,17 @@ export async function getAccount(req: Request, res: Response) {
   res.status(StatusCodes.OK).send({ user: req.user, account });
 }
 
-export async function deleteAccount(req: Request, res: Response) {
-  const reqParams = req.params as { number: string };
-  const account = await Account.findOneAndDelete({ number: reqParams.number });
-  res
-    .status(StatusCodes.OK)
-    .send({ msg: "account deleted successfully ", account, user: req.user });
+export async function deleteAccount(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const { number } = req.params as { number: string };
+  try {
+    const account = await Account.findOneAndDelete({ number });
+    if (!account) return next(new NotFoundError("Account not found"));
+    res.send({ msg: "account deleted successfully " });
+  } catch (error) {
+    return next(new BadRequestError("Something went wrong"));
+  }
 }
