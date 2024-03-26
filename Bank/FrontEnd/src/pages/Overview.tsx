@@ -36,7 +36,10 @@ function Overview() {
                 <td>{accountNumFormatter(acc.number)}</td>
                 <td>{acc.type}</td>
                 <td>₪ {acc.balance}</td>
-                <td className="table-BADC-btn" onClick={handleBADC}>
+                <td
+                  className="table-BADC-btn"
+                  onClick={() => handleBADC(acc.number)}
+                >
                   <FaFileLines />
                 </td>
                 <td
@@ -74,7 +77,31 @@ export async function action({ params, request }: ActionFunctionArgs) {
   });
 }
 
-const handleBADC = async () => {};
+const handleBADC = async (accountNum: string) => {
+  try {
+    const response = await fetcher(`accounts/BADC/${accountNum.slice(5)}`);
+
+    if (!response.ok) {
+      if ([403, 404].includes(response.status)) {
+        const responseData = await response.json();
+        return toast.error(responseData.msg);
+      }
+      throw new HTTPError(response);
+    }
+
+    const blob = await response.blob();
+    const fileURL = URL.createObjectURL(blob);
+    window.open(fileURL, "_blank");
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      toast.error(error.message);
+      throw error;
+    }
+    console.log(error);
+    return error;
+  }
+};
+
 const handleDelete = async (accountNum: string) => {
   try {
     const response = await fetcher(`accounts/${accountNum.slice(5)}`, {

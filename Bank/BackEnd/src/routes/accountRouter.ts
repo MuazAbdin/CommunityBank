@@ -3,6 +3,7 @@ import {
   createNewAccout,
   deleteAccount,
   getAccount,
+  getBADC,
   getCurrentUserAccounts,
 } from "../controllers/accountController.js";
 
@@ -19,6 +20,9 @@ router.get("/", getCurrentUserAccounts);
 
 // get specific account for the current user
 router.get("/:number", getAccount);
+
+// get BADC: Bank account Details Confirmation for a specific account for the current user
+router.get("/BADC/:number", getBADC);
 
 // create new account for the current user
 router.post("/", createNewAccout);
