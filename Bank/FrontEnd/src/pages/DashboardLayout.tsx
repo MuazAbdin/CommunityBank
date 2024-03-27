@@ -1,9 +1,11 @@
-import { Outlet, useLoaderData, useOutletContext } from "react-router-dom";
+import { Outlet, useLoaderData } from "react-router-dom";
 import Wrapper from "../assets/stylingWrappers/DashboardLayout";
 import Aside from "../components/Aside";
 import PageHeader from "../components/PageHeader";
 import { fetcher } from "../utils/fetcher";
 import { AccountDetails, UserDetails } from "../types/components";
+import { HTTPError } from "../utils/cutomErrors";
+import { toast } from "react-toastify";
 
 function DashboardLayout() {
   const { user, accounts } = useLoaderData() as Awaited<
@@ -40,15 +42,20 @@ function DashboardLayout() {
 
 export default DashboardLayout;
 
-// in the back end made get current middleware before all routes
 export async function loader() {
-  // const response = await fetcher("/v1/users/current");
-  const response = await fetcher("accounts");
-  if (!response.ok) throw response;
-  const { user, accounts } = (await response.json()) as {
-    user: UserDetails;
-    accounts: AccountDetails[];
-  };
-  return { user, accounts };
-  // return json(response);
+  try {
+    const response = await fetcher("accounts");
+    if (!response.ok) throw new HTTPError(response);
+    const responseData = await response.json();
+    return responseData as {
+      user: UserDetails;
+      accounts: AccountDetails[];
+    };
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      toast.error(error.message);
+    }
+    console.log(error);
+    throw error;
+  }
 }

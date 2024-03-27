@@ -60,7 +60,18 @@ export default function buildBADC_PDF(
     .text(
       "If you have any further questions, please do not hesitate to call us.",
       { indent: 15 }
-    );
+    )
+    .moveDown(2);
+
+  pdfDoc
+    .font("fonts/SourceSerif4-Bold.ttf", 14)
+    .text("Bank Manager")
+    .moveDown(0.25);
+  pdfDoc
+    .font("fonts/SourceSerif4-Regular.ttf", 13)
+    .text("Sawyer Ford")
+    .moveDown();
+  pdfDoc.image("images/BankSignature.png", { height: 100 });
 }
 
 function captlize(value: string) {

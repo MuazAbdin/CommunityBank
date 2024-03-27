@@ -2,14 +2,25 @@ import { FaRightFromBracket } from "react-icons/fa6";
 import { fetcher } from "../utils/fetcher";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { HTTPError } from "../utils/cutomErrors";
 
 function PageHeader({ name }: { name: string }) {
   const navigate = useNavigate();
 
   async function handleLogout() {
-    await fetcher("/v1/auth/logout");
-    toast.success("Logged out successfully");
-    return navigate("/login");
+    try {
+      const response = await fetcher("auth/logout");
+      if (!response.ok) throw new HTTPError(response);
+      toast.success("Logged out successfully");
+      return navigate("/login");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+        throw error;
+      }
+      console.log(error);
+      return error;
+    }
   }
 
   return (

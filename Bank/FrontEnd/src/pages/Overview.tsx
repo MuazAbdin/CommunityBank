@@ -24,7 +24,6 @@ function Overview() {
   const openModal = () => setIsModalOpened(true);
 
   const clikcedAccountRef = useRef<string>("");
-
   const navigate = useNavigate();
 
   return (
@@ -33,9 +32,19 @@ function Overview() {
         isOpened={isModalOpened}
         onCancel={closeModal}
         onConfirm={async () => {
-          await handleDelete(clikcedAccountRef.current);
-          navigate("/dashboard");
-          closeModal();
+          try {
+            await handleDelete(clikcedAccountRef.current);
+            navigate("/dashboard");
+          } catch (error: unknown) {
+            if (error instanceof HTTPError) {
+              await error.setMessage();
+              toast.error(error.message);
+            }
+            console.log(error);
+            throw error;
+          } finally {
+            closeModal();
+          }
         }}
       />
 
@@ -118,25 +127,10 @@ const handleBADC = async (accountNum: string) => {
 };
 
 async function handleDelete(accountNum: string) {
-  try {
-    const response = await fetcher(`accounts/${accountNum.slice(5)}`, {
-      method: "DELETE",
-    });
-    if (!response.ok) {
-      if (response.status === 404) {
-        const responseData = await response.json();
-        return toast.error(responseData.msg);
-      }
-      throw new HTTPError(response);
-    }
-    const responseData = await response.json();
-    toast.success(responseData.msg);
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      toast.error(error.message);
-      throw error;
-    }
-    console.log(error);
-    return error;
-  }
+  const response = await fetcher(`accounts/${accountNum.slice(5)}`, {
+    method: "DELETE",
+  });
+  if (!response.ok) throw new HTTPError(response);
+  const responseData = await response.json();
+  toast.success(responseData.msg);
 }

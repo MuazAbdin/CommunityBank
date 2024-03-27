@@ -44,7 +44,11 @@ export async function createNewAccout(
   }
 }
 
-export async function getAccount(req: Request, res: Response) {
+export async function getAccount(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   const reqParams = req.params as { number: string };
   const account = await Account.findOneAndUpdate(
     { number: reqParams.number },
@@ -52,46 +56,40 @@ export async function getAccount(req: Request, res: Response) {
     { new: true }
   );
   // console.log(moment(account?.lastVisit).format("LLLL"));
+  if (!account) return next(new NotFoundError("Account not found"));
   res.status(StatusCodes.OK).send({ user: req.user, account });
 }
 
 export async function getBADC(req: Request, res: Response, next: NextFunction) {
   const { number } = req.params as { number: string };
-  try {
-    const account = await Account.findOne({ number }).populate("user");
-    if (!account) return next(new NotFoundError("Account not found"));
-    //@ts-ignore
-    if (req.user?.IDcard !== account.user.IDcard)
-      return next(new UnauthorizedError("Forbidden action"));
 
-    const fileName = `account-${account.number}.pdf`;
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = dirname(__filename);
-    const filePath = path.join(
-      resolve(__dirname, "../.."),
-      "pdfFiles",
-      fileName
-    );
+  const account = await Account.findOne({ number }).populate("user");
+  if (!account) return next(new NotFoundError("Account not found"));
+  //@ts-ignore
+  if (req.user?.IDcard !== account.user.IDcard)
+    return next(new UnauthorizedError("Forbidden action"));
 
-    const pdfDoc = new PDFDocument({
-      size: "A4",
-      margin: 80,
-      info: {
-        Title: `account-${account.number}.pdf`,
-        Author: "Community-Bank",
-      },
-    });
-    res.setHeader("Content-Type", "application/pdf");
-    res.setHeader("Content-Disposition", `inline; filename=${fileName}`);
+  const fileName = `account-${account.number}.pdf`;
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = dirname(__filename);
+  const filePath = path.join(resolve(__dirname, "../.."), "pdfFiles", fileName);
 
-    buildBADC_PDF(pdfDoc, account);
+  const pdfDoc = new PDFDocument({
+    size: "A4",
+    margin: 80,
+    info: {
+      Title: `account-${account.number}.pdf`,
+      Author: "Community-Bank",
+    },
+  });
+  res.setHeader("Content-Type", "application/pdf");
+  res.setHeader("Content-Disposition", `inline; filename=${fileName}`);
 
-    pdfDoc.pipe(fs.createWriteStream(filePath)); // save copy on the server: optional
-    pdfDoc.pipe(res);
-    pdfDoc.end();
-  } catch (error) {
-    return next(new BadRequestError("Something went wrong"));
-  }
+  buildBADC_PDF(pdfDoc, account);
+
+  pdfDoc.pipe(fs.createWriteStream(filePath)); // save copy on the server: optional
+  pdfDoc.pipe(res);
+  pdfDoc.end();
 }
 
 export async function deleteAccount(
@@ -100,11 +98,9 @@ export async function deleteAccount(
   next: NextFunction
 ) {
   const { number } = req.params as { number: string };
-  try {
-    const account = await Account.findOneAndDelete({ number });
-    if (!account) return next(new NotFoundError("Account not found"));
-    res.send({ msg: "account deleted successfully " });
-  } catch (error) {
-    return next(new BadRequestError("Something went wrong"));
-  }
+  const account = await Account.findOne({ number, balance: 0 });
+  console.log(account);
+  // const account = await Account.findOneAndDelete({ number }, { balance: 0 });
+  if (!account) return next(new BadRequestError("Can't be deleted"));
+  res.send({ msg: "account deleted successfully " });
 }
