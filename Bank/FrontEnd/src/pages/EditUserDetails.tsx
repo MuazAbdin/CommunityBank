@@ -6,7 +6,7 @@ import { customAction } from "../utils/customAction";
 import { validateEditUserDetailsFields } from "../utils/validation";
 
 function EditUserDetails() {
-  const values = useOutletContext<IUserProfileContext>();
+  const { userValues } = useOutletContext<IUserProfileContext>();
   return (
     <section className="content">
       <StyledUserForm
@@ -14,7 +14,7 @@ function EditUserDetails() {
         title="edit details"
         method="PATCH"
         buttonText="save"
-        values={values.userValues}
+        values={userValues}
         fields={EDIT_USER_FIELDS}
       />
     </section>

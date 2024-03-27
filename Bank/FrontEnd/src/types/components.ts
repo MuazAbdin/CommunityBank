@@ -54,8 +54,9 @@ export interface ITransactionProps {
 }
 
 export interface IUserProfileContext {
+  // openModal: () => void;
   userValues: IUserValues;
-  accountsValues: IAccountsValues;
+  accountsValues: IAccountsValues[];
 }
 
 export interface IUserValues {
@@ -74,4 +75,3 @@ export interface IAccountsValues {
   balance: number;
   lastVisit: Date;
 }
-[];

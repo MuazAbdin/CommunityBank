@@ -1,4 +1,4 @@
-import { Outlet, useLoaderData } from "react-router-dom";
+import { Outlet, useLoaderData, useOutletContext } from "react-router-dom";
 import Wrapper from "../assets/stylingWrappers/DashboardLayout";
 import Aside from "../components/Aside";
 import PageHeader from "../components/PageHeader";
@@ -9,6 +9,7 @@ function DashboardLayout() {
   const { user, accounts } = useLoaderData() as Awaited<
     ReturnType<typeof loader>
   >;
+
   const userValues = {
     IDcard: user.IDcard,
     firstName: user.name.first,

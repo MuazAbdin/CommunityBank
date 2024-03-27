@@ -5,7 +5,7 @@ import {
 } from "react-router-dom";
 import Wrapper from "../assets/stylingWrappers/Overview";
 import StyledAccountForm from "../assets/stylingWrappers/StyledAccountForm";
-import { AccountDetails, UserDetails } from "../types/components";
+import { IUserProfileContext } from "../types/components";
 import Table from "../components/Table";
 import { accountNumFormatter } from "../utils/inputFormatters";
 import { FaFileLines, FaTrashCan } from "react-icons/fa6";
@@ -13,17 +13,32 @@ import { customAction } from "../utils/customAction";
 import { fetcher } from "../utils/fetcher";
 import { HTTPError } from "../utils/cutomErrors";
 import { toast } from "react-toastify";
+import { useRef, useState } from "react";
+import Modal from "../components/Modal";
 
 function Overview() {
-  const { accountsValues } = useOutletContext() as {
-    userValues: UserDetails;
-    accountsValues: AccountDetails[];
-  };
+  const { accountsValues } = useOutletContext<IUserProfileContext>();
+
+  const [isModalOpened, setIsModalOpened] = useState(false);
+  const closeModal = () => setIsModalOpened(false);
+  const openModal = () => setIsModalOpened(true);
+
+  const clikcedAccountRef = useRef<string>("");
 
   const navigate = useNavigate();
 
   return (
     <section className="content">
+      <Modal
+        isOpened={isModalOpened}
+        onCancel={closeModal}
+        onConfirm={async () => {
+          await handleDelete(clikcedAccountRef.current);
+          navigate("/dashboard");
+          closeModal();
+        }}
+      />
+
       <h3 className="section-title">overview</h3>
       <Wrapper className="overview-details">
         <Table
@@ -44,9 +59,9 @@ function Overview() {
                 </td>
                 <td
                   className="table-del-btn"
-                  onClick={async () => {
-                    await handleDelete(acc.number);
-                    navigate("/dashboard");
+                  onClick={() => {
+                    clikcedAccountRef.current = acc.number;
+                    openModal();
                   }}
                 >
                   <FaTrashCan />
@@ -102,7 +117,7 @@ const handleBADC = async (accountNum: string) => {
   }
 };
 
-const handleDelete = async (accountNum: string) => {
+async function handleDelete(accountNum: string) {
   try {
     const response = await fetcher(`accounts/${accountNum.slice(5)}`, {
       method: "DELETE",
@@ -124,4 +139,4 @@ const handleDelete = async (accountNum: string) => {
     console.log(error);
     return error;
   }
-};
+}
