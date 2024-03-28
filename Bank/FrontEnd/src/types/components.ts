@@ -37,7 +37,8 @@ export interface AccountDetails {
 
 export interface TransactionDetails {
   _id: string;
-  account: string;
+  senderAccount: string;
+  receiverAccount: string;
   type: string;
   amount: number;
   vendor: string;
@@ -47,10 +48,11 @@ export interface TransactionDetails {
 
 export interface ITransactionProps {
   // _id: string;
-  date: Date;
+  amount: number;
+  receiverAccount: string;
   vendor: string;
   category: string;
-  amount: number;
+  date: Date;
 }
 
 export interface IUserProfileContext {

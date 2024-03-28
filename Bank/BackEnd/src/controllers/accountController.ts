@@ -98,9 +98,7 @@ export async function deleteAccount(
   next: NextFunction
 ) {
   const { number } = req.params as { number: string };
-  const account = await Account.findOne({ number, balance: 0 });
-  console.log(account);
-  // const account = await Account.findOneAndDelete({ number }, { balance: 0 });
+  const account = await Account.findOneAndDelete({ number, balance: 0 });
   if (!account) return next(new BadRequestError("Can't be deleted"));
   res.send({ msg: "account deleted successfully " });
 }

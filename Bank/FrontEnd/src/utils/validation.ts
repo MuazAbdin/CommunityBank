@@ -3,6 +3,7 @@ import {
   CHANGE_PASSWORD_FIELDS,
   EDIT_USER_FIELDS,
   REGISTER_FIELDS,
+  TRANSFER_FIELDS,
 } from "./constants";
 import { isInt } from "validator";
 
@@ -30,8 +31,7 @@ export const isAmountValid: IInputValidator = function (amount) {
 
 export const isAccountNumValid: IInputValidator = function (accountNum) {
   if (accountNum.length === 0) return { result: false, message: "required" };
-  if (!/^\d{11}$/.test(accountNum))
-    return { result: false, message: "invalid" };
+  if (!/^\d{6}$/.test(accountNum)) return { result: false, message: "invalid" };
   return { result: true, message: "valid" };
 };
 
@@ -148,6 +148,22 @@ export function validateChangePasswordFields(fields: any) {
         ? (value: string) => f.validator!(fields.password || "", value)
         : f.validator;
     return { name: f.id, value: fields[f.id], ...validator(fields[f.id]) };
+  });
+  const data = results
+    .filter((r) => !r.result)
+    .map((r) => {
+      return { name: r.name, value: r.value, message: r.message };
+    });
+  const msg = data.length === 0 ? "" : "Invalid inputs";
+  return { msg, data };
+}
+
+export function validateTrnasferFields(fields: { [key: string]: string }) {
+  const results = Object.keys(fields).map((name) => {
+    const field = TRANSFER_FIELDS.find((f) => f.id == name);
+    if (!field?.validator)
+      return { name, value: fields[name], ...isEmpty(fields[name]) };
+    return { name, value: fields[name], ...field.validator(fields[name]) };
   });
   const data = results
     .filter((r) => !r.result)

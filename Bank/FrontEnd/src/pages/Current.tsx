@@ -13,7 +13,7 @@ function Current() {
       <StyledSearch />
       <Table
         tableCaption="Transactions"
-        tableHeader={["", "Date", "Vendor", "Category", "Amount"]}
+        tableHeader={["", "Date", "Account", "Vendor", "Category", "Amount"]}
       >
         {transactions.map((t) => (
           <Transaction key={t._id} {...t} />

@@ -161,29 +161,30 @@ export const CHANGE_PASSWORD_FIELDS: IInputField[] = [
 export const TRANSFER_FIELDS: IInputField[] = [
   {
     label: "Amount",
-    id: "transferAmount",
+    id: "amount",
     type: "number",
     placeholder: "Amount",
     validator: isAmountValid,
     help: "Minimum amount is ₪1.",
-    formatter: moneyAmountFormatter,
+    // formatter: moneyAmountFormatter,
   },
   {
     label: "Transfer to",
-    id: "transferTo",
+    id: "receiverAccount",
     type: "text",
     placeholder: "Transfer to",
     validator: isAccountNumValid,
-    help: "A valid CommunityBank account number.",
-    formatter: accountNumFormatter,
+    help: "Last 6 digits of a CommunityBank account number.",
+    // formatter: accountNumFormatter,
+    // hideVerifyIcon: true,
   },
-  // {
-  //   label: "Transfer on",
-  //   id: "transferOn",
-  //   type: "date",
-  //   placeholder: "Transfer on",
-  //   // min: new Date().toLocaleDateString("fr-ca"),
-  // },
+  {
+    label: "Vendor",
+    id: "vendor",
+    type: "text",
+    placeholder: "Vendor",
+    validator: isEmpty,
+  },
 ];
 
 export const LOAN_FIELDS: IInputField[] = [

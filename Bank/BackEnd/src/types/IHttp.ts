@@ -31,6 +31,7 @@ export interface IRequestBodyAccountType {
 }
 
 export interface IRequestBodyTransaction {
+  receiver: string;
   amount: string;
   vendor: string;
   category: (typeof CATEGORIES)[number];

@@ -72,6 +72,27 @@ export default function buildBADC_PDF(
     .text("Sawyer Ford")
     .moveDown();
   pdfDoc.image("images/BankSignature.png", { height: 100 });
+
+  pdfDoc
+    .moveTo(80, pdfDoc.page.height - 80)
+    .lineTo(pdfDoc.page.width - 80, pdfDoc.page.height - 80)
+    .stroke();
+
+  pdfDoc
+    .font("fonts/SourceSerif4-Bold.ttf", 11)
+    .text("Community Bank", 130, pdfDoc.page.height - 75, {
+      continued: true,
+      lineBreak: false,
+    })
+    .font("fonts/SourceSerif4-Regular.ttf", 10)
+    .text(", Jerusalem, Community st. 13. ", {
+      continued: true,
+      lineBreak: false,
+    })
+    .font("fonts/SourceSerif4-Bold.ttf")
+    .text("Tel: ", { continued: true, lineBreak: false })
+    .font("fonts/SourceSerif4-Regular.ttf")
+    .text("02-1234567 .", { lineBreak: false });
 }
 
 function captlize(value: string) {
