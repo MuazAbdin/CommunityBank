@@ -21,7 +21,10 @@ function UserDetailsForm({
   const insertedPassword = useRef<HTMLInputElement>(null);
 
   const invalidCredentials = actionData?.msg === "invalid credentials";
-  const isSubmitted = actionData?.msg === "Invalid inputs";
+
+  const submissionCountRef = useRef(0);
+  // const isSubmitted = actionData?.msg === "Invalid inputs";
+  // const isSubmitted = !!actionData;
 
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
@@ -58,14 +61,20 @@ function UserDetailsForm({
             prevValue={values?.[f.id as Extract<IUserValues, "IDcard">] || ""}
             help={f.help}
             hideVerifyIcon={f.hideVerifyIcon}
-            isSubmitted={isSubmitted}
+            // isSubmitted={isSubmitted}
+            submissionCount={submissionCountRef.current}
             disabled={f.disabled}
             readOnly={f.readOnly}
             formID={formID}
           />
         );
       })}
-      <button name="submit" className="btn" disabled={isSubmitting}>
+      <button
+        name="submit"
+        className="btn"
+        disabled={isSubmitting}
+        onClick={() => submissionCountRef.current++}
+      >
         {isSubmitting ? "submitting ..." : `${buttonText}`}
       </button>
       {children}

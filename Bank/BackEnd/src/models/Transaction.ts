@@ -1,17 +1,5 @@
 import { Schema, model } from "mongoose";
-
-const CATEGORIES = [
-  "entertainment",
-  "food",
-  "government",
-  "healthcare",
-  "housing",
-  "insurance",
-  "miscellaneous",
-  "payments",
-  "salary",
-  "transportation",
-];
+import { CATEGORIES } from "../utils/constant.js";
 
 const transactionSchema = new Schema(
   {
@@ -30,7 +18,7 @@ const transactionSchema = new Schema(
       lowercase: true,
       trim: true,
       required: true,
-      enum: CATEGORIES,
+      enum: CATEGORIES.map((c) => c.toLowerCase()),
     },
     date: { type: Date, required: true },
   },

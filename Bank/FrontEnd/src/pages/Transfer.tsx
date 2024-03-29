@@ -1,6 +1,5 @@
 import { ActionFunctionArgs } from "react-router-dom";
 import StyledTransferForm from "../assets/stylingWrappers/StyledTransferForm";
-import Input from "../components/Input";
 import { customAction } from "../utils/customAction";
 import { validateTrnasferFields } from "../utils/validation";
 
@@ -21,7 +20,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
     url: `transactions/${params.number}`,
     successMessage: "Transfered successfully",
     redirectPath: "..",
-    preSubmitValidator: validateTrnasferFields,
+    // preSubmitValidator: validateTrnasferFields,
     specialErrors: [400, 401], // BadRequestError (invalid inputs), Forbidden
   });
 }

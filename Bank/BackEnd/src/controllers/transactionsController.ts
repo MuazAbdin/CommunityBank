@@ -11,7 +11,7 @@ import { handleDBErrors } from "../errors/dbErrors.js";
 
 export async function getAllTransactions(req: Request, res: Response) {
   const filters = req.query as unknown as IRequestQueryTransactions;
-  console.log(filters);
+  // console.log(filters);
   const transactions = await Transaction.find({ account: req.account!._id });
   res
     .status(StatusCodes.OK)
@@ -24,9 +24,10 @@ export async function createTransaction(
   next: NextFunction
 ) {
   const reqBody = req.body as IRequestBodyTransaction;
+
   const newTransaction = {
-    senderAccount: req.account?._id,
-    receiverAccount: reqBody.receiver,
+    // senderAccount: req.account?._id,
+    // receiverAccount: reqBody.receiverAccount,
     type: "transfer",
     amount: parseInt(reqBody.amount),
     vendor: reqBody.vendor,
@@ -36,28 +37,25 @@ export async function createTransaction(
   try {
     // findOneAndUpdate the receiver
     const receiverAccount = await Account.findOneAndUpdate(
-      { number: reqBody.receiver },
+      { number: reqBody.receiverAccount },
       { $inc: { balance: parseInt(reqBody.amount) }, lastVisit: Date.now() },
       { new: true }
     );
-    if (!receiverAccount)
-      return next(new NotFoundError("Receiver account not found"));
-    // check if sennder is the same as reciver
-    if (receiverAccount._id === req.account?._id)
-      return next(new BadRequestError("Can't transfer to yourself"));
     // findOneAndUpdate the sender
     const senderAccount = await Account.findOneAndUpdate(
-      { _id: req.account?._id },
+      { _id: req.account!._id },
       {
         $inc: { balance: -1 * parseInt(reqBody.amount) },
         lastVisit: Date.now(),
       },
       { new: true }
     );
-    if (!senderAccount)
-      return next(new NotFoundError("Sender account not found"));
     // create transaction
-    const transaction = await Transaction.create(newTransaction);
+    const transaction = await Transaction.create({
+      receiverAccount,
+      senderAccount,
+      ...newTransaction,
+    });
 
     res.status(StatusCodes.CREATED).send({
       msg: "transaction created successfully",

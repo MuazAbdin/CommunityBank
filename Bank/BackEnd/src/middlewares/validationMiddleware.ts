@@ -15,6 +15,7 @@ import {
   registerSchema,
   editDetailsSchema,
   changePasswordSchema,
+  transferSchema,
 } from "../errors/validationSchemas.js";
 
 function processValidations(req: Request, res: Response, next: NextFunction) {
@@ -53,4 +54,9 @@ export const validateEditDetailsInput = validationRunner(
 export const validateChangePasswordInput = validationRunner(
   // @ts-ignore
   checkSchema(changePasswordSchema)
+);
+
+export const validateTransferInput = validationRunner(
+  // @ts-ignore
+  checkSchema(transferSchema)
 );

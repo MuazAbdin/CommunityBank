@@ -3,6 +3,7 @@ import {
   createTransaction,
   getAllTransactions,
 } from "../controllers/transactionsController.js";
+import { validateTransferInput } from "../middlewares/validationMiddleware.js";
 
 const router = Router();
 
@@ -10,7 +11,8 @@ const router = Router();
 router.get("/", getAllTransactions);
 
 // Adding a transaction to the current account.
-router.post("/", createTransaction);
+//@ts-ignore
+router.post("/", validateTransferInput, createTransaction);
 
 // Getting stats of the account's transactions.
 router.get("/stats", () => {});

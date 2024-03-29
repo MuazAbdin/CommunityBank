@@ -1,17 +1,5 @@
 import { Types } from "mongoose";
-
-const CATEGORIES = [
-  "Entertainment",
-  "Food",
-  "Government",
-  "Healthcare",
-  "Housing",
-  "Insurance",
-  "Miscellaneous",
-  "Payments",
-  "Salary",
-  "Transportation",
-] as const;
+import { CATEGORIES } from "../utils/constant.js";
 
 /* Request Body types */
 export interface IRequestBodyUserDetails {
@@ -31,8 +19,8 @@ export interface IRequestBodyAccountType {
 }
 
 export interface IRequestBodyTransaction {
-  receiver: string;
   amount: string;
+  receiverAccount: string;
   vendor: string;
   category: (typeof CATEGORIES)[number];
   date: Date;

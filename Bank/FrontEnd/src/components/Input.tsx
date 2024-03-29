@@ -14,7 +14,8 @@ interface IInputProps {
   hideVerifyIcon?: boolean;
   formID?: string;
   help?: string;
-  isSubmitted?: boolean;
+  // isSubmitted?: boolean;
+  submissionCount: number;
   severErrorMsg?: string;
   prevValue?: string;
 }
@@ -27,7 +28,8 @@ const Input = forwardRef(function Input(
     formatter,
     help,
     hideVerifyIcon,
-    isSubmitted,
+    // isSubmitted,
+    submissionCount = 0,
     severErrorMsg,
     prevValue,
     formID,
@@ -42,7 +44,7 @@ const Input = forwardRef(function Input(
     showMessage,
     handleInputChange,
     handleInputBlur,
-  } = useInput(validator, formatter, severErrorMsg, isSubmitted, prevValue);
+  } = useInput(validator, formatter, severErrorMsg, submissionCount, prevValue);
 
   return (
     <Wrapper

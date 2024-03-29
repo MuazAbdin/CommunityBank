@@ -6,13 +6,15 @@ export function useInput(
   validator?: IInputValidator,
   formatter?: IInputFormatter,
   errorMessage: string = "",
-  isSubmitted: boolean = false,
+  // isSubmitted: boolean = false,
+  submissionCount: number = 0,
   prevValue: string = ""
 ) {
   // console.log(validator);
   const [value, setValue] = useState(prevValue || "");
   // const [showMessage, setShowMessage] = useState(false);
 
+  const submissionRef = useRef(0);
   const [showOnBlurMessage, setShowOnBlurMessage] = useState(false);
   const [showOnSubmitMessage, setShowOnSubmitMessage] = useState(false);
 
@@ -30,15 +32,21 @@ export function useInput(
 
   useEffect(() => {
     // if (isSubmitted) setShowMessage(true);
-    if (isSubmitted) setShowOnSubmitMessage(true);
-  }, [isSubmitted]);
+    if (submissionCount > submissionRef.current) {
+      setShowOnSubmitMessage(true);
+      setShowOnBlurMessage(false);
+      submissionRef.current++;
+    }
+  }, [submissionCount]);
 
   // const validationResult = {
   //   result: validator ? validator(value).result : errorMessage === "",
   //   message: validator ? validator(value).message : errorMessage || "",
   // };
 
-  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
+  function handleInputChange(
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) {
     // let formattedValue = event.currentTarget.value;
     // if (formatter) formattedValue = formatter(event.currentTarget.value);
     setValue(event.currentTarget.value);
