@@ -21,9 +21,9 @@ export interface IRequestBodyAccountType {
 export interface IRequestBodyTransaction {
   amount: string;
   receiverAccount: string;
-  vendor: string;
+  // vendor: string;
   category: (typeof CATEGORIES)[number];
-  date: Date;
+  // date: Date;
 }
 
 export interface IRequestQueryTransactions {

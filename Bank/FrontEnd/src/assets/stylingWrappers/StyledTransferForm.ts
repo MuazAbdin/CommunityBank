@@ -28,7 +28,7 @@ const StyledTransferForm = styled(TransferForm)`
     align-items: center;
     gap: 1rem;
 
-    &:has(#transferAmount) {
+    &:has(#amount) {
       /* width: calc(70% - 0.5ch); */
 
       &::before {

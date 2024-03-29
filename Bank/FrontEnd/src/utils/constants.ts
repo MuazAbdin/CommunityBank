@@ -178,13 +178,13 @@ export const TRANSFER_FIELDS: IInputField[] = [
     // formatter: accountNumFormatter,
     // hideVerifyIcon: true,
   },
-  {
-    label: "Vendor",
-    id: "vendor",
-    type: "text",
-    placeholder: "Vendor",
-    validator: isEmpty,
-  },
+  // {
+  //   label: "Vendor",
+  //   id: "vendor",
+  //   type: "text",
+  //   placeholder: "Vendor",
+  //   validator: isEmpty,
+  // },
 ];
 
 export const LOAN_FIELDS: IInputField[] = [

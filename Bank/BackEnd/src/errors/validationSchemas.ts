@@ -162,23 +162,23 @@ export const transferSchema = {
       }) as validator,
     },
   },
-  vendor: {
-    errorMessage: "invalid",
-    trim: true,
-    notEmpty: { errorMessage: "required", bail: true },
-    toLowerCase: true,
-    matches: { options: /^[\w\d\s.\-_]{3,35}$/ },
-  },
+  // vendor: {
+  //   errorMessage: "invalid",
+  //   trim: true,
+  //   notEmpty: { errorMessage: "required", bail: true },
+  //   toLowerCase: true,
+  //   matches: { options: /^[\w\d\s.\-_]{3,35}$/ },
+  // },
   category: {
     errorMessage: "invalid",
     trim: true,
     notEmpty: { errorMessage: "required", bail: true },
     isIn: { options: [CATEGORIES.map((c) => c.toLowerCase())] },
   },
-  date: {
-    errorMessage: "invalid",
-    trim: true,
-    notEmpty: { errorMessage: "required", bail: true },
-    isDate: { options: { format: "MM/DD/YYYY" } },
-  },
+  // date: {
+  //   errorMessage: "invalid",
+  //   trim: true,
+  //   notEmpty: { errorMessage: "required", bail: true },
+  //   isDate: { options: { format: "MM/DD/YYYY" } },
+  // },
 };

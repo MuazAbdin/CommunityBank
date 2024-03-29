@@ -1,4 +1,5 @@
 import { ITransactionProps } from "../types/components";
+import { accountNumFormatter } from "../utils/inputFormatters";
 
 function getDate(date: Date): string {
   const month = date.getUTCMonth() + 1; // months from 1-12
@@ -7,14 +8,14 @@ function getDate(date: Date): string {
 }
 
 function Transaction(props: ITransactionProps) {
-  const { amount, receiverAccount, vendor, category, date } = props;
-  const amountStyle: string = amount < 0 ? "red" : "green";
+  const { amount, targetAccount, tag, category, createdAt } = props;
+  const amountStyle = tag === "sent" ? "red" : "green";
+  const sign = tag === "sent" ? "-" : "";
 
   return (
     <tr>
-      <td>{getDate(new Date(date))}</td>
-      <td>{receiverAccount}</td>
-      <td>{vendor}</td>
+      <td>{getDate(new Date(createdAt))}</td>
+      <td>{accountNumFormatter(targetAccount)}</td>
       <td>{category}</td>
       <td
         style={{
@@ -23,7 +24,8 @@ function Transaction(props: ITransactionProps) {
           fontWeight: 600,
         }}
       >
-        ₪ {amount}
+        {sign}
+        {amount} ₪
       </td>
     </tr>
   );

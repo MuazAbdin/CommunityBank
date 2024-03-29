@@ -18,7 +18,15 @@ const accountSchema = new Schema(
     balance: { type: Number, required: true, default: 0 },
     lastVisit: { type: Date, required: true, default: Date.now() },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    methods: {
+      getTag(senderAccountId, receiverAccountId) {
+        if (this._id === senderAccountId) return "sender";
+        if (this._id === receiverAccountId) return "receiver";
+      },
+    },
+  }
 );
 
 export default model("Account", accountSchema);

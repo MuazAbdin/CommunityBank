@@ -12,7 +12,7 @@ const transactionSchema = new Schema(
       enum: ["deposit", "withdrawal", "transfer", "loan payment"],
     },
     amount: { type: Number, required: true, min: 0.01 },
-    vendor: { type: String, lowercase: true, trim: true, required: true },
+    // vendor: { type: String, lowercase: true, trim: true, required: true },
     category: {
       type: String,
       lowercase: true,
@@ -20,7 +20,7 @@ const transactionSchema = new Schema(
       required: true,
       enum: CATEGORIES.map((c) => c.toLowerCase()),
     },
-    date: { type: Date, required: true },
+    // date: { type: Date, required: true },
   },
   { timestamps: true }
 );

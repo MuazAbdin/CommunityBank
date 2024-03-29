@@ -12,7 +12,32 @@ import { handleDBErrors } from "../errors/dbErrors.js";
 export async function getAllTransactions(req: Request, res: Response) {
   const filters = req.query as unknown as IRequestQueryTransactions;
   // console.log(filters);
-  const transactions = await Transaction.find({ account: req.account!._id });
+
+  // const transactions = await Transaction.find({
+  //   $or: [{ receiverAccount: req.account }, { senderAccount: req.account }],
+  // }).sort({ createdAt: 1 });
+  const received = await Transaction.find({
+    receiverAccount: req.account,
+  })
+    .populate("senderAccount", "number")
+    .transform((res) =>
+      res.map((item) => {
+        return { ...item._doc, tag: "received" };
+      })
+    );
+
+  const sent = await Transaction.find({
+    senderAccount: req.account,
+  })
+    .populate("receiverAccount", "number")
+    .transform((res) =>
+      res.map((item) => {
+        return { ...item._doc, tag: "sent" };
+      })
+    );
+  const transactions = [...received, ...sent].sort(
+    (doc1, doc2) => doc1.createdAt - doc2.createdAt
+  );
   res
     .status(StatusCodes.OK)
     .send({ user: req.user, account: req.account, transactions });
@@ -30,9 +55,9 @@ export async function createTransaction(
     // receiverAccount: reqBody.receiverAccount,
     type: "transfer",
     amount: parseInt(reqBody.amount),
-    vendor: reqBody.vendor,
+    // vendor: reqBody.vendor,
     category: reqBody.category,
-    date: reqBody.date,
+    // date: reqBody.date,
   };
   try {
     // findOneAndUpdate the receiver

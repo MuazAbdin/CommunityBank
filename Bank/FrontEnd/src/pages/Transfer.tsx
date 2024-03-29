@@ -20,7 +20,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
     url: `transactions/${params.number}`,
     successMessage: "Transfered successfully",
     redirectPath: "..",
-    // preSubmitValidator: validateTrnasferFields,
+    preSubmitValidator: validateTrnasferFields,
     specialErrors: [400, 401], // BadRequestError (invalid inputs), Forbidden
   });
 }
