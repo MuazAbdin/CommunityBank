@@ -1,8 +1,8 @@
 import { useOutletContext } from "react-router-dom";
-import StyledSearch from "../assets/stylingWrappers/Search";
 import Table from "../components/Table";
 import Transaction from "../components/Transaction";
 import { TransactionDetails } from "../types/components";
+import StyledSearchBar from "../assets/stylingWrappers/SearchBar";
 
 function Current() {
   const { transactions } = useOutletContext() as {
@@ -11,7 +11,7 @@ function Current() {
 
   return (
     <section className="account-subsection-container">
-      <StyledSearch />
+      <StyledSearchBar pagesCount={1} currentPage={1} />
       <Table
         tableCaption="Transactions"
         tableHeader={["", "Date", "Account", "Category", "Amount"]}
