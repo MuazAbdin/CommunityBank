@@ -9,8 +9,8 @@ function getDate(date: Date): string {
 
 function Transaction(props: ITransactionProps) {
   const { amount, targetAccount, tag, category, createdAt } = props;
-  const amountStyle = tag === "sent" ? "red" : "green";
-  const sign = tag === "sent" ? "- " : "";
+  const amountStyle = tag === "payor" ? "red" : "green";
+  const sign = tag === "payor" ? "- " : "";
 
   return (
     <tr>

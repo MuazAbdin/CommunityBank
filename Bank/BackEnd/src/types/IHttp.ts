@@ -27,9 +27,13 @@ export interface IRequestBodyTransaction {
 }
 
 export interface IRequestQueryTransactions {
-  text: string;
-  from: Date;
-  to: Date;
+  query: string;
+  side: string;
+  type: string;
+  category: string;
+  page: string;
+  start: string;
+  end: string;
 }
 
 export interface IUserWithoutPasswordDetails {

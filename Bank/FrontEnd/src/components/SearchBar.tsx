@@ -33,12 +33,14 @@ function SearchBar({ className, pagesCount, currentPage }: ISearcBarProps) {
     event.preventDefault();
 
     const fd = new FormData(event.currentTarget.form!);
-    const query = (fd.get("search") || "") as string;
-    const side = JSON.stringify(fd.getAll("side") || []) as string;
-    const type = JSON.stringify(fd.getAll("type") || []) as string;
-    const category = JSON.stringify(fd.getAll("category") || []) as string;
-    const start = (fd.get("start") || "") as string;
-    const end = (fd.get("end") || "") as string;
+    const query = fd.get("search") || "";
+    const side = fd.getAll("side") || [];
+    const type = fd.getAll("type") || [];
+    const category = fd.getAll("category") || [];
+    const start = fd.get("start") || "";
+    const end = fd.get("end") || "";
+
+    // console.log({ query, side, type, category, start, end, page });
 
     const params = new URLSearchParams({
       query,
@@ -47,7 +49,7 @@ function SearchBar({ className, pagesCount, currentPage }: ISearcBarProps) {
       category,
       start,
       end,
-      page: page.toString(),
+      page,
     });
 
     submit(params);
@@ -68,7 +70,7 @@ function SearchBar({ className, pagesCount, currentPage }: ISearcBarProps) {
           type="search"
           id="search"
           name="search"
-          placeholder="Search"
+          placeholder="Search by Account Number"
           value={query}
           onChange={handleQueryChange}
         />

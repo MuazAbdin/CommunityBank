@@ -22,8 +22,8 @@ const accountSchema = new Schema(
     timestamps: true,
     methods: {
       getTag(senderAccountId, receiverAccountId) {
-        if (this._id === senderAccountId) return "sender";
-        if (this._id === receiverAccountId) return "receiver";
+        if (this._id === senderAccountId) return "payor";
+        if (this._id === receiverAccountId) return "payee";
       },
     },
   }

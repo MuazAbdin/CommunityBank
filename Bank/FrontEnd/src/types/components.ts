@@ -44,7 +44,7 @@ export interface TransactionDetails {
   // vendor: string;
   category: string;
   createdAt: Date;
-  tag: "sent" | "received";
+  tag: "payor" | "payee";
   // date: Date;
 }
 
@@ -56,7 +56,7 @@ export interface ITransactionProps {
   category: string;
   // date: Date;
   createdAt: Date;
-  tag: "sent" | "received";
+  tag: "payor" | "payee";
 }
 
 export interface IUserProfileContext {
