@@ -8,146 +8,29 @@ import Transaction from "../models/Transaction.js";
 import Account from "../models/Account.js";
 import { BadRequestError, NotFoundError } from "../errors/customErrors.js";
 import { handleDBErrors } from "../errors/dbErrors.js";
-import { CATEGORIES } from "../utils/constant.js";
-
-function getTrasactoinsFilters(filters: IRequestQueryTransactions) {
-  const query = filters.query ?? "^\\d{11}$";
-  const sides = filters.side?.split(",") || ["Payee", "Payor"];
-  const types = (
-    filters.type?.split(",") || [
-      "deposit",
-      "withdrawal",
-      "transfer",
-      "loan payment",
-    ]
-  ).map((t) => t.toLowerCase());
-  const categories = (filters.category?.split(",") || CATEGORIES).map((c) =>
-    c.toLowerCase()
-  );
-
-  const start = filters.start
-    ? new Date(filters.start)
-    : new Date("2024-01-01Z00:00:00:000"); // the start date of the bank
-  let end = filters.end ? new Date(filters.end) : new Date();
-  if (end < start) end = start;
-  end.setDate(end.getDate() + 1);
-  const page = parseInt(filters.page);
-  const limit = 10;
-  const offset = (page - 1) * limit;
-  return { query, sides, types, categories, start, end, limit, offset };
-}
+import {
+  buildSearchQuery,
+  getTrasactoinsFilters,
+} from "../utils/queryParser.js";
 
 export async function getAllTransactions(req: Request, res: Response) {
   const filters = req.query as unknown as IRequestQueryTransactions;
-  const { query, sides, types, categories, start, end, offset, limit } =
-    getTrasactoinsFilters(filters);
+  const processedFilters = getTrasactoinsFilters(filters);
+  const resultsCount = (await buildSearchQuery(req, processedFilters).exec())
+    .length;
+  const transactions = await buildSearchQuery(req, processedFilters)
+    .skip(processedFilters.offset)
+    .limit(processedFilters.limit)
+    .exec();
 
-  console.log(query, sides, types, categories, start, end, limit, offset);
+  const pagesCount = Math.ceil(resultsCount / processedFilters.limit);
 
-  let accountMatch = [];
-  let populatePath = "";
-  if (sides.includes("Payee")) {
-    accountMatch.push({ receiverAccount: req.account });
-    populatePath += "senderAccount";
-  }
-  if (sides.includes("Payor")) {
-    accountMatch.push({ senderAccount: req.account });
-    populatePath += " receiverAccount";
-  }
-
-  let resultsCount = 0;
-  let transactions = [];
-
-  const result = await Transaction.find({
-    $or: accountMatch,
-    type: { $in: types },
-    category: { $in: categories },
-    createdAt: { $gte: start, $lte: end },
-  })
-    .populate({
-      path: "senderAccount",
-      select: "number",
-      match: { number: { $regex: query } },
-    })
-    // .where({ "senderAccount.number": { $regex: query } })
-    // .where({ senderAccount: { $ne: null } })
-    .transform((res) => {
-      const processedResult = res
-        .filter((item) => item._doc.senderAccount != null)
-        .map((item) => {
-          return { ...item._doc, tag: "payee" };
-        });
-      resultsCount += processedResult.length;
-      return processedResult;
-    })
-    .skip(offset)
-    .limit(limit);
-
-  if (sides.includes("Payee")) {
-    const received = await Transaction.find({
-      receiverAccount: req.account,
-      type: { $in: types },
-      category: { $in: categories },
-      createdAt: { $gte: start, $lte: end },
-    })
-      // .populate("senderAccount", "number")
-      .populate({
-        path: "senderAccount",
-        select: "number",
-        match: { number: { $regex: query } },
-      })
-      // .where({ "senderAccount.number": { $regex: query } })
-      // .where({ senderAccount: { $ne: null } })
-      .transform((res) => {
-        const processedResult = res
-          .filter((item) => item._doc.senderAccount != null)
-          .map((item) => {
-            return { ...item._doc, tag: "payee" };
-          });
-        resultsCount += processedResult.length;
-        return processedResult;
-      })
-      .skip(offset)
-      .limit(limit)
-      .exec();
-    transactions = [...transactions, ...received];
-  }
-  if (sides.includes("Payor")) {
-    const sent = await Transaction.find({
-      senderAccount: req.account,
-      type: { $in: types },
-      category: { $in: categories },
-      createdAt: { $gte: start, $lte: end },
-    })
-      // .populate("receiverAccount", "number")
-      .populate({
-        path: "receiverAccount",
-        select: "number",
-        match: { number: { $regex: query } },
-      })
-      // .where({ "receiverAccount.number": { $regex: query } })
-      // .where({ receiverAccount: { $ne: null } })
-      .transform((res) => {
-        const processedResult = res
-          .filter((item) => item._doc.receiverAccount != null)
-          .map((item) => {
-            return { ...item._doc, tag: "payor" };
-          });
-        resultsCount += processedResult.length;
-        return processedResult;
-      })
-      .skip(offset)
-      .limit(limit)
-      .exec();
-
-    transactions = [...transactions, ...sent];
-  }
-  transactions.sort((doc1, doc2) => doc1.createdAt - doc2.createdAt);
-  const pagesCount = Math.ceil(resultsCount / limit);
-
-  res
-    .status(StatusCodes.OK)
-    .send({ user: req.user, account: req.account, transactions, pagesCount });
+  res.status(StatusCodes.OK).send({
+    user: req.user,
+    account: req.account,
+    transactions,
+    pagesCount,
+  });
 }
 
 export async function createTransaction(
@@ -199,3 +82,46 @@ export async function createTransaction(
     return next(new BadRequestError("Something went wrong", errorValues));
   }
 }
+
+//  const res22 = await Transaction.aggregate([
+//     {
+//       $lookup: {
+//         from: "accounts",
+//         as: "senderAccount",
+//         let: { senderAccount: "$senderAccount" },
+//         pipeline: [
+//           {
+//             $match: {
+//               $expr: { $eq: ["$_id", "$$senderAccount"] },
+//               number: { $regex: "25" },
+//             },
+//           },
+//           { $project: { number: 1 } },
+//         ],
+//       },
+//     },
+// {
+//   $project: {
+//     receiverAccount: 1,
+//     senderAccount: {
+//       $cond: {
+//         if: { $ne: ["$senderAccount", []] },
+//         then: { $arrayElemAt: ["$senderAccount", 0] },
+//         else: "$$REMOVE",
+//       },
+//     },
+//     amount: 1,
+//     type: 1,
+//     category: 1,
+//     createdAt: 1,
+//     tag: {
+//       $cond: {
+//         if: { $eq: ["$senderAccount.0.number", req.account!.number] },
+//         then: "payor",
+//         else: "payee",
+//       },
+//     },
+//   },
+// },
+// ]);
+// console.log(res22);
