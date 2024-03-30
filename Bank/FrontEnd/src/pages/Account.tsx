@@ -17,7 +17,7 @@ function Account() {
     <Wrapper>
       <AccountHeader number={account.number} balance={account.balance} />
       <AccountNavBar />
-      <Outlet context={{ transactions, pagesCount, page }} />
+      <Outlet context={{ account, transactions, pagesCount, page }} />
     </Wrapper>
   );
 }
@@ -27,8 +27,6 @@ export default Account;
 export async function loader({ params, request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
   const searchParams = getURLSearchParams(url);
-  console.log(searchParams);
-  // return null;
   const loaderData = await customLoader({
     params,
     request,
@@ -89,16 +87,4 @@ function getURLSearchParams(url: URL) {
 
   // @ts-ignore
   return searchQuery;
-  // return new URLSearchParams(searchQuery);
 }
-
-// export async function loader({ params }: LoaderFunctionArgs) {
-//   const response = await fetcher(`transactions/${params.number}`);
-//   if (!response.ok) throw response;
-//   const { user, account, transactions } = (await response.json()) as {
-//     user: UserDetails;
-//     account: AccountDetails;
-//     transactions: TransactionDetails[];
-//   };
-//   return { user, account, transactions };
-// }

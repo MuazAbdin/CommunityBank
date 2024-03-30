@@ -2,8 +2,8 @@ import { ITransactionProps } from "../types/components";
 import { accountNumFormatter } from "../utils/inputFormatters";
 
 function getDate(date: Date): string {
-  const month = date.getUTCMonth() + 1; // months from 1-12
-  const day = date.getUTCDate();
+  const month = date.getMonth() + 1; // months from 1-12
+  const day = date.getDate();
   return `${day}/${month}`;
 }
 

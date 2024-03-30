@@ -53,6 +53,7 @@ function SearchBar({ className, pagesCount, currentPage }: ISearcBarProps) {
     });
 
     submit(params);
+    setShow(false);
   };
 
   return (
@@ -136,6 +137,7 @@ function Filters({ show }: { show: boolean }) {
 function RangeDatePicker() {
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
+  // console.log(startDate);
   return (
     <fieldset className="range-date-picker c-flex">
       <span>from</span>

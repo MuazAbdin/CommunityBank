@@ -1,8 +1,10 @@
 import { Request } from "express";
-import Account from "../models/Account.js";
 import { IRequestQueryTransactions } from "../types/IHttp.js";
 import { CATEGORIES } from "./constant.js";
 import Transaction from "../models/Transaction.js";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc.js";
+dayjs.extend(utc);
 
 const ACCOUNT_TYPES = ["deposit", "withdrawal", "transfer", "loan payment"];
 
@@ -43,6 +45,7 @@ export function getTrasactoinsFilters(filters: IRequestQueryTransactions) {
   const categories = (filters.category?.split(",") || CATEGORIES).map((c) =>
     c.toLowerCase()
   ) as IAccountCategory[];
+
   const start = filters.start
     ? new Date(filters.start)
     : new Date("2024-01-01Z00:00:00:000"); // the start date of the bank
@@ -52,7 +55,18 @@ export function getTrasactoinsFilters(filters: IRequestQueryTransactions) {
   const page = parseInt(filters.page);
   const limit = 10;
   const offset = (page - 1) * limit;
-  return { query, sides, types, categories, start, end, limit, offset };
+  return {
+    query,
+    sides,
+    types,
+    categories,
+    start: new Date(dayjs.utc(start).local().format()),
+    end: new Date(dayjs.utc(end).local().format()),
+    // start,
+    // end,
+    limit,
+    offset,
+  };
 }
 
 export function getAccountMatch(req: Request, sides: ("Payee" | "Payor")[]) {
