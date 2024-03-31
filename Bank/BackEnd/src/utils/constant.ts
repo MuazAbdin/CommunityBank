@@ -10,3 +10,10 @@ export const CATEGORIES = [
   "Salary",
   "Transportation",
 ];
+
+export const ACCOUNT_TYPES = [
+  "deposit",
+  "withdrawal",
+  "transfer",
+  "loan payment",
+];

@@ -6,12 +6,21 @@ import {
 } from "../types/IHttp.js";
 import Transaction from "../models/Transaction.js";
 import Account from "../models/Account.js";
-import { BadRequestError, NotFoundError } from "../errors/customErrors.js";
+import {
+  BadRequestError,
+  NotFoundError,
+  UnauthorizedError,
+} from "../errors/customErrors.js";
 import { handleDBErrors } from "../errors/dbErrors.js";
 import {
   buildSearchQuery,
   getTrasactoinsFilters,
 } from "../utils/queryParser.js";
+import PDFDocument from "pdfkit";
+import fs from "fs";
+import path, { dirname, resolve } from "path";
+import { fileURLToPath } from "url";
+import buildTransactionsPDF from "../utils/transactionsPDF.js";
 
 export async function getAllTransactions(req: Request, res: Response) {
   const filters = req.query as unknown as IRequestQueryTransactions;
@@ -31,6 +40,49 @@ export async function getAllTransactions(req: Request, res: Response) {
     transactions,
     pagesCount,
   });
+}
+
+export async function getTransactionsPDF(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  if (req.user!._id.toString() !== req.account!.user.toString())
+    return next(new UnauthorizedError("Forbidden action"));
+
+  const filters = {
+    query: undefined,
+    side: undefined,
+    type: undefined,
+    category: undefined,
+    page: "1",
+    start: undefined,
+    end: undefined,
+  };
+  const processedFilters = getTrasactoinsFilters(filters);
+  const transactions = await buildSearchQuery(req, processedFilters).exec();
+
+  const fileName = `account-${req.account!.number}.pdf`;
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = dirname(__filename);
+  const filePath = path.join(resolve(__dirname, "../.."), "pdfFiles", fileName);
+
+  const pdfDoc = new PDFDocument({
+    size: "A4",
+    margin: 50,
+    info: {
+      Title: `account-${req.account!.number}.pdf`,
+      Author: "Community-Bank",
+    },
+  });
+  res.setHeader("Content-Type", "application/pdf");
+  res.setHeader("Content-Disposition", `inline; filename=${fileName}`);
+
+  buildTransactionsPDF(pdfDoc, req.user!, req.account!, transactions);
+
+  pdfDoc.pipe(fs.createWriteStream(filePath)); // save copy on the server: optional
+  pdfDoc.pipe(res);
+  pdfDoc.end();
 }
 
 export async function createTransaction(
