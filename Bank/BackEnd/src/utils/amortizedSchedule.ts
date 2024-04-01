@@ -19,17 +19,23 @@ export function amortizedSchedule(
     balance -= principalRepayment;
     schedule.push({
       month: k,
-      payment: totalRepayment,
-      interest: interestRepayment,
-      principal: principalRepayment,
-      balance: Math.max(balance, 0),
+      payment: parseFloat(totalRepayment.toFixed(2)),
+      interest: parseFloat(interestRepayment.toFixed(2)),
+      principal: parseFloat(principalRepayment.toFixed(2)),
+      balance: Math.abs(parseFloat(balance.toFixed(2))),
     });
   }
   schedule.push({
     month: "",
-    payment: schedule.reduce((acc, row) => acc + row.payment, 0),
-    interest: schedule.reduce((acc, row) => acc + row.interest, 0),
-    principal: schedule.reduce((acc, row) => acc + row.principal, 0),
+    payment: parseFloat(
+      schedule.reduce((acc, row) => acc + row.payment, 0).toFixed(2)
+    ),
+    interest: parseFloat(
+      schedule.reduce((acc, row) => acc + row.interest, 0).toFixed(2)
+    ),
+    principal: parseFloat(
+      schedule.reduce((acc, row) => acc + row.principal, 0).toFixed(2)
+    ),
     balance: "",
   });
 

@@ -1,15 +1,26 @@
-import { ActionFunctionArgs } from "react-router-dom";
+import { ActionFunctionArgs, useActionData } from "react-router-dom";
 import StyledLoanForm from "../assets/stylingWrappers/StyledLoanForm";
 import LoanCalculations from "../components/LoanCalculations";
 import { customAction } from "../utils/customAction";
 import { validateLoanFields } from "../utils/validation";
-import StyledTransferForm from "../assets/stylingWrappers/StyledTransferForm";
+
+export interface ILoanCalculations {
+  monthlyPayment: number;
+  totalInterestPaid: number;
+  loanAmount: number;
+  totalPaid: number;
+}
 
 function Loan() {
+  const actionData = useActionData() as {
+    calculations: ILoanCalculations;
+  };
   return (
     <section className="account-subsection-container">
       <StyledLoanForm />
-      {/* <LoanCalculations /> */}
+      {actionData?.calculations && (
+        <LoanCalculations calculations={actionData?.calculations} />
+      )}
     </section>
   );
 }
@@ -20,11 +31,11 @@ export async function action({ params, request }: ActionFunctionArgs) {
   return customAction({
     params,
     request,
-    // url: `loans/${params.number}`,
-    url: "",
-    successMessage: "Transfered successfully",
-    redirectPath: "..",
+    url: "loans/calculate",
+    successMessage: "Calculated successfully",
+    redirectPath: "",
     preSubmitValidator: validateLoanFields,
     specialErrors: [400, 401], // BadRequestError (invalid inputs), Forbidden
+    returnDataOnSuccess: true,
   });
 }

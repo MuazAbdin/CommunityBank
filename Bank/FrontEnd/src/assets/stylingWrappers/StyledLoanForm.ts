@@ -41,13 +41,17 @@ const StyledLoanForm = styled(LoanForm)`
     align-items: center;
     gap: 1rem;
 
-    &:has(#loanAmount) {
-      /* width: calc(70% - 0.5ch); */
-
+    &:has(#amount) {
       &::before {
         content: "₪";
       }
     }
+
+    /* &:has(#interestRate) {
+      &::after {
+        content: "%";
+      }
+    } */
   }
 
   .btn {

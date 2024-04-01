@@ -3,6 +3,28 @@ import Loan from "../models/Loan.js";
 import { StatusCodes } from "http-status-codes";
 import { handleDBErrors } from "../errors/dbErrors.js";
 import { BadRequestError } from "../errors/customErrors.js";
+import { amortizedSchedule } from "../utils/amortizedSchedule.js";
+
+export async function scheduleLoan(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const { amount, term, interestRate } = req.body;
+  const schedule = amortizedSchedule(
+    parseFloat(amount),
+    parseFloat(term) / 12,
+    parseFloat(interestRate)
+  );
+  const lastIdx = parseFloat(term);
+  const calculations = {
+    monthlyPayment: schedule[lastIdx - 1].payment,
+    totalInterestPaid: schedule[lastIdx].interest,
+    loanAmount: parseFloat(amount),
+    totalPaid: schedule[lastIdx].payment,
+  };
+  res.status(StatusCodes.OK).send({ calculations });
+}
 
 export async function createLoan(
   req: Request,

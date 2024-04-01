@@ -210,6 +210,7 @@ export const LOAN_FIELDS: IInputField[] = [
     type: "number",
     validator: isRateValid,
     placeholder: "Interest Rate",
+    help: "Number between 0-100.",
   },
 ];
 

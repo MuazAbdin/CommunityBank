@@ -17,6 +17,7 @@ interface ICustomAcionFunctionArgs extends ActionFunctionArgs {
   specialErrors?: number[];
   successMessage?: string;
   redirectPath?: string;
+  returnDataOnSuccess?: boolean;
 }
 
 export async function customAction({
@@ -27,6 +28,7 @@ export async function customAction({
   redirectPath = "",
   preSubmitValidator,
   specialErrors = [],
+  returnDataOnSuccess = false,
 }: ICustomAcionFunctionArgs) {
   const fd = await request.formData();
   const data = Object.fromEntries(
@@ -56,6 +58,7 @@ export async function customAction({
     }
 
     const responseData = await response.json();
+    if (returnDataOnSuccess) return responseData;
     toast.success(responseData?.msg || successMessage);
     return redirect(redirectPath);
   } catch (error: unknown) {
