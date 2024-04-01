@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 const Wrapper = styled.nav`
+  background: var(--background-color-transparent);
+
   menu {
     list-style-type: none;
     margin: 0;

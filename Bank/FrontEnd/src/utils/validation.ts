@@ -2,6 +2,7 @@ import isEmail from "validator/lib/isEmail";
 import {
   CHANGE_PASSWORD_FIELDS,
   EDIT_USER_FIELDS,
+  LOAN_FIELDS,
   REGISTER_FIELDS,
   TRANSFER_FIELDS,
 } from "./constants";
@@ -32,6 +33,13 @@ export const isAmountValid: IInputValidator = function (amount) {
 export const isAccountNumValid: IInputValidator = function (accountNum) {
   if (accountNum.length === 0) return { result: false, message: "required" };
   if (!/^\d{6}$/.test(accountNum)) return { result: false, message: "invalid" };
+  return { result: true, message: "valid" };
+};
+
+export const isRateValid: IInputValidator = function (rate) {
+  if (rate.length === 0) return { result: false, message: "required" };
+  if (!/^(\d{1,2}|100)$/.test(rate))
+    return { result: false, message: "invalid" };
   return { result: true, message: "valid" };
 };
 
@@ -164,6 +172,21 @@ export function validateTrnasferFields(fields: { [key: string]: string }) {
     if (!field?.validator)
       return { name, value: fields[name], ...isEmpty(fields[name]) };
     return { name, value: fields[name], ...field.validator(fields[name]) };
+  });
+  const data = results
+    .filter((r) => !r.result)
+    .map((r) => {
+      return { name: r.name, value: r.value, message: r.message };
+    });
+  const msg = data.length === 0 ? "" : "Invalid inputs";
+  return { msg, data };
+}
+
+export function validateLoanFields(fields: any) {
+  const results = LOAN_FIELDS.map((f) => {
+    if (!f.validator)
+      return { name: f.id, value: fields[f.id], result: true, message: "" };
+    return { name: f.id, value: fields[f.id], ...f.validator(fields[f.id]) };
   });
   const data = results
     .filter((r) => !r.result)

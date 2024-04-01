@@ -2,23 +2,11 @@ import Wrapper from "../assets/stylingWrappers/InputSelect";
 import { IInputValidator } from "../utils/validation";
 import { useInput } from "../hooks/useInput";
 
-const CATEGORIES = [
-  "Entertainment",
-  "Food",
-  "Government",
-  "Healthcare",
-  "Housing",
-  "Insurance",
-  "Miscellaneous",
-  "Payments",
-  "Salary",
-  "Transportation",
-];
-
 interface IInputSelectProps {
   label: string;
   id: string;
   validator?: IInputValidator;
+  fields: string[];
   // formID?: string;
   // isSubmitted?: boolean;
   submissionCount: number;
@@ -29,6 +17,7 @@ function InputSelect({
   label,
   id,
   validator,
+  fields,
   // formID,
   // isSubmitted,
   submissionCount = 0,
@@ -60,8 +49,8 @@ function InputSelect({
           onChange={handleInputChange}
           onBlur={handleInputBlur}
         >
-          <option value="">Choose a category ...</option>
-          {CATEGORIES.map((c) => (
+          <option value="">Choose a {label} ...</option>
+          {fields.map((c) => (
             <option key={c} value={c.toLowerCase()}>
               {c}
             </option>

@@ -1,5 +1,7 @@
 import Wrapper from "../assets/stylingWrappers/LoanCalculations";
+import { LOAN_FIELDS } from "../utils/constants";
 import Arrow from "./Arrow";
+import HiddenForm from "./HiddenForm";
 import PieChart from "./PieChart";
 
 function LoanCalculations() {
@@ -7,6 +9,12 @@ function LoanCalculations() {
     <Wrapper>
       <Arrow />
       <PieChart />
+      <HiddenForm
+        fields={LOAN_FIELDS}
+        values={{ amount: 100, term: 12, interestRate: 6 }}
+      >
+        <button className="btn">agree</button>
+      </HiddenForm>
     </Wrapper>
   );
 }

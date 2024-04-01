@@ -19,7 +19,6 @@ function PieChart() {
           loan amount: <strong className="loan">₪ 450</strong>
         </span>
       </div>
-      <button className="btn">agree</button>
     </Wrapper>
   );
 }

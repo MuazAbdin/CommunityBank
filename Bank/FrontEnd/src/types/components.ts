@@ -81,3 +81,14 @@ export interface IAccountsValues {
   balance: number;
   lastVisit: Date;
 }
+
+export interface ILoanValues {
+  amount: number;
+  interestRate: number;
+  term: number;
+}
+export interface ILoanFormProps {
+  className?: string;
+  // values?: ILoanValues;
+  // stage: "calculate" | "agree";
+}

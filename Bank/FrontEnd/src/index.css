@@ -83,7 +83,7 @@ html {
   --dark-mode-error-text-color: var(--red-light);
 
   --background-color: var(--grey-50);
-  --background-color-transparent: hsla(210, 40%, 96%, 0.5);
+  --background-color-transparent: hsla(210, 40%, 96%, 0.6);
   --background-color-piechart: #c1ead3;
   --text-color: var(--grey-900);
   --background-secondary-color: var(--white);

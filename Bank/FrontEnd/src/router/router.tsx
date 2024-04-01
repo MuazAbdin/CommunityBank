@@ -26,8 +26,8 @@ import { action as editUserDetailsAction } from "../pages/EditUserDetails";
 import { action as changeUserPasswordAction } from "../pages/ChangeUserPassword";
 
 import { action as openAccountAction } from "../pages/Overview";
-
 import { action as transferAction } from "../pages/Transfer";
+import { action as calculateLoanAction } from "../pages/Loan";
 
 const router = createBrowserRouter([
   {
@@ -81,7 +81,7 @@ const router = createBrowserRouter([
                 element: <Transfer />,
                 action: transferAction,
               },
-              { path: "loan", element: <Loan /> },
+              { path: "loan", element: <Loan />, action: calculateLoanAction },
               { path: "breakdown", element: <Breakdown /> },
             ],
           },

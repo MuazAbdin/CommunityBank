@@ -20,14 +20,18 @@ const StyledLoanForm = styled(LoanForm)`
     grid-column: 1 / 3;
   }
 
-  /* fieldset:nth-of-type(1) {
-    grid-column: 1/3;
-    width: 70%;
-    justify-self: center;
-  } */
+  fieldset:nth-of-type(1) {
+    grid-column: unset;
+  }
 
   fieldset:nth-of-type(2) {
     grid-column: 1;
+  }
+
+  fieldset:nth-of-type(3) {
+    grid-row: 2;
+    grid-column: 2/3;
+    width: 100%;
   }
 
   fieldset {

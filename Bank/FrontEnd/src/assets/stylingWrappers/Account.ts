@@ -1,11 +1,6 @@
 import styled from "styled-components";
 
 const Wrapper = styled.section`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow-y: scroll;
-
   .account-subsection-container {
     flex-grow: 1;
     padding: 2rem;

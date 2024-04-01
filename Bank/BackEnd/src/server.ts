@@ -45,7 +45,7 @@ app.use(
 );
 app.use("/api/v1/accounts", authenticateUser, accountRouter);
 app.use("/api/v1/users", authenticateUser, userRouter);
-app.use("/api/v1/loans", loanRouter);
+app.use("/api/v1/loans", authenticateUser, loanRouter);
 app.use("/api/v1/auth", authRouter);
 
 app.use(errorHandlerMiddleware);

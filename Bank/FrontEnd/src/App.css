@@ -15,4 +15,14 @@
   background-attachment: fixed;
   background-size: cover;
   transition: all 1s ease;
+
+  main {
+    flex-grow: 1;
+    background-image: url("/images/mainBG.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: 30% 0%;
+    background-repeat: no-repeat;
+    overflow-y: scroll;
+  }
 }

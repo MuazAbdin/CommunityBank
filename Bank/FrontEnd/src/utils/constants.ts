@@ -16,6 +16,7 @@ import {
   isMobileValid,
   isPasswordConfirmValid,
   isPasswordValid,
+  isRateValid,
 } from "./validation";
 
 export interface IInputField {
@@ -190,7 +191,7 @@ export const TRANSFER_FIELDS: IInputField[] = [
 export const LOAN_FIELDS: IInputField[] = [
   {
     label: "Loan Amount",
-    id: "loanAmount",
+    id: "amount",
     type: "number",
     placeholder: "Loan Amount",
     validator: isAmountValid,
@@ -198,14 +199,33 @@ export const LOAN_FIELDS: IInputField[] = [
   },
   {
     label: "Loan Term",
-    id: "loanTerm",
+    id: "term",
     type: "number",
+    validator: isEmpty,
     placeholder: "Loan Term",
   },
   {
     label: "Interest Rate",
     id: "interestRate",
     type: "number",
+    validator: isRateValid,
     placeholder: "Interest Rate",
   },
 ];
+
+export const CATEGORIES = [
+  "Entertainment",
+  "Food",
+  "Government",
+  "Healthcare",
+  "Housing",
+  "Insurance",
+  "Miscellaneous",
+  "Payments",
+  "Salary",
+  "Transportation",
+];
+
+export const LOAN_MONTH_TERMS = Array(4)
+  .fill(null)
+  .map((_, i) => `${(i + 1) * 12} months`);

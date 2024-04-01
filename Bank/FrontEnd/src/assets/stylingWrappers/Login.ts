@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 const Wrapper = styled.main`
-  flex-grow: 1;
+  /* flex-grow: 1;
   background-image: url("./src/assets/images/mainBG.jpg");
   background-attachment: fixed;
   background-size: cover;
   background-position: 30% 0%;
   background-repeat: no-repeat;
-  overflow-y: scroll;
+  overflow-y: scroll; */
 
   form {
     display: flex;

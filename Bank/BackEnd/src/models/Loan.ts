@@ -11,8 +11,9 @@ const loanSchema = new Schema(
     amount: { type: Number, required: true, min: 0.01 },
     interestRate: { type: Number, required: true, default: 0.05 },
     term: { type: Number, required: true, default: 12 },
-    date: { type: Date, required: true },
-    payments: { type: [payment], required: true, default: [] },
+    lastPayment: Number,
+    // date: { type: Date, required: true },
+    // payments: { type: [payment], required: true, default: [] },
   },
   { timestamps: true }
 );

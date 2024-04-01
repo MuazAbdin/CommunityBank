@@ -33,9 +33,11 @@ function DashboardLayout() {
 
   return (
     <Wrapper>
-      <Aside accountsNums={accountsValues.map((acc) => acc.number)} />
-      <PageHeader name={`${userValues.firstName} ${userValues.lastName}`} />
-      <Outlet context={{ userValues, accountsValues }} />
+      <div>
+        <Aside accountsNums={accountsValues.map((acc) => acc.number)} />
+        <PageHeader name={`${userValues.firstName} ${userValues.lastName}`} />
+        <Outlet context={{ userValues, accountsValues }} />
+      </div>
     </Wrapper>
   );
 }

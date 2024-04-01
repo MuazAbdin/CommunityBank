@@ -14,7 +14,7 @@ function Account() {
     useLoaderData() as Awaited<ReturnType<typeof loader>>;
 
   return (
-    <Wrapper>
+    <Wrapper className="content">
       <AccountHeader number={account.number} balance={account.balance} />
       <AccountNavBar />
       <Outlet context={{ account, transactions, pagesCount, page }} />

@@ -7,7 +7,8 @@ const Wrapper = styled.header`
   font-size: 1.25em;
   color: var(--text-color);
   text-transform: capitalize;
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
+  padding: 0.5rem;
 
   .account-number > strong {
     font-family: var(--numbers-font);

@@ -1,7 +1,7 @@
 import { PropsWithChildren, useRef } from "react";
 import { Form, useActionData, useNavigation } from "react-router-dom";
 import Input from "./Input";
-import { TRANSFER_FIELDS } from "../utils/constants";
+import { CATEGORIES, TRANSFER_FIELDS } from "../utils/constants";
 import { ITransactionProps, IUserFormActionData } from "../types/components";
 import DatePicker from "./DatePicker";
 import InputSelect from "./InputSelect";
@@ -14,9 +14,7 @@ function TransferForm({
 }: PropsWithChildren<{ className?: string; values?: ITransactionProps }>) {
   const actionData = useActionData() as IUserFormActionData;
 
-  // const isSubmitted = actionData?.msg === "Invalid inputs";
   const submissionCountRef = useRef(0);
-  // const isSubmitted = !!actionData;
 
   let onSumbitSelectErrorMessage = "";
   if (actionData && actionData.data) {
@@ -50,7 +48,6 @@ function TransferForm({
             prevValue={""}
             help={f.help}
             hideVerifyIcon={f.hideVerifyIcon}
-            // isSubmitted={isSubmitted}
             submissionCount={submissionCountRef.current}
             formID="transfer-form"
           />
@@ -60,7 +57,7 @@ function TransferForm({
         label="Category"
         id="category"
         validator={isEmpty}
-        // isSubmitted={isSubmitted}
+        fields={CATEGORIES}
         submissionCount={submissionCountRef.current}
         onSubmitErrorMessage={onSumbitSelectErrorMessage}
       />
