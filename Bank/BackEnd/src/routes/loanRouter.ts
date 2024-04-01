@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { createLoan, scheduleLoan } from "../controllers/loanController.js";
+import { validateLoanInput } from "../middlewares/validationMiddleware.js";
 
 const router = Router();
 
@@ -7,9 +8,11 @@ const router = Router();
 router.get("/", () => {});
 
 // calculate amortized shedule.
-router.post("/calculate", scheduleLoan);
+//@ts-ignore
+router.post("/calculate", validateLoanInput, scheduleLoan);
 
 // Adding a loan to the current account.
-router.post("/:number", createLoan);
+//@ts-ignore
+router.post("/:number", validateLoanInput, createLoan);
 
 export default router;

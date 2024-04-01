@@ -2,8 +2,11 @@ import Wrapper from "../assets/stylingWrappers/PieChart";
 import { ILoanCalculations } from "../pages/Loan";
 
 function PieChart({ calculations }: { calculations: ILoanCalculations }) {
+  const principalPercentage = Math.round(
+    (360 * calculations.loanAmount) / calculations.totalPaid
+  );
   return (
-    <Wrapper>
+    <Wrapper $principalPercentage={principalPercentage}>
       <div className="calc-piechart">
         <div className="total-amount">
           Total Paid: <strong>₪ {formatAmount(calculations.totalPaid)}</strong>

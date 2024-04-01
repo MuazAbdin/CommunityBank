@@ -14,12 +14,20 @@ export interface ILoanCalculations {
 function Loan() {
   const actionData = useActionData() as {
     calculations: ILoanCalculations;
+    amount: number;
+    term: number;
+    interestRate: number;
   };
   return (
     <section className="account-subsection-container">
       <StyledLoanForm />
-      {actionData?.calculations && (
-        <LoanCalculations calculations={actionData?.calculations} />
+      {actionData && (
+        <LoanCalculations
+          calculations={actionData.calculations}
+          amount={actionData.amount}
+          term={actionData.term}
+          interestRate={actionData.interestRate}
+        />
       )}
     </section>
   );

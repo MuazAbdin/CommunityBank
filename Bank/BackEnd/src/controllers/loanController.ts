@@ -23,7 +23,12 @@ export async function scheduleLoan(
     loanAmount: parseFloat(amount),
     totalPaid: schedule[lastIdx].payment,
   };
-  res.status(StatusCodes.OK).send({ calculations });
+  res.status(StatusCodes.OK).send({
+    calculations,
+    amount: parseFloat(amount),
+    term: parseFloat(term),
+    interestRate: parseFloat(interestRate),
+  });
 }
 
 export async function createLoan(

@@ -7,17 +7,20 @@ import PieChart from "./PieChart";
 
 function LoanCalculations({
   calculations,
+  amount,
+  term,
+  interestRate,
 }: {
   calculations: ILoanCalculations;
+  amount: number;
+  term: number;
+  interestRate: number;
 }) {
   return (
     <Wrapper>
       <Arrow />
       <PieChart calculations={calculations} />
-      <HiddenForm
-        fields={LOAN_FIELDS}
-        values={{ amount: 100, term: 12, interestRate: 6 }}
-      >
+      <HiddenForm fields={LOAN_FIELDS} values={{ amount, term, interestRate }}>
         <button className="btn">agree</button>
       </HiddenForm>
     </Wrapper>

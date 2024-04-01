@@ -16,6 +16,7 @@ import {
   editDetailsSchema,
   changePasswordSchema,
   transferSchema,
+  loanSchema,
 } from "../errors/validationSchemas.js";
 
 function processValidations(req: Request, res: Response, next: NextFunction) {
@@ -59,4 +60,9 @@ export const validateChangePasswordInput = validationRunner(
 export const validateTransferInput = validationRunner(
   // @ts-ignore
   checkSchema(transferSchema)
+);
+
+export const validateLoanInput = validationRunner(
+  // @ts-ignore
+  checkSchema(loanSchema)
 );

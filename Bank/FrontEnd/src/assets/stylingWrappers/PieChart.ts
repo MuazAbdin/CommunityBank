@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
-const Wrapper = styled.section`
+const Wrapper = styled.section<{ $principalPercentage: number }>`
   --loan-color: #117245;
   --interest-color: #b32733;
+  --principal-deg: calc(${(props) => props.$principalPercentage} * 1deg);
 
   display: grid;
   grid-template-columns: auto 1fr;
@@ -28,7 +29,10 @@ const Wrapper = styled.section`
         transparent 71% 96%,
         var(--background-color-piechart) 97% 100%
       ),
-      conic-gradient(var(--loan-color) 90deg, var(--interest-color) 90deg);
+      conic-gradient(
+        var(--loan-color) var(--principal-deg),
+        var(--interest-color) var(--principal-deg)
+      );
   }
 
   .total-amount {

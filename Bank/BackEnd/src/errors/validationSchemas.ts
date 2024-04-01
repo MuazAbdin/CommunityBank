@@ -6,7 +6,7 @@ import User from "../models/User.js";
 import { BadRequestError } from "./customErrors.js";
 import { Request } from "express";
 import Account from "../models/Account.js";
-import { CATEGORIES } from "../utils/constant.js";
+import { CATEGORIES, LOAN_MONTH_TERMS } from "../utils/constant.js";
 
 type Location = "body" | "cookies" | "headers" | "params" | "query";
 type validator = (
@@ -181,4 +181,34 @@ export const transferSchema = {
   //   notEmpty: { errorMessage: "required", bail: true },
   //   isDate: { options: { format: "MM/DD/YYYY" } },
   // },
+};
+
+// amount : "5000" interestRate : "50" term : "12 months"
+export const loanSchema = {
+  amount: {
+    errorMessage: "invalid",
+    trim: true,
+    notEmpty: { errorMessage: "required", bail: true },
+    isFloat: {
+      errorMessage: "amount must be at least ₪ 1",
+      options: { min: 1 },
+      bail: true,
+    },
+  },
+  term: {
+    errorMessage: "invalid",
+    trim: true,
+    notEmpty: { errorMessage: "required", bail: true },
+    isIn: { options: [LOAN_MONTH_TERMS.map((c) => c.toLowerCase())] },
+  },
+  interestRate: {
+    errorMessage: "invalid",
+    trim: true,
+    notEmpty: { errorMessage: "required", bail: true },
+    isFloat: {
+      errorMessage: "rate must be between 0-100",
+      options: { min: 0, max: 100 },
+      bail: true,
+    },
+  },
 };

@@ -17,3 +17,7 @@ export const ACCOUNT_TYPES = [
   "transfer",
   "loan payment",
 ];
+
+export const LOAN_MONTH_TERMS = Array(4)
+  .fill(null)
+  .map((_, i) => `${(i + 1) * 12} months`);
