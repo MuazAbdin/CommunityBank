@@ -102,4 +102,6 @@ export interface loanDetails {
   nextPayment: number;
   createdAt: Date;
   payOffDate: Date;
+  balnce: number;
+  monthlyPayment: number;
 }

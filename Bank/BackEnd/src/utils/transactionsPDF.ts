@@ -5,12 +5,13 @@ import {
   IAccountDetails,
   IUserWithoutPasswordDetails,
 } from "../types/IHttp.js";
+import { buildSearchQuery } from "./queryParser.js";
 
 export default function buildTransactionsPDF(
   pdfDoc: PDFKit.PDFDocument,
   userData: IUserWithoutPasswordDetails,
   accountData: IAccountDetails,
-  transactions: any
+  transactions: Awaited<ReturnType<typeof buildSearchQuery>>
 ) {
   // A4 595.28 x 841.89 (portrait) (about width sizes)
   pdfDoc.image("images/BankLogo.png", 50, 50, { width: 170 });
@@ -79,7 +80,7 @@ export default function buildTransactionsPDF(
   let pageNum = 1;
   drawFooter(pdfDoc, pageNum);
 
-  transactions.forEach((t, i) => {
+  transactions.forEach((t, i: number) => {
     if (!isFooterDrawn) {
       drawFooter(pdfDoc, pageNum);
       isFooterDrawn = true;

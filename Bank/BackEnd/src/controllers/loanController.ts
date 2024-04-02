@@ -10,6 +10,11 @@ import {
 import { amortizedSchedule } from "../utils/amortizedSchedule.js";
 import Account from "../models/Account.js";
 import Transaction from "../models/Transaction.js";
+import PDFDocument from "pdfkit";
+import fs from "fs";
+import path, { dirname, resolve } from "path";
+import { fileURLToPath } from "url";
+import buildLoanPDF from "../utils/loanPDF.js";
 
 export async function scheduleLoan(
   req: Request,
@@ -111,4 +116,46 @@ export async function getAllLoans(
 
   const loans = await Loan.find({ account: account._id });
   res.status(StatusCodes.CREATED).send({ user: req.user, account, loans });
+}
+
+export async function getLoanPDF(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const { loanId } = req.params;
+  const loan = await Loan.findById(loanId);
+  if (!loan) return next(new NotFoundError("Loan not found"));
+  const account = await Account.findById(loan.account);
+  if (!account) return next(new NotFoundError("Account not found"));
+  if (req.user!._id.toString() !== account.user.toString())
+    return next(new UnauthorizedError("Forbidden action"));
+
+  const schedule = amortizedSchedule(
+    loan.amount,
+    loan.term / 12,
+    loan.interestRate
+  );
+
+  const fileName = `loan-${loan._id}.pdf`;
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = dirname(__filename);
+  const filePath = path.join(resolve(__dirname, "../.."), "pdfFiles", fileName);
+
+  const pdfDoc = new PDFDocument({
+    size: "A4",
+    margin: 50,
+    info: {
+      Title: `loan-${loan._id}.pdf`,
+      Author: "Community-Bank",
+    },
+  });
+  res.setHeader("Content-Type", "application/pdf");
+  res.setHeader("Content-Disposition", `inline; filename=${fileName}`);
+
+  buildLoanPDF(pdfDoc, req.user!, account, loan, schedule);
+
+  pdfDoc.pipe(fs.createWriteStream(filePath)); // save copy on the server: optional
+  pdfDoc.pipe(res);
+  pdfDoc.end();
 }

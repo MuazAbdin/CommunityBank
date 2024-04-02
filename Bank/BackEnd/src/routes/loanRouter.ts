@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   createLoan,
   getAllLoans,
+  getLoanPDF,
   scheduleLoan,
 } from "../controllers/loanController.js";
 import { validateLoanInput } from "../middlewares/validationMiddleware.js";
@@ -13,6 +14,8 @@ router.get("/", () => {});
 
 // Retrieving all loans for aspecific account for the current user.
 router.get("/:number", getAllLoans);
+
+router.get("/pdf/:loanId", getLoanPDF);
 
 // calculate amortized shedule.
 //@ts-ignore
