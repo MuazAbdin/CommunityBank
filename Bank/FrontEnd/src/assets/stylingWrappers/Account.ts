@@ -22,6 +22,25 @@ const Wrapper = styled.section`
       padding: 0;
       color: var(--text-color);
     }
+
+    .table-loanDetails-btn {
+      cursor: pointer;
+      font-size: 1.5rem;
+      background-color: var(--yellow-light);
+      color: var(--yellow-dark);
+      border: 1px solid;
+      border-radius: var(--border-radius);
+      transition: all 100ms ease-in-out;
+
+      &:hover {
+        box-shadow: 0 0 7px var(--text-color);
+      }
+
+      svg {
+        display: block;
+        margin: auto;
+      }
+    }
   }
 `;
 

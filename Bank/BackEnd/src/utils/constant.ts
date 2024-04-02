@@ -5,13 +5,14 @@ export const CATEGORIES = [
   "Healthcare",
   "Housing",
   "Insurance",
+  "Bank Loan",
   "Miscellaneous",
   "Payments",
   "Salary",
   "Transportation",
 ];
 
-export const ACCOUNT_TYPES = [
+export const TRANSACTOIN_TYPES = [
   "deposit",
   "withdrawal",
   "transfer",

@@ -1,9 +1,14 @@
-import { LoaderFunctionArgs } from "react-router-dom";
+import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
 import Table from "../components/Table";
 import { customLoader } from "../utils/customLoader";
 import { AccountDetails, UserDetails, loanDetails } from "../types/components";
+import { FaFileInvoiceDollar } from "react-icons/fa6";
+import dayjs from "dayjs";
 
 function LoansBrowser() {
+  const { user, account, loans } = useLoaderData() as Awaited<
+    ReturnType<typeof loader>
+  >;
   return (
     <section className="account-subsection-container">
       <Table
@@ -14,9 +19,28 @@ function LoansBrowser() {
           "Pay-off Date",
           "Amount",
           "Term",
-          "Interest Rate",
+          "Interest",
+          "",
         ]}
-      ></Table>
+      >
+        {loans.map((loan) => {
+          return (
+            <tr key={loan._id}>
+              <td>{dayjs(loan.createdAt).format("MMMM YYYY")}</td>
+              <td>{dayjs(loan.payOffDate).format("MMMM YYYY")}</td>
+              <td>{loan.amount} ₪</td>
+              <td>{loan.term} months</td>
+              <td>{loan.interestRate} %</td>
+              <td
+                className="table-loanDetails-btn"
+                onClick={() => handleLoanPDF(loan._id)}
+              >
+                <FaFileInvoiceDollar />
+              </td>
+            </tr>
+          );
+        })}
+      </Table>
     </section>
   );
 }
@@ -39,3 +63,5 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
 
   return { user, account, loans };
 }
+
+async function handleLoanPDF(loadId: string) {}

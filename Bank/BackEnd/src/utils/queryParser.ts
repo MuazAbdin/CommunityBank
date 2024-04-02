@@ -88,18 +88,19 @@ export function transformPopulatedResult(
     .filter((item) => {
       const isReceiver =
         req.account!._id.toString() ===
-        item._doc.receiverAccount._id.toString();
-      const isSenderMatch = item._doc.senderAccount.number.includes(query);
+        item._doc.receiverAccount?._id.toString();
+      const isSenderMatch =
+        item._doc.senderAccount?.number.includes(query) ?? true;
 
       const isSender =
-        req.account!._id.toString() === item._doc.senderAccount._id.toString();
-      const isReceiverMatch = item._doc.receiverAccount.number.includes(query);
-
+        req.account!._id.toString() === item._doc.senderAccount?._id.toString();
+      const isReceiverMatch =
+        item._doc.receiverAccount?.number.includes(query) ?? true;
       return (isReceiver && isSenderMatch) || (isSender && isReceiverMatch);
     })
     .map((item) => {
       const tag =
-        req.account!._id.toString() === item._doc.senderAccount._id.toString()
+        req.account!._id.toString() === item._doc.senderAccount?._id.toString()
           ? "payor"
           : "payee";
       const newDoc = { ...item._doc, tag };

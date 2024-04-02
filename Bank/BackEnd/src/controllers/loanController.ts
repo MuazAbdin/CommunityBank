@@ -9,6 +9,7 @@ import {
 } from "../errors/customErrors.js";
 import { amortizedSchedule } from "../utils/amortizedSchedule.js";
 import Account from "../models/Account.js";
+import Transaction from "../models/Transaction.js";
 
 export async function scheduleLoan(
   req: Request,
@@ -70,6 +71,22 @@ export async function createLoan(
 
   try {
     const loan = await Loan.create(newLoan);
+    const newTransaction = {
+      receiverAccount: newLoan.account,
+      type: "deposit",
+      amount: newLoan.amount,
+      category: "bank loan",
+    };
+    console.log(account);
+    const receiverAccount = await Account.findOneAndUpdate(
+      { _id: account._id },
+      {
+        $inc: { balance: newTransaction.amount },
+        lastVisit: Date.now(),
+      },
+      { new: true }
+    );
+    const transaction = await Transaction.create(newTransaction);
     res.status(StatusCodes.CREATED).send({ msg: "Loan created successfully" });
     // .send({ msg: "Loan created successfully", account, user: req.user });
   } catch (error: any) {

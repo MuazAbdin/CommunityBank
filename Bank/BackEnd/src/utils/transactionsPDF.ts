@@ -87,8 +87,8 @@ export default function buildTransactionsPDF(
 
     const targetAccount =
       t._doc.tag === "payor"
-        ? t.receiverAccount.number
-        : t.senderAccount.number;
+        ? t.receiverAccount?.number || " --- "
+        : t.senderAccount?.number || " --- ";
     const amountStyle = t._doc.tag === "payor" ? "red" : "green";
     const sign = t._doc.tag === "payor" ? "-" : "";
 

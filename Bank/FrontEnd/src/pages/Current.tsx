@@ -36,8 +36,8 @@ function Current() {
         {transactions.map((t) => {
           const targetAccount =
             t.tag === "payor"
-              ? t.receiverAccount.number
-              : t.senderAccount.number;
+              ? t.receiverAccount?.number || " --- "
+              : t.senderAccount?.number || " --- ";
           return (
             <Transaction key={t._id} {...t} targetAccount={targetAccount} />
           );

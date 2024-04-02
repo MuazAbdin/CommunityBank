@@ -94,6 +94,7 @@ export interface ILoanFormProps {
 }
 
 export interface loanDetails {
+  _id: string;
   account: string;
   amount: number;
   interestRate: number;
