@@ -18,7 +18,13 @@ function HiddenForm({
   return (
     <form>
       {fields.map((f) => (
-        <input key={f.id} id={f.id} type="hidden" value={values[f.id]} />
+        <input
+          key={f.id}
+          id={f.id}
+          name={f.id}
+          type="hidden"
+          value={f.id !== "term" ? values[f.id] : `${values[f.id]} months`}
+        />
       ))}
 
       {children}

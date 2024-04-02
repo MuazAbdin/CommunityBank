@@ -41,8 +41,33 @@ export async function createLoan(
   res: Response,
   next: NextFunction
 ) {
-  const reqBody = req.body;
-  const newLoan = {};
+  const reqParams = req.params as { number: string };
+  const account = await Account.findOne({ number: reqParams.number });
+  if (!account) return next(new NotFoundError("Account not found"));
+  if (account.user.toString() !== req.user!._id.toString())
+    return next(new UnauthorizedError("Forbidden action"));
+  account.lastVisit = new Date();
+  await account.save();
+
+  const { amount, term, interestRate } = req.body;
+  const schedule = amortizedSchedule(
+    parseFloat(amount),
+    parseFloat(term) / 12,
+    parseFloat(interestRate)
+  );
+
+  const payOffDate = new Date();
+  payOffDate.setMonth(payOffDate.getMonth() + schedule.length - 1);
+
+  const newLoan = {
+    account: account._id,
+    amount: parseFloat(amount),
+    term: parseFloat(term),
+    interestRate: parseFloat(interestRate),
+    nextPayment: 0,
+    payOffDate,
+  };
+
   try {
     const loan = await Loan.create(newLoan);
     res.status(StatusCodes.CREATED).send({ msg: "Loan created successfully" });

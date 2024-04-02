@@ -98,7 +98,7 @@ export interface loanDetails {
   amount: number;
   interestRate: number;
   term: number;
-  lastPayment: number;
+  nextPayment: number;
   createdAt: Date;
   payOffDate: Date;
 }
