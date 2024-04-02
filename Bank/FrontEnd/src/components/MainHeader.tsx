@@ -15,11 +15,11 @@ function MainHeader({ isDark, themeToggle }: IMainHeaderProps) {
         <menu>
           <li>
             <FaLocationDot />
-            <Link to="/">Branches</Link>
+            <Link to="/branches">Branches</Link>
           </li>
           <li>
             <FaEnvelope />
-            <Link to="/">Contact Us</Link>
+            <Link to="/contact">Contact Us</Link>
           </li>
           <li className="theme-btn">
             <ToggleTheme isDark={isDark} themeToggle={themeToggle} />

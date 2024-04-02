@@ -16,6 +16,8 @@ import {
   Breakdown,
   Error,
   LoansBrowser,
+  Branches,
+  Contact,
 } from "../pages";
 
 import { loader as userLoader } from "../pages/DashboardLayout";
@@ -40,6 +42,14 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Landing />,
+      },
+      {
+        path: "branches",
+        element: <Branches />,
+      },
+      {
+        path: "contact",
+        element: <Contact />,
       },
       {
         path: "register",

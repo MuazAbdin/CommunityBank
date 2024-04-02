@@ -3,6 +3,7 @@ import styled from "styled-components";
 const Wrapper = styled.main`
   flex-grow: 1;
   overflow-y: scroll;
+
   & > div {
     height: calc(100% - 2rem);
     border-radius: var(--border-radius);
@@ -17,25 +18,26 @@ const Wrapper = styled.main`
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    gap: 2.5rem;
+    gap: 1.5rem;
 
-    font-size: 5rem;
-    font-weight: 700;
-    color: var(--highlight-color);
-    padding-top: 5rem;
-
-    .error-header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 2.5rem;
-      gap: 1.5rem;
-      text-shadow: 2px 2px 5px;
+    .title {
+      font-size: 2.25rem;
+      font-weight: 500;
+      font-family: var(--title-font);
+      letter-spacing: 0.15ch;
+      text-transform: uppercase;
+      color: var(--highlight-color);
+      margin: 2rem 0;
     }
 
-    .error-data {
-      font-size: 1.25rem;
-      color: var(--error-text-color);
+    .contact-item {
+      align-self: flex-start;
+      transform: translateX(60%);
+      justify-content: flex-start;
+      width: 50%;
+      gap: 1rem;
+      font-size: 1.5rem;
+      font-weight: 500;
     }
   }
 `;

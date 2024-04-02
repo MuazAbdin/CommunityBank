@@ -22,12 +22,14 @@ function Error() {
       <ToastContainer position="bottom-left" />
       <MainHeader isDark={isDark} themeToggle={themeToggle} />
       <Wrapper>
-        <FaTriangleExclamation />
-        <div className="error-header">
-          <h1>{error.status}</h1>
-          <span>{error.message ?? error.statusText}</span>
+        <div>
+          <FaTriangleExclamation />
+          <div className="error-header">
+            <h1>{error.status}</h1>
+            <span>{error.message ?? error.statusText}</span>
+          </div>
+          <p className="error-data">{error.data ?? ""}</p>
         </div>
-        <p className="error-data">{error.data ?? ""}</p>
       </Wrapper>
       <MainFooter />
     </div>
