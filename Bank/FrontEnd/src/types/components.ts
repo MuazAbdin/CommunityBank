@@ -92,3 +92,13 @@ export interface ILoanFormProps {
   // values?: ILoanValues;
   // stage: "calculate" | "agree";
 }
+
+export interface loanDetails {
+  account: string;
+  amount: number;
+  interestRate: number;
+  term: number;
+  lastPayment: number;
+  createdAt: Date;
+  payOffDate: Date;
+}

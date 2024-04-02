@@ -1,4 +1,8 @@
-import { FaFileInvoiceDollar, FaRegCircleUser } from "react-icons/fa6";
+import {
+  FaFileInvoiceDollar,
+  FaHandHoldingDollar,
+  FaRegCircleUser,
+} from "react-icons/fa6";
 import Wrapper from "../assets/stylingWrappers/Aside";
 import Accordion from "./Accordion";
 import { accountNumFormatter } from "../utils/inputFormatters";
@@ -13,6 +17,10 @@ function Aside({ accountsNums }: { accountsNums: string[] }) {
   const accounts = accountsNums.map((num) => {
     return { name: accountNumFormatter(num), to: `accounts/${num.slice(-6)}` };
   });
+  const loans = accounts.map((a) => {
+    return { ...a, to: `${a.to}/loan/browse` };
+  });
+
   return (
     <Wrapper>
       <nav>
@@ -28,6 +36,12 @@ function Aside({ accountsNums }: { accountsNums: string[] }) {
             title="accounts"
             Icon={FaFileInvoiceDollar}
             subsectoins={accounts}
+          />
+          <Accordion.Item
+            id="nav-loans"
+            title="loans"
+            Icon={FaHandHoldingDollar}
+            subsectoins={loans}
           />
         </Accordion>
       </nav>

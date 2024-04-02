@@ -32,7 +32,7 @@ function AccountNavBar() {
         </li>
         <li>
           <NavLink
-            to="loan"
+            to="loan/request"
             className={({ isActive }) => (isActive ? "active" : undefined)}
           >
             <FaHandHoldingDollar />

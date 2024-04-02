@@ -8,6 +8,7 @@ const Wrapper = styled.menu`
   flex-direction: column;
   font-size: 1.25em;
   text-transform: capitalize;
+  background-color: var(--background-color-transparent);
 
   .accordion-item {
     color: var(--highlight-color);

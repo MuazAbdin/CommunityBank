@@ -16,6 +16,24 @@ function LoanCalculations({
   term: number;
   interestRate: number;
 }) {
+  const navigate = useNavigate();
+
+  async function handleLogout() {
+    try {
+      const response = await fetcher("auth/logout");
+      if (!response.ok) throw new HTTPError(response);
+      toast.success("Logged out successfully");
+      return navigate("/login");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+        throw error;
+      }
+      console.log(error);
+      return error;
+    }
+  }
+
   return (
     <Wrapper>
       <Arrow />

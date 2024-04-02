@@ -58,8 +58,8 @@ export async function customAction({
     }
 
     const responseData = await response.json();
-    if (returnDataOnSuccess) return responseData;
     toast.success(responseData?.msg || successMessage);
+    if (returnDataOnSuccess) return responseData;
     return redirect(redirectPath);
   } catch (error: unknown) {
     if (error instanceof Error) {

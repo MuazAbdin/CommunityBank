@@ -1,4 +1,5 @@
 import { Types } from "mongoose";
+import User from "../models/User.js";
 
 export interface IUser {
   name: {
@@ -21,7 +22,7 @@ export interface IUser {
 export interface IAccount {
   number: string;
   type: "checking" | "savings";
-  user: Types.ObjectId;
+  user: Types.ObjectId | typeof User;
   balance: number;
   lastVisit: Date;
   createdAt: NativeDate;

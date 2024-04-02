@@ -2,10 +2,12 @@ import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat.js";
 dayjs.extend(localizedFormat);
 import { IAccount } from "../types/IModels.js";
+import Account from "../models/Account.js";
 
 export default function buildBADC_PDF(
   pdfDoc: PDFKit.PDFDocument,
   accountData: IAccount
+  // accountData: Awaited<ReturnType<typeof Account.findOne>>
 ) {
   // A4 595.28 x 841.89 (portrait) (about width sizes)
   pdfDoc

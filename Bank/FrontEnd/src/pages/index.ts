@@ -14,4 +14,5 @@ export { default as Account } from "./Account";
 export { default as Current } from "./Current";
 export { default as Transfer } from "./Transfer";
 export { default as Loan } from "./Loan";
+export { default as LoansBrowser } from "./LoansBrowser";
 export { default as Breakdown } from "./Breakdown";

@@ -15,10 +15,12 @@ import {
   Loan,
   Breakdown,
   Error,
+  LoansBrowser,
 } from "../pages";
 
 import { loader as userLoader } from "../pages/DashboardLayout";
 import { loader as accountLoader } from "../pages/Account";
+import { loader as loanLoader } from "../pages/LoansBrowser";
 
 import { action as registerAction } from "../pages/Register";
 import { action as loginAction } from "../pages/Login";
@@ -81,7 +83,21 @@ const router = createBrowserRouter([
                 element: <Transfer />,
                 action: transferAction,
               },
-              { path: "loan", element: <Loan />, action: calculateLoanAction },
+              {
+                path: "loan",
+                children: [
+                  {
+                    path: "request",
+                    element: <Loan />,
+                    action: calculateLoanAction,
+                  },
+                  {
+                    path: "browse",
+                    element: <LoansBrowser />,
+                    loader: loanLoader,
+                  },
+                ],
+              },
               { path: "breakdown", element: <Breakdown /> },
             ],
           },

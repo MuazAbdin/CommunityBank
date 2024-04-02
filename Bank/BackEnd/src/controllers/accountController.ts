@@ -50,13 +50,13 @@ export async function getAccount(
   next: NextFunction
 ) {
   const reqParams = req.params as { number: string };
-  const account = await Account.findOneAndUpdate(
-    { number: reqParams.number },
-    { lastVisit: Date.now() },
-    { new: true }
-  );
-  // console.log(moment(account?.lastVisit).format("LLLL"));
+  const account = await Account.findOne({ number: reqParams.number });
   if (!account) return next(new NotFoundError("Account not found"));
+  if (account.user.toString() !== req.user!._id.toString())
+    return next(new UnauthorizedError("Forbidden action"));
+  account.lastVisit = new Date();
+  await account.save();
+
   res.status(StatusCodes.OK).send({ user: req.user, account });
 }
 
