@@ -24,6 +24,7 @@ import { loader as userLoader } from "../pages/DashboardLayout";
 import { loader as accountLoader } from "../pages/Account";
 import { loader as loanLoader } from "../pages/LoansBrowser";
 
+import { action as contactUsAction } from "../pages/Contact";
 import { action as registerAction } from "../pages/Register";
 import { action as loginAction } from "../pages/Login";
 import { action as editUserDetailsAction } from "../pages/EditUserDetails";
@@ -50,6 +51,7 @@ const router = createBrowserRouter([
       {
         path: "contact",
         element: <Contact />,
+        action: contactUsAction,
       },
       {
         path: "register",

@@ -63,7 +63,8 @@ const Wrapper = styled.fieldset<{
     overflow: hidden;
     position: relative;
 
-    &:has(input:focus) {
+    &:has(input:focus),
+    &:has(textarea:focus) {
       border: 2px solid darkblue;
     }
 
@@ -118,7 +119,8 @@ const Wrapper = styled.fieldset<{
       }
     }
 
-    input {
+    input,
+    textarea {
       height: 100%;
       flex-grow: 1;
       color: var(--grey-900);
@@ -142,21 +144,26 @@ const Wrapper = styled.fieldset<{
     }
 
     input:disabled,
-    input:read-only {
+    input:read-only,
+    textarea:disabled,
+    textarea:read-only {
       cursor: not-allowed;
       background-color: var(--grey-200);
     }
 
-    input:focus {
+    input:focus,
+    textarea:focus {
       outline: none;
       /* padding-top: 1.25rem; */
     }
 
-    .input-field:has(input:focus) ~ label {
+    .input-field:has(input:focus) ~ label,
+    .input-field:has(textarea:focus) ~ label {
       display: block;
     }
 
-    input:focus::placeholder {
+    input:focus::placeholder,
+    textarea:focus::placeholder {
       color: transparent;
     }
 

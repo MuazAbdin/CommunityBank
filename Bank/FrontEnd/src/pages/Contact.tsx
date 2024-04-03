@@ -1,31 +1,29 @@
-import { FaBuildingColumns, FaLocationDot, FaPhone } from "react-icons/fa6";
+import { ActionFunctionArgs } from "react-router-dom";
 import Wrapper from "../assets/stylingWrappers/Contact";
-import { TbMailFilled } from "react-icons/tb";
+import StyledContactForm from "../assets/stylingWrappers/StyledContactForm";
+import { customAction } from "../utils/customAction";
+import { validateContactFields } from "../utils/validation";
 
 function Contact() {
   return (
     <Wrapper>
       <div>
-        <div className="title">Contact Us</div>
-        <div className="contact-item c-flex">
-          <FaBuildingColumns />
-          <span>Community Bank</span>
-        </div>
-        <div className="contact-item c-flex">
-          <FaLocationDot />
-          <span>Jerusalem, Community st. 13</span>
-        </div>
-        <div className="contact-item c-flex">
-          <FaPhone />
-          <span>02-1234567</span>
-        </div>
-        <div className="contact-item c-flex">
-          <TbMailFilled />
-          <span>community@bank.com</span>
-        </div>
+        <StyledContactForm></StyledContactForm>
       </div>
     </Wrapper>
   );
 }
 
 export default Contact;
+
+export async function action({ params, request }: ActionFunctionArgs) {
+  return customAction({
+    params,
+    request,
+    url: "contact",
+    successMessage: "Message sent successfully",
+    redirectPath: "/",
+    preSubmitValidator: validateContactFields,
+    specialErrors: [400], // BadRequestError (invalid inputs), Forbidden
+  });
+}

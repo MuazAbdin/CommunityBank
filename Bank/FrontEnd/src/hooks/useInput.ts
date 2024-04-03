@@ -45,7 +45,9 @@ export function useInput(
   // };
 
   function handleInputChange(
-    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    event: ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
   ) {
     // let formattedValue = event.currentTarget.value;
     // if (formatter) formattedValue = formatter(event.currentTarget.value);

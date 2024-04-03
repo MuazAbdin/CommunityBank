@@ -22,7 +22,7 @@ import {
 export interface IInputField {
   label: string;
   id: string;
-  type: string;
+  type?: string;
   placeholder: string;
   autoComplete?: string;
   validator?: IInputValidator;
@@ -64,7 +64,7 @@ export const REGISTER_FIELDS: IInputField[] = [
     autoComplete: "given-name",
     placeholder: "First Name",
     validator: isFirstNameValid,
-    help: "Must contain between 5-32 characters.",
+    help: "Must contain between 3-32 characters.",
   },
   {
     label: "Last Name",
@@ -73,7 +73,7 @@ export const REGISTER_FIELDS: IInputField[] = [
     autoComplete: "family-name",
     placeholder: "Last Name",
     validator: isLastNameValid,
-    help: "Must contain between 5-32 characters.",
+    help: "Must contain between 3-32 characters.",
   },
   {
     label: "Email",
@@ -211,6 +211,31 @@ export const LOAN_FIELDS: IInputField[] = [
     validator: isRateValid,
     placeholder: "Interest Rate",
     help: "Number between 0-100.",
+  },
+];
+
+export const CONTACT_US_FIELDS: IInputField[] = [
+  {
+    label: "Name",
+    id: "name",
+    type: "text",
+    placeholder: "Name",
+    validator: isFirstNameValid,
+    help: "Must contain between 3-32 characters.",
+  },
+  {
+    label: "Email",
+    id: "email",
+    type: "email",
+    autoComplete: "email",
+    placeholder: "Email",
+    validator: isEmailValid,
+  },
+  {
+    label: "Message",
+    id: "message",
+    placeholder: "Message",
+    validator: isEmpty,
   },
 ];
 

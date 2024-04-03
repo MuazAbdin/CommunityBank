@@ -7,6 +7,7 @@ import { IInputValidator } from "../utils/validation";
 import { IInputFormatter } from "../utils/inputFormatters";
 
 interface IInputProps {
+  ElementType?: "input" | "textarea";
   label: string;
   id: string;
   validator?: IInputValidator;
@@ -22,6 +23,7 @@ interface IInputProps {
 
 const Input = forwardRef(function Input(
   {
+    ElementType = "input",
     label,
     id,
     validator,
@@ -34,7 +36,7 @@ const Input = forwardRef(function Input(
     prevValue,
     formID,
     ...props
-  }: IInputProps & ComponentPropsWithoutRef<"input">,
+  }: IInputProps & ComponentPropsWithoutRef<"input" | "textarea">,
   ref: ForwardedRef<HTMLInputElement>
 ) {
   const {
@@ -58,7 +60,7 @@ const Input = forwardRef(function Input(
           {!hideVerifyIcon && showMessage && (
             <GrValidate className="validate-icon" />
           )}
-          <input
+          <ElementType
             id={id}
             name={id}
             value={value}

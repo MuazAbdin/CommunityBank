@@ -21,7 +21,7 @@ function Loan() {
   return (
     <section className="account-subsection-container">
       <StyledLoanForm />
-      {actionData && (
+      {actionData?.calculations && (
         <LoanCalculations
           calculations={actionData.calculations}
           amount={actionData.amount}

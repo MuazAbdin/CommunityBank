@@ -1,6 +1,7 @@
 import isEmail from "validator/lib/isEmail";
 import {
   CHANGE_PASSWORD_FIELDS,
+  CONTACT_US_FIELDS,
   EDIT_USER_FIELDS,
   LOAN_FIELDS,
   REGISTER_FIELDS,
@@ -184,6 +185,21 @@ export function validateTrnasferFields(fields: { [key: string]: string }) {
 
 export function validateLoanFields(fields: any) {
   const results = LOAN_FIELDS.map((f) => {
+    if (!f.validator)
+      return { name: f.id, value: fields[f.id], result: true, message: "" };
+    return { name: f.id, value: fields[f.id], ...f.validator(fields[f.id]) };
+  });
+  const data = results
+    .filter((r) => !r.result)
+    .map((r) => {
+      return { name: r.name, value: r.value, message: r.message };
+    });
+  const msg = data.length === 0 ? "" : "Invalid inputs";
+  return { msg, data };
+}
+
+export function validateContactFields(fields: any) {
+  const results = CONTACT_US_FIELDS.map((f) => {
     if (!f.validator)
       return { name: f.id, value: fields[f.id], result: true, message: "" };
     return { name: f.id, value: fields[f.id], ...f.validator(fields[f.id]) };
