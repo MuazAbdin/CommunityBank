@@ -23,6 +23,7 @@ import {
 import { loader as userLoader } from "../pages/DashboardLayout";
 import { loader as accountLoader } from "../pages/Account";
 import { loader as loanLoader } from "../pages/LoansBrowser";
+import { loader as breakdownLoader } from "../pages/Breakdown";
 
 import { action as contactUsAction } from "../pages/Contact";
 import { action as registerAction } from "../pages/Register";
@@ -110,7 +111,11 @@ const router = createBrowserRouter([
                   },
                 ],
               },
-              { path: "breakdown", element: <Breakdown /> },
+              {
+                path: "breakdown",
+                element: <Breakdown />,
+                loader: breakdownLoader,
+              },
             ],
           },
         ],

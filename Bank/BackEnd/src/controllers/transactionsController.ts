@@ -42,6 +42,29 @@ export async function getAllTransactions(req: Request, res: Response) {
   });
 }
 
+export async function getBreakdown(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  if (req.user!._id.toString() !== req.account!.user.toString())
+    return next(new UnauthorizedError("Forbidden action"));
+
+  const breakdown = await Transaction.aggregate([
+    {
+      $match: {
+        $or: [
+          { senderAccount: req.account!._id },
+          { receiverAccount: req.account!._id },
+        ],
+      },
+    },
+    { $group: { _id: "$category", count: { $sum: "$amount" } } },
+  ]);
+
+  res.status(StatusCodes.OK).send({ breakdown });
+}
+
 export async function getTransactionsPDF(
   req: Request,
   res: Response,
