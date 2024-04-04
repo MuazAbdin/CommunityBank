@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
 dotenv.config();
-import express from "express";
+import express, { NextFunction, Request } from "express";
 const app = express();
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
@@ -23,6 +23,11 @@ import { getAccount } from "./middlewares/accountMiddleware.js";
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
+app.use("*", (req: Request, res: Response, next: NextFunction) => {
+  res.headers.set("Access-Control-Allow-Private-Network", "true"); // Set the private network header
+  next();
+});
 
 app.use(
   cors({
