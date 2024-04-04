@@ -27,7 +27,11 @@ if (process.env.NODE_ENV === "development") {
 app.use(
   cors({
     credentials: true, // important part here
-    origin: ["http://localhost:5173", "http://localhost:4173"],
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:4173",
+      "https://muazabdin.github.io",
+    ],
     optionsSuccessStatus: 200,
   })
 );

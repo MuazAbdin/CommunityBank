@@ -125,7 +125,7 @@ const router = createBrowserRouter(
     },
   ],
   {
-    basename: "/CommunityBank",
+    basename: "/CommunityBank/",
   }
 );
 
