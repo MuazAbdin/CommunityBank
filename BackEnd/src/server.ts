@@ -1,7 +1,9 @@
 import * as dotenv from "dotenv";
 dotenv.config();
-import express, { NextFunction, Request } from "express";
+import express, { NextFunction, Request, Response } from "express";
 const app = express();
+import path, { dirname, resolve } from "path";
+import { fileURLToPath } from "url";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -23,11 +25,8 @@ import { getAccount } from "./middlewares/accountMiddleware.js";
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
-// //@ts-ignore
-// app.use("*", (req: Request, res: Response, next: NextFunction) => {
-//   res.headers.set("Access-Control-Allow-Private-Network", "true"); // Set the private network header
-//   next();
-// });
+const __dirname = dirname(fileURLToPath(import.meta.url));
+app.use(express.static(path.join(resolve(__dirname, ".."), "dist")));
 
 app.use(
   cors({
@@ -58,6 +57,10 @@ app.use("/api/v1/users", authenticateUser, userRouter);
 app.use("/api/v1/loans", authenticateUser, loanRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/contact", contactRouter);
+
+app.get("*", (req: Request, res: Response, next: NextFunction) => {
+  res.sendFile(path.join(resolve(__dirname, ".."), "dist", "index.html"));
+});
 
 app.use(errorHandlerMiddleware);
 
