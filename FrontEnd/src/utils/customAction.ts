@@ -34,10 +34,10 @@ export async function customAction({
   const data = Object.fromEntries(
     [...fd.entries()].filter((entry) => entry[0] !== "submit")
   );
-  console.log(data);
+  // console.log(data);
   if (preSubmitValidator) {
     const preSubmitValidation = preSubmitValidator(data);
-    console.log(preSubmitValidation);
+    // console.log(preSubmitValidation);
     if (preSubmitValidation.msg === "Invalid inputs")
       return preSubmitValidation;
   }
