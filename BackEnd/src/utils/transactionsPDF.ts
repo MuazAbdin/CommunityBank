@@ -80,6 +80,7 @@ export default function buildTransactionsPDF(
   let pageNum = 1;
   drawFooter(pdfDoc, pageNum);
 
+  //@ts-ignore
   transactions.forEach((t, i: number) => {
     if (!isFooterDrawn) {
       drawFooter(pdfDoc, pageNum);

@@ -84,28 +84,34 @@ export function transformPopulatedResult(
   result: any,
   query: string
 ) {
-  return result
-    .filter((item) => {
-      const isReceiver =
-        req.account!._id.toString() ===
-        item._doc.receiverAccount?._id.toString();
-      const isSenderMatch =
-        item._doc.senderAccount?.number.includes(query) ?? true;
+  return (
+    result
+      //@ts-ignore
+      .filter((item) => {
+        const isReceiver =
+          req.account!._id.toString() ===
+          item._doc.receiverAccount?._id.toString();
+        const isSenderMatch =
+          item._doc.senderAccount?.number.includes(query) ?? true;
 
-      const isSender =
-        req.account!._id.toString() === item._doc.senderAccount?._id.toString();
-      const isReceiverMatch =
-        item._doc.receiverAccount?.number.includes(query) ?? true;
-      return (isReceiver && isSenderMatch) || (isSender && isReceiverMatch);
-    })
-    .map((item) => {
-      const tag =
-        req.account!._id.toString() === item._doc.senderAccount?._id.toString()
-          ? "payor"
-          : "payee";
-      const newDoc = { ...item._doc, tag };
-      return Object.assign(item, { _doc: newDoc });
-    });
+        const isSender =
+          req.account!._id.toString() ===
+          item._doc.senderAccount?._id.toString();
+        const isReceiverMatch =
+          item._doc.receiverAccount?.number.includes(query) ?? true;
+        return (isReceiver && isSenderMatch) || (isSender && isReceiverMatch);
+      })
+      //@ts-ignore
+      .map((item) => {
+        const tag =
+          req.account!._id.toString() ===
+          item._doc.senderAccount?._id.toString()
+            ? "payor"
+            : "payee";
+        const newDoc = { ...item._doc, tag };
+        return Object.assign(item, { _doc: newDoc });
+      })
+  );
 }
 
 export function buildSearchQuery(
