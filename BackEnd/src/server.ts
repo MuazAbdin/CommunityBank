@@ -25,8 +25,6 @@ import { getAccount } from "./middlewares/accountMiddleware.js";
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
-const __dirname = dirname(fileURLToPath(import.meta.url));
-app.use(express.static(path.join(resolve(__dirname, ".."), "dist")));
 
 app.use(
   cors({
@@ -34,11 +32,17 @@ app.use(
     origin: [
       "http://localhost:5173",
       "http://localhost:4173",
+      "http://localhost:3000",
       "https://muazabdin.github.io",
+      "https://communitybank.onrender.com",
     ],
     optionsSuccessStatus: 200,
   })
 );
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+console.log(path.join(resolve(__dirname, ".."), "dist"));
+app.use(express.static(path.join(resolve(__dirname, ".."), "dist")));
 
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
@@ -59,6 +63,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/contact", contactRouter);
 
 app.get("*", (req: Request, res: Response, next: NextFunction) => {
+  // console.log(path.join(resolve(__dirname, ".."), "dist", "index.html"));
   res.sendFile(path.join(resolve(__dirname, ".."), "dist", "index.html"));
 });
 

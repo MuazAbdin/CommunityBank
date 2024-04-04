@@ -123,10 +123,10 @@ const router = createBrowserRouter(
         },
       ],
     },
-  ],
-  {
-    basename: "/CommunityBank/",
-  }
+  ]
+  // {
+  //   basename: "/CommunityBank/",
+  // }
 );
 
 export default router;
