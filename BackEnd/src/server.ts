@@ -23,11 +23,11 @@ import { getAccount } from "./middlewares/accountMiddleware.js";
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
-//@ts-ignore
-app.use("*", (req: Request, res: Response, next: NextFunction) => {
-  res.headers.set("Access-Control-Allow-Private-Network", "true"); // Set the private network header
-  next();
-});
+// //@ts-ignore
+// app.use("*", (req: Request, res: Response, next: NextFunction) => {
+//   res.headers.set("Access-Control-Allow-Private-Network", "true"); // Set the private network header
+//   next();
+// });
 
 app.use(
   cors({

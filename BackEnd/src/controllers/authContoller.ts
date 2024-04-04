@@ -60,7 +60,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
     httpOnly: true,
     expires: new Date(Date.now() + 0.25 * HOUR),
     secure: process.env.NODE_ENV === "production",
-    // sameSite: "none",
+    sameSite: "none",
   });
 
   res.status(StatusCodes.OK).send({ msg: "Logged in successfully" });
