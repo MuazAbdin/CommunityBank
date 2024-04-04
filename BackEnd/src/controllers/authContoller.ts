@@ -58,7 +58,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 
   res.cookie("token", token, {
     httpOnly: true,
-    expires: new Date(Date.now() + 24 * HOUR),
+    expires: new Date(Date.now() + 0.25 * HOUR),
     secure: process.env.NODE_ENV === "production",
   });
 
