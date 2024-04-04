@@ -36,7 +36,9 @@ export default function buildBADC_PDF(
     })
     .font("fonts/SourceSerif4-Bold.ttf")
     .text(
+      //@ts-ignore
       `${captlize(accountData.user.name.first)} ${captlize(
+        //@ts-ignore
         accountData.user.name.last
       )} `,
       { continued: true }

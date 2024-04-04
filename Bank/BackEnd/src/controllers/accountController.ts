@@ -85,9 +85,10 @@ export async function getBADC(req: Request, res: Response, next: NextFunction) {
   res.setHeader("Content-Type", "application/pdf");
   res.setHeader("Content-Disposition", `inline; filename=${fileName}`);
 
+  //@ts-ignore
   buildBADC_PDF(pdfDoc, account);
 
-  pdfDoc.pipe(fs.createWriteStream(filePath)); // save copy on the server: optional
+  // pdfDoc.pipe(fs.createWriteStream(filePath)); // save copy on the server: optional
   pdfDoc.pipe(res);
   pdfDoc.end();
 }

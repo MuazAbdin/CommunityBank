@@ -103,7 +103,7 @@ export async function getTransactionsPDF(
 
   buildTransactionsPDF(pdfDoc, req.user!, req.account!, transactions);
 
-  pdfDoc.pipe(fs.createWriteStream(filePath)); // save copy on the server: optional
+  // pdfDoc.pipe(fs.createWriteStream(filePath)); // save copy on the server: optional
   pdfDoc.pipe(res);
   pdfDoc.end();
 }

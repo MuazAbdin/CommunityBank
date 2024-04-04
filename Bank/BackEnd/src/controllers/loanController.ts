@@ -155,7 +155,7 @@ export async function getLoanPDF(
 
   buildLoanPDF(pdfDoc, req.user!, account, loan, schedule);
 
-  pdfDoc.pipe(fs.createWriteStream(filePath)); // save copy on the server: optional
+  // pdfDoc.pipe(fs.createWriteStream(filePath)); // save copy on the server: optional
   pdfDoc.pipe(res);
   pdfDoc.end();
 }

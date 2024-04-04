@@ -6,8 +6,9 @@
   "main": "build/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc & node build/server.js",
-    "dev": "tsc --watch & nodemon build/server.js"
+    "build": "npm install && tsc",
+    "start": "node build/server.js",
+    "dev": "npm i && tsc --watch && nodemon build/server.js"
   },
   "author": "Muaz Abdin",
   "license": "ISC",
